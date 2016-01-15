@@ -1,3 +1,3 @@
 # CoPlay
 
-a [Sails](http://sailsjs.org) application
+a simple application
