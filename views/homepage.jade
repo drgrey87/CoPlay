@@ -1,0 +1,18 @@
+extends ./layout.jade
+
+block title
+  title Article Title
+
+block content
+  h1 My Article
+//
+  div.default-page
+    div.header
+      h1#main-title.container
+      h3.container You're looking at
+    div.main.container.clearfix
+      ul.getting-started
+        li.clearfix
+          div.step
+            div.sprite one
+  script(src="/js/dependencies/sails.io.js")
