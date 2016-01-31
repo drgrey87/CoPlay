@@ -1,6 +1,3 @@
-/**
- * rerun server
- */
 module.exports = function(grunt) {
 
   grunt.config.set('nodemon', {

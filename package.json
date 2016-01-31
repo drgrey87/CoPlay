@@ -18,11 +18,15 @@
     "grunt-contrib-watch": "^0.6.0",
     "grunt-sails-linker": "~0.9.5",
     "grunt-sync": "~0.0.4",
+    "grunt-webpack": "^1.0.11",
     "include-all": "~0.1.3",
     "open": "0.0.5",
     "rc": "~0.5.0",
+    "react": "^0.14.6",
+    "react-dom": "^0.14.6",
     "sails": "~0.11.4",
-    "sails-disk": "~0.10.0"
+    "sails-disk": "~0.10.0",
+    "webpack-dev-server": "^1.14.1"
   },
   "scripts": {
     "debug": "node debug app.js",
@@ -36,8 +40,15 @@
   "author": "sergey",
   "license": "",
   "devDependencies": {
+    "babel-core": "^6.4.5",
+    "babel-loader": "^6.2.1",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-stage-0": "^6.3.13",
     "grunt-inject": "^0.1.1",
     "grunt-nodemon": "^0.4.1",
-    "jade": "^1.11.0"
+    "grunt-webpack": "^1.0.11",
+    "jade": "^1.11.0",
+    "webpack": "^1.12.12"
   }
 }

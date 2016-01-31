@@ -1,5 +1,8 @@
 /.editorconfig
 /node_modules
 .idea
+/www
+/.tmp
 /api/controllers/.gitkeep
 /.sailsrc
+/assets/js/bundle.js
