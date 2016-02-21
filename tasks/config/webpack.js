@@ -2,11 +2,19 @@ module.exports = function(grunt) {
   grunt.config.set('webpack', {
     bundle: {
       // webpack options
-      entry: '/home/sergey/WebstormProjects/CoPlay/assets/js/main.js',
+      entry: './assets/js/main.js',
       output: {
-        path: '/home/sergey/WebstormProjects/CoPlay/assets/js/',
-        filename: 'bundle.js',
+        filename: './assets/js/bundle.js',
+        publicPath: "./assets/",
+        library: 'main',
+        //sourceMapFilename: 'main.map'
       },
+      //watchers
+      //watch: true,
+      //watchOptions: {
+      //  aggregateTimeout: 200
+      //},
+      devtool: 'inline-source-map',
       module: {
         loaders: [
           {
