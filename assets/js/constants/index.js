@@ -1,0 +1,7 @@
+export let constants = {
+  ADD_DATA: 'ADD_DATA',
+  REMOVE_DATA: 'REMOVE_DATA',
+  SET_PAGE: 'SET_PAGE',
+  RECEIVE_DATA: 'RECEIVE_DATA'
+}
+

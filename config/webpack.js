@@ -7,16 +7,23 @@ const webpack = require('webpack'),
 module.exports.webpack = {
 
   options: {
-    entry: './assets/js/main',
+    context: path.resolve(__dirname, '../assets/js'),
+    entry: [
+      // 'webpack-hot-middleware/client',
+      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
+      './index'
+    ],
     output: {
-      filename: './assets/js/bundle.js',
-      publicPath: "./assets/",
-      library: 'main'
+      path: path.resolve(__dirname, '../assets/js'),
+      filename: 'bundle.js',
+      // publicPath: path.resolve(__dirname, '../.tmp/public/js'),
+      publicPath: '/',
+      // library: 'main'
     },
-    watchOptions: {
-      aggregateTimeout: 100
-    },
-    devtool: 'eval',
+    // watchOptions: {
+    //   aggregateTimeout: 100
+    // },
+    // devtool: 'cheap-module-source-map',
     resolve: {
       modulesDirectories: ["node_modules"],
       extensions: ["", ".js"]
@@ -27,19 +34,34 @@ module.exports.webpack = {
       moduleTemplates: ["*-loader", "*"]
     },
     module: {
+      preLoaders: [
+        {
+          test: /\.js$/,
+          loaders: ['eslint'],
+          include: [
+            path.resolve(__dirname, "../assets/js"),
+          ],
+        }
+      ],
       loaders: [
         {
           test: /.jsx?$/,
-          loader: 'babel-loader',
+          loaders: ['react-hot', 'babel-loader'],
           exclude: /(node_modules|bower_components)/,
-          query: {
-            presets: ['es2015', 'react'],
-            plugins: ['transform-runtime']
-          }
+          plugins: ['transform-runtime']
         }
       ]
     },
     plugins: [
+      new webpack.HotModuleReplacementPlugin(),
+      //new webpack.NoErrorsPlugin(),
+      //new webpack.optimize.CommonsChunkPlugin({
+      //  name: 'common',
+      //  minChunks: 2
+      //}),
+      new webpack.ProvidePlugin({
+
+      }),
       new CleanWebpackPlugin(['public/js/'], {
         root: path.resolve(__dirname, '../.tmp/'),
         verbose: true,
@@ -48,14 +70,15 @@ module.exports.webpack = {
       new CopyWebpackPlugin(
         [
           {
-            from: './assets/js',
-            to: './.tmp/public/js',
-            toType: 'dir'
+            from: path.resolve(__dirname, '../assets/js'),
+            to: path.resolve(__dirname, '../.tmp/public/js')
+          },
+          {
+            from: 'assets/js/dependencies',
+            to: 'dependencies',
+            force: true
           }
-        ],
-        {
-          ignore: ['./assets/js/dependencies/']
-        }
+        ]
       )
     ]
   }
