@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 import * as CounterActions from '../actions/CounterActions';
 import Counter from '../components/Counter';
 import Footer from '../components/Footer';
-
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import RaisedButton from 'material-ui/RaisedButton';
+//https://api.vk.com/method/audion.get&access_token=rT1T5bMFGX1OnYEkiQ3l&v=5.52
 /**
  * It is common practice to have a 'Root' container/component require our main App (this one).
  * Again, this is because it serves to wrap the rest of our application with the Provider
@@ -13,12 +15,15 @@ import Footer from '../components/Footer';
 export default class App extends Component {
   render() {
     // we can use ES6's object destructuring to effectively 'unpack' our props
-    const { counter, actions } = this.props;
+    const { data, actions } = this.props;
     return (
       <div className="main-app-container">
         <div className="main-app-nav">Simple Redux Boilerplate</div>
+        <MuiThemeProvider>
+          <RaisedButton label="Default" linkButton href='/list' />
+        </MuiThemeProvider>
         {/* notice that we then pass those unpacked props into the Counter component */}
-        <Counter counter={counter} actions={actions} />
+        <Counter counter={data.state} actions={actions} />
         <Footer />
       </div>
     );
@@ -26,7 +31,7 @@ export default class App extends Component {
 }
 
 App.propTypes = {
-  counter: PropTypes.number.isRequired,
+  data: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired
 };
 
@@ -37,7 +42,7 @@ App.propTypes = {
  */
 function mapStateToProps(state) {
   return {
-    counter: state.counter
+    data: state.counter
   };
 }
 
