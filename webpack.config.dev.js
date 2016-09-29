@@ -13,6 +13,7 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/static/'
   },
+  watch: true,
   plugins: [
     /**
      * This is where the magic happens! You need this to enable Hot Module Replacement!

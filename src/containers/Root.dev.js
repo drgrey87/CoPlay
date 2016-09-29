@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import App from './App';
+import Vk from '../components/routes/Vk';
 import DevTools from './DevTools';
+import {Router, Route, browserHistory} from 'react-router';
 
 /**
  * Component is exported for conditional usage in Root.js
@@ -17,9 +19,15 @@ module.exports = class Root extends Component {
        */
       <Provider store={store}>
         <div>
-          <App />
-          {/* Being the dev version of our Root component, we include DevTools below */}
-          <DevTools />
+          <Router history={browserHistory}>
+            <Route path="/" component={App}/>
+            <Route path="vk" component={Vk}/>
+              {/*<Route path="yandex" component={Yandex}/>*/}
+              {/*<Route path="sound_cloud" component={Sound_cloud}/>*/}
+            {/* Being the dev version of our Root component, we include DevTools below */}
+            {/*</Route>*/}
+            <DevTools />
+          </Router>
         </div>
       </Provider>
     );

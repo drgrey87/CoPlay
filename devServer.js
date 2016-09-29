@@ -9,13 +9,16 @@ const compiler = webpack(config);
 
 let code;
 
-let vk_requests = (options) => {
+let requests = (options) => {
   return request(options);
 };
 
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
-  publicPath: config.output.publicPath
+  publicPath: config.output.publicPath,
+  stats: {
+    colors: true
+  }
 }));
 
 app.use(require('webpack-hot-middleware')(compiler));
@@ -32,31 +35,40 @@ app.get('/vk_code', (req, res) => {
   };
   if (!code || req.query.code !== code) {
     code = req.query.code;
-    vk_requests(options)
+    requests(options)
       .then((responce) => {
         options.uri = `https://api.vk.com/method/audio.get?count=100&access_token=${responce.access_token}&v=5.52`;
-        return vk_requests(options);
+        return requests(options);
       })
-      .then((responce) => {
+      .then((responce) => {console.log('resp1', responce);
         res.redirect('/');
       })
       .catch((err) => {
         console.log(err);
       });
   } else {
-    res.redirect('/');
+    requests(options)
+      .then((responce) => {
+        options.uri = `https://api.vk.com/method/audio.get?count=100&access_token=${responce.access_token}&v=5.52`;
+        return requests(options);
+      })
+      .then((responce) => {console.log('resp2', responce);
+        res.redirect('/');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 });
 
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.listen(3000, 'localhost', (err) => {
+  console.log('Listening at http://localhost:3000');
   if (err) {
     console.log(err);
     return;
   }
-
-  console.log('Listening at http://localhost:3000');
 });
