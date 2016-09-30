@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as CounterActions from '../../actions/CounterActions';
 
-export default class Vk extends Component {
+class Vk extends Component {
   // constructor() {
   //   const {netsList, actions} = props;
   //   super(props);
