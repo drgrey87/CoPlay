@@ -1,15 +1,15 @@
-import * as types from '../constants/ActionTypes';
+import * as actionTypes from '../constants/ActionTypes';
 
 export function increment(add) {
   return {
-    type: types.INCREMENT_COUNTER,
+    type: actionTypes.INCREMENT_COUNTER,
     add: '1'
   };
 }
 
 export function decrement(add) {
   return {
-    type: types.DECREMENT_COUNTER,
+    type: actionTypes.DECREMENT_COUNTER,
     add: '-1'
   };
 }
@@ -32,18 +32,42 @@ export function getList() {
 
 export function getVkData() {
   return (dispatch) => {
-    setTimeout(() => {
-      console.log(1111111111);
-      dispatch({
-        type: types.GET_VK_DATA,
-        list: [{id:1, name:'a'}, {id:2, name:'b'}, {id:3, name:'c'}, {id:4, name:'d'}]
+    fetch('/vk/list')
+      .then((list) => list.json())
+      .then((list) => {
+        console.log('--------', list);
+        dispatch({
+          type: actionTypes.GET_VK_DATA,
+          // list: [{id:1, name:'a'}, {id:2, name:'b'}, {id:3, name:'c'}, {id:4, name:'d'}]
+          list: list
+        })
       });
-    }, 1000);
   };
-  // return {
-  //   type: GET_LIST
-  // };
 }
+
+export function getSoundCloudData() {
+  return (dispatch) => {
+    fetch('/list')
+      .then((list) => {
+        console.log('--------', list);
+        dispatch({
+          type: actionTypes.GET_SOUND_CLOUD_DATA,
+          list: [{id:1, name:'a'}, {id:2, name:'b'}, {id:3, name:'c'}, {id:4, name:'d'}]
+        })
+      });
+  };
+}
+
+// export function getVkData() {
+//   return (dispatch) => {
+//     setTimeout(() => {
+//       dispatch({
+//         type: types.GET_VK_DATA,
+//         list: [{id:1, name:'a'}, {id:2, name:'b'}, {id:3, name:'c'}, {id:4, name:'d'}]
+//       });
+//     }, 1000);
+//   };
+// }
 
 // export function incrementIfOdd() {
 //   return (dispatch, getState) => {

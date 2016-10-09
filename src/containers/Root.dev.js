@@ -26,8 +26,8 @@ module.exports = class Root extends Component {
               {/*<Route path="sound_cloud" component={Sound_cloud}/>*/}
             {/* Being the dev version of our Root component, we include DevTools below */}
             {/*</Route>*/}
-            <DevTools />
           </Router>
+          <DevTools />
         </div>
       </Provider>
     );

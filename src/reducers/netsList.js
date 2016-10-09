@@ -1,10 +1,10 @@
-import { INCREMENT_COUNTER, DECREMENT_COUNTER, GET_LIST, GET_NETS_LIST , GET_VK_DATA} from '../constants/ActionTypes';
+import * as actionTypes from '../constants/ActionTypes';
 
 const initialState = {
   nets: [
-    {key: 0, label: 'vk', href: 'vk'},
-    {key: 1, label: 'yandex music', href: 'yandex'},
-    {key: 2, label: 'sound cloud', href: 'sound_cloud'}
+    {key: 0, label: '1vk', href: 'vk', list: []},
+    {key: 1, label: 'yandex music', href: 'yandex', list: []},
+    {key: 2, label: 'sound cloud', href: 'sound_cloud', list: []}
   ]
 };
 
@@ -13,11 +13,16 @@ const initialState = {
  * */
 export default function netsList(data = initialState, action) {
   switch (action.type) {
-    case GET_NETS_LIST:
+    case actionTypes.GET_NETS_LIST:
       return {...data};
-    case GET_VK_DATA:
-      console.log('data', data);
-      return {...data};
+    case actionTypes.GET_VK_DATA:
+      let newData = Object.assign({}, data);
+      newData.nets[0].list.push(...action.list);
+      return newData;
+    // case actionTypes.GET_SOUND_CLOUD_DATA:
+    //   let newData = Object.assign({}, data);
+    //   newData.nets[0].list.push(...action.list);
+    //   return newData;
     default:
       return {...data};
   }

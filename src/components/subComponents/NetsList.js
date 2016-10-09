@@ -33,7 +33,8 @@ export default class App extends Component {
   }
 
   renderChip(data) {
-    let href = `/${data.href}`;
+    // let href = `/${data.href}/auth`;
+    let href = `/${data.href}/auth`;
     return (
       // <Chip
       //   key={data.key}
@@ -43,7 +44,8 @@ export default class App extends Component {
       // >
       //   {data.label}
       // </Chip>
-      <li key={data.key}><Link to={href}>{data.label}</Link></li>
+      <li key={data.key}><a href={href}>{data.label}</a></li>
+      //<li key={data.key} onClick={this.handleClick}>{data.label}</li>
     );
   }
 

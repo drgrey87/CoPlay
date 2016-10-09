@@ -51,12 +51,16 @@
     "install": "^0.8.1",
     "material-ui": "^0.15.1",
     "npm": "^3.10.5",
+    "passport": "^0.3.2",
+    "passport-vkontakte": "^0.3.2",
     "react": "^15.0.1",
     "react-dom": "^15.0.1",
     "react-redux": "^4.1.1",
     "react-router": "^2.6.1",
     "react-tap-event-plugin": "^1.0.0",
     "redux-thunk": "^1.0.3",
-    "request-promise": "^3.0.0"
+    "request": "^2.75.0",
+    "request-promise": "^3.0.0",
+    "vksdk": "^5.3.2"
   }
 }

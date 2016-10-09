@@ -4,33 +4,43 @@ import { connect } from 'react-redux';
 import * as CounterActions from '../../actions/CounterActions';
 
 class Vk extends Component {
-  // constructor() {
-  //   const {netsList, actions} = props;
-  //   super(props);
-  //   console.log('aaaa', actions);
-  // }
 
   componentDidMount() {
     // console.log('this.props', this.props);
     this.props.actions.getVkData();
   }
 
+  vkPage() {
+    let page;
+    if (this.props.vkData.list.length) {
+      page = (
+        this.props.vkData.list.map(function (item) {
+          return <p key={item.id}>{item.artist}</p>;
+        })
+      );
+    } else {
+      page = 'About';
+    }
+    return page;
+  }
   render() {
-    // console.log('this.props', this.props);
-    return <div>About</div>
+    const { data, vkData, actions } = this.props;
+    return <div>
+      {this.vkPage()}
+    </div>
   }
 }
 
 Vk.propTypes = {
   data: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
-  netsList: PropTypes.object.isRequired
+  vkData: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
   return {
     data: state.counter,
-    netsList: state.netsList
+    vkData: state.netsList.nets[0]
   };
 }
 
