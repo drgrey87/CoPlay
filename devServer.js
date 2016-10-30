@@ -1,24 +1,41 @@
 const path = require('path');
 const express = require('express');
 const webpack = require('webpack');
-const config = require('./webpack.config.dev');
+const webpackConfig = require('./webpack.config.dev');
+const config = require('./config/config');
 const request = require('request-promise');
 
 const app = express();
-const compiler = webpack(config);
-const VK = require('vksdk');
+const compiler = webpack(webpackConfig);
+// const VK = require('vksdk');
 const passport = require('passport');
 const VKontakteStrategy = require('passport-vkontakte').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
 let vkList;
-let code;
 
-let requests = (options) => {
-  return request(options);
-};
+// let requests = (options) => {
+//   return request(options);
+// };
+
+// Simple middleware to ensure user is authenticated.
+// Use this middleware on any resource that needs to be protected.
+// If the request is authenticated (typically via a persistent login session),
+// the request will proceed.  Otherwise, the user will be redirected to the
+// login page.
+function ensureAuthenticated(req, res, next) {
+  // if (req.isAuthenticated()) {
+  //   // req.user is available for use here
+  //   return next();
+  // }
+
+  // denied. redirect to login
+  // res.redirect('/login')
+  return next();
+}
 
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
-  publicPath: config.output.publicPath,
+  publicPath: webpackConfig.output.publicPath,
   stats: {
     colors: true
   },
@@ -29,22 +46,6 @@ app.use(require('webpack-dev-middleware')(compiler, {
 }));
 
 app.use(require('webpack-hot-middleware')(compiler));
-app.use((req, res, next) => {
-  // Website you wish to allow to connect
-  // res.setHeader('Access-Control-Allow-Origin', 'https://oauth.vk.com/', 'http://localhost:3000/');
-  res.header('Access-Control-Allow-Origin', req.get('Origin') || '*');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
-  res.header('Access-Control-Expose-Headers', 'Content-Length');
-  res.header('Access-Control-Allow-Headers', 'Accept, Authorization, Content-Type, X-Requested-With, Range');
-  if (req.method === 'OPTIONS') {
-    return res.send(200);
-  } else {
-    return next();
-  }
-});
-
-
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -64,14 +65,7 @@ passport.deserializeUser(function(obj, done) {
 });
 
 
-passport.use(new VKontakteStrategy(
-  {
-    clientID:     5660240, // VK.com docs call it 'API ID', 'app_id', 'api_id', 'client_id' or 'apiId'
-    clientSecret: 'Zp1MTLEbRtEBUkexjZH7',
-    callbackURL:  "http://localhost:3000/auth/vkontakte/callback",
-    scope: ['audio'],
-    profileFields: ['audio'],
-  },
+passport.use(new VKontakteStrategy(config.startegies.VK,
   function myVerifyCallbackFn(accessToken, refreshToken, params, profile, done) {
 
     process.nextTick(function () {
@@ -83,7 +77,7 @@ passport.use(new VKontakteStrategy(
         uri: `https://api.vk.com/method/audio.get?count=100&access_token=${params.access_token}&v=5.57`,
         json: true
       })
-      .then((response) => {console.log('responce.items', response.response.items);
+      .then((response) => {
         vkList = response.response.items;
         done(null, profile);
       })
@@ -96,7 +90,21 @@ passport.use(new VKontakteStrategy(
   }
 ));
 
-app.get('/vk/auth', passport.authenticate('vkontakte', { display: 'page', scope: ['audio'] }),
+passport.use(new FacebookStrategy(config.startegies.FB,
+  function(accessToken, refreshToken, profile, cb) {console.log('profile', profile);
+    return cb(null, profile);
+    // User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+    //   return cb(err, user);
+    // });
+  }
+));
+
+app.get('/login', (req, res) => {
+  console.log('login');
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.get('/auth/vk', passport.authenticate('vkontakte', { display: 'page', scope: ['audio'] }),
   function(req, res) {
     // The request will be redirected to VK for authentication, so this
     // function will not be called.
@@ -108,6 +116,41 @@ app.get('/auth/vkontakte/callback', passport.authenticate('vkontakte', { failure
     res.redirect('/vk');
   }
 );
+
+app.get('/auth/facebook',
+  passport.authenticate('facebook'));
+
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  function(req, res) {
+    console.log('succes auth');
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
+
+app.get('/', ensureAuthenticated, (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.get('/vk', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.get('/vk/list', (req, res) => {
+  let result;
+  setTimeout(() => {
+    result = vkList || [];
+    res.send(result);
+  }, 3000);
+});
+
+app.listen(3000, 'localhost', (err) => {
+  console.log('Listening at http://localhost:3000');
+  if (err) {
+    console.log(err);
+    return;
+  }
+});
 
 //second variant
 
@@ -151,26 +194,3 @@ app.get('/auth/vkontakte/callback', passport.authenticate('vkontakte', { failure
 //   }
 // });
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-app.get('/vk', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-app.get('/vk/list', (req, res) => {
-  let result;
-  setTimeout(() => {
-    result = vkList || [];
-    res.send(result);
-  }, 3000);
-});
-
-app.listen(3000, 'localhost', (err) => {
-  console.log('Listening at http://localhost:3000');
-  if (err) {
-    console.log(err);
-    return;
-  }
-});

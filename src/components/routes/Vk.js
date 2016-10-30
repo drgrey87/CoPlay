@@ -6,8 +6,11 @@ import * as CounterActions from '../../actions/CounterActions';
 class Vk extends Component {
 
   componentDidMount() {
-    // console.log('this.props', this.props);
     this.props.actions.getVkData();
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return true;
   }
 
   vkPage() {
@@ -15,7 +18,11 @@ class Vk extends Component {
     if (this.props.vkData.list.length) {
       page = (
         this.props.vkData.list.map(function (item) {
-          return <p key={item.id}>{item.artist}</p>;
+          return <div key={item.id}>
+              <p>{item.artist}</p>
+              <p>{item.title}</p>
+              <audio src={item.url} type="audio/mp3" preload="auto" controls></audio>
+            </div>;
         })
       );
     } else {

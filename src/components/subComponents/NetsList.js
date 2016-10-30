@@ -34,7 +34,7 @@ export default class App extends Component {
 
   renderChip(data) {
     // let href = `/${data.href}/auth`;
-    let href = `/${data.href}/auth`;
+    let href = `/auth/${data.href}`;
     return (
       // <Chip
       //   key={data.key}

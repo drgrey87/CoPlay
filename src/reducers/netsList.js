@@ -3,7 +3,7 @@ import * as actionTypes from '../constants/ActionTypes';
 const initialState = {
   nets: [
     {key: 0, label: '1vk', href: 'vk', list: []},
-    {key: 1, label: 'yandex music', href: 'yandex', list: []},
+    {key: 1, label: 'yandex music', href: 'facebook', list: []},
     {key: 2, label: 'sound cloud', href: 'sound_cloud', list: []}
   ]
 };
