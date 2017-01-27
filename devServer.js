@@ -1,6 +1,8 @@
 const path = require('path');
 const express = require('express');
 const webpack = require('webpack');
+const webpackHotMiddleWare = require('webpack-hot-middleware');
+const webpackDevMiddleWare = require('webpack-dev-middleware');
 const webpackConfig = require('./webpack.config.dev');
 const config = require('./config/config');
 const request = require('request-promise');
@@ -33,7 +35,7 @@ function ensureAuthenticated(req, res, next) {
   return next();
 }
 
-app.use(require('webpack-dev-middleware')(compiler, {
+app.use(webpackDevMiddleWare(compiler, {
   noInfo: true,
   publicPath: webpackConfig.output.publicPath,
   stats: {
@@ -45,7 +47,7 @@ app.use(require('webpack-dev-middleware')(compiler, {
   },
 }));
 
-app.use(require('webpack-hot-middleware')(compiler));
+app.use(webpackHotMiddleWare(compiler));
 app.use(passport.initialize());
 app.use(passport.session());
 
