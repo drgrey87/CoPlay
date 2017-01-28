@@ -22,7 +22,6 @@ module.exports = class Root extends Component {
           <Router history={browserHistory}>
             <Route path="/" component={App}/>
             <Route path="vk" component={Vk}/>
-              {/*<Route path="yandex" component={Yandex}/>*/}
               {/*<Route path="sound_cloud" component={Sound_cloud}/>*/}
             {/* Being the dev version of our Root component, we include DevTools below */}
             {/*</Route>*/}
