@@ -26,8 +26,7 @@ export default class mobile extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+    flex:1
   }
 });
 

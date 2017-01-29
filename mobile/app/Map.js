@@ -48,7 +48,7 @@ export default class Map extends Component {
         });
       },
       (error) => alert(error.message),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+      // {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
     );
 
     this.watchID = navigator.geolocation.watchPosition((position) => {
@@ -80,7 +80,6 @@ export default class Map extends Component {
         followUserLocation={true}
         loadingEnabled={true}
         showsMyLocationButton={true}
-        mapType={'hybrid'}
       />
     );
   }
@@ -88,11 +87,7 @@ export default class Map extends Component {
 
 let styles = StyleSheet.create({
   map: {
-    position:'absolute',
-    top:0,
-    right:0,
-    bottom:0,
-    left:0,
+    flex: 1,
     width:width,
     height:height
   }
