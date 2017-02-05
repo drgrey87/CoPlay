@@ -6,7 +6,6 @@
 
 ## Install
 
-```
 1) npm install -g react-native-cli
 2) Download and install [Android Studio](https://developer.android.com/studio/install.html)
 3) Choose Custom installation when running Android Studio for the first time. Make sure the boxes next to all of the following are checked:
@@ -44,15 +43,15 @@
 9) npm i;
 10) react-native link
 11) react-native run-android
-```
+
 
 ## Troubleshooting
 
 ```
 Execution failed for task ':app:compileDebugJavaWithJavac'. Could not find tools.jar:
-
-`sudo apt-get install default-jdk`
 ```
+> sudo apt-get install default-jdk`
+
 
 ## License
 
