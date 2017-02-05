@@ -1,7 +1,3 @@
-# CoPlay
-
-> Find the missing player :sparkles:
-
 ## Table of Contents
 
 - [Install](#install)
@@ -60,4 +56,4 @@ Execution failed for task ':app:compileDebugJavaWithJavac'. Could not find tools
 
 ## License
 
-MIT © Richard McRichface
+This project is licenced under the [MIT License](https://opensource.org/licenses/mit-license.html).
