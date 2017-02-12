@@ -26,7 +26,7 @@ class DrawerMenu extends Component {
 
   render() {
     return(
-      <ScrollView style={styles.drawer}>
+      <ScrollView contentContainerStyle={styles.drawer}>
         <View style={styles.header} key={0}>
           <View style={styles.headerIcon} key={0}>
             <Icon name="md-boat" size={50} color="#fff" />
@@ -36,7 +36,7 @@ class DrawerMenu extends Component {
               Lighthouses
             </Text>
             <Text style={styles.headerEmail} key={1}>
-              pablodarde@gmail.com
+              dr.grey_101@inbox.ru
             </Text>
           </View>
         </View>
@@ -48,7 +48,6 @@ class DrawerMenu extends Component {
                 style={styles.listItem}
                 onPress={this.navigateTo.bind(this, item.index)}
               >
-                <Image source={{ uri: item.thumb}} style={styles.listItemImage} />
                 <Text style={styles.listItemTitle}>{item.label}</Text>
               </TouchableOpacity>
             ))}
@@ -69,12 +68,11 @@ const styles = StyleSheet.create({
   },
   header: {
     height: 180,
-    flex: 1,
     padding: 16,
     backgroundColor: '#1565C0'
   },
   content: {
-    flex: 3,
+    flex: 1,
     padding: 16,
     backgroundColor: '#1E88E5'
   },
@@ -109,12 +107,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     flexShrink: 1,
     color: '#fff'
-  },
-  listItemImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 7,
-    marginRight: 10,
   }
 });
 

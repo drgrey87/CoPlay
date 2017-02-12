@@ -19,6 +19,24 @@ export const toolbarActions = [
 
 export const menuItems = [
   {
+    thumb: 'List',
+    index: 0,
+    label: 'List of events',
+  },
+  {
+    thumb: 'Calendar',
+    index: 1,
+    label: 'My Calendar'
+  },
+  {
+    thumb: 'Settings',
+    index: 2,
+    label: 'Settings'
+  }
+];
+
+export const ListItems = [
+  {
     thumb: 'lighthouse_lindau',
     index: 1,
     label: 'Lindau Lighthouse, Germany',

@@ -4,23 +4,25 @@ import {
   View,
   Text,
   Image,
-  StyleSheet
+  StyleSheet,
+  TouchableOpacity
 } from 'react-native';
+
+import { ListItems } from '../data.service';
 
 const Home = () => {
   return (
     <ScrollView contentContainerStyle={styles.view}>
-      <Text style={styles.header1}>Lighthouses</Text>
-      <Image
-        source={{uri: 'cover'}}
-        style={styles.img}
-      />
-      <Text style={styles.photo}>
-        Pigeon Point Lighthouse, Pescadero, California
-      </Text>
-      <Text style={styles.text}>
-        Know the most beautiful lighthouses of the world.
-      </Text>
+        <View>
+            {ListItems.map((item, idx) => (
+              <TouchableOpacity
+                key={idx}
+                style={styles.listItem}
+              >
+                <Text style={styles.listItemTitle}>{item.label}</Text>
+              </TouchableOpacity>
+            ))}
+        </View>
     </ScrollView>
   );
 }
