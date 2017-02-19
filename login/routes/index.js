@@ -18,7 +18,7 @@ let ensureAuthenticated = (req, res, next) => {
 }
 
 /* GET home page. */
-router.get('/login', ensureAuthenticated, (req, res) => {
+router.get('/', ensureAuthenticated, (req, res) => {
   res.render('index');
 });
 
