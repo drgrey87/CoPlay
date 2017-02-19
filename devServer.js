@@ -1,4 +1,7 @@
+const favicon = require('serve-favicon');
 const path = require('path');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const express = require('express');
 const webpack = require('webpack');
 const webpackHotMiddleWare = require('webpack-hot-middleware');
@@ -9,31 +12,23 @@ const request = require('request-promise');
 
 const app = express();
 const compiler = webpack(webpackConfig);
-// const VK = require('vksdk');
 const passport = require('passport');
 const VKontakteStrategy = require('passport-vkontakte').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
+
+var index = require('./routes/index');
+var login = require('./routes/login');
+var auth = require('./routes/auth');
+var vk = require('./routes/vk');
+
 let vkList;
 
-// let requests = (options) => {
-//   return request(options);
-// };
+app.set('views', './views');
+app.set('view engine', 'jade');
 
-// Simple middleware to ensure user is authenticated.
-// Use this middleware on any resource that needs to be protected.
-// If the request is authenticated (typically via a persistent login session),
-// the request will proceed.  Otherwise, the user will be redirected to the
-// login page.
-function ensureAuthenticated(req, res, next) {
-  // if (req.isAuthenticated()) {
-  //   // req.user is available for use here
-  //   return next();
-  // }
-
-  // denied. redirect to login
-  // res.redirect('/login')
-  return next();
-}
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 app.use(webpackDevMiddleWare(compiler, {
   noInfo: true,
@@ -101,50 +96,29 @@ passport.use(new FacebookStrategy(config.startegies.FB,
   }
 ));
 
-app.get('/login', (req, res) => {
-  console.log('login');
-  res.sendFile(path.join(__dirname, 'index.html'));
+app.use('/', index);
+app.use('/login', login);
+app.use('/auth', auth);
+app.use('/vk', vk);
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  console.log('aaaaaaaaaaaaaaaaaaaaaaaa');
+  err.status = 404;
+  next(err);
 });
 
-app.get('/auth/vk', passport.authenticate('vkontakte', { display: 'page', scope: ['audio'] }),
-  function(req, res) {
-    // The request will be redirected to VK for authentication, so this
-    // function will not be called.
-  }
-);
-
-app.get('/auth/vkontakte/callback', passport.authenticate('vkontakte', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/vk');
-  }
-);
-
-app.get('/auth/facebook',
-  passport.authenticate('facebook'));
-
-app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', { failureRedirect: '/login' }),
-  function(req, res) {
-    console.log('succes auth');
-    // Successful authentication, redirect home.
-    res.redirect('/');
-  });
-
-app.get('/', ensureAuthenticated, (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-app.get('/vk', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-app.get('/vk/list', (req, res) => {
-  let result;
-  setTimeout(() => {
-    result = vkList || [];
-    res.send(result);
-  }, 3000);
-});
+// error handler
+// app.use(function(err, req, res, next) {
+//   // set locals, only providing error in development
+//   res.locals.message = err.message;
+//   res.locals.error = req.app.get('env') === 'development' ? err : {};
+//
+//   // render the error page
+//   res.status(err.status || 500);
+//   res.render('error');
+// });
 
 app.listen(3000, 'localhost', (err) => {
   console.log('Listening at http://localhost:3000');
@@ -154,45 +128,4 @@ app.listen(3000, 'localhost', (err) => {
   }
 });
 
-//second variant
-
-// app.get('/vk/auth', (req, res) => {
-//   let url = 'https://oauth.vk.com/authorize?client_id=5660240&display=page&redirect_uri=http://localhost:3000/auth/vkontakte/callback&scope=audio,offline&response_type=code&v=5.52';
-//   res.redirect(url);
-// });
-
-// app.get('/auth/vkontakte/callback', (req, res) => {
-//   console.log('req.quey', req.query);
-//   console.log('req.body', req.body);
-//   let options = {
-//     uri: `https://oauth.vk.com/access_token?client_id=5660240&client_secret=Zp1MTLEbRtEBUkexjZH7&redirect_uri=http://localhost:3000/auth/vkontakte/callback&code=${req.query.code}`,
-//     json: true
-//   };
-//   if (!code || req.query.code !== code) {
-//     code = req.query.code;
-//     requests(options)
-//       .then((responce) => {
-//         options.uri = `https://api.vk.com/method/audio.get?count=100&access_token=${responce.access_token}&v=5.52`;
-//         return requests(options);
-//       })
-//       .then((responce) => {console.log('resp1', responce);
-//         res.redirect('/vk');
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//       });
-//   } else {
-//     requests(options)
-//       .then((responce) => {
-//         options.uri = `https://api.vk.com/method/audio.get?count=100&access_token=${responce.access_token}&v=5.52`;
-//         return requests(options);
-//       })
-//       .then((responce) => {console.log('resp2', responce);
-//         res.redirect('/vk');
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//       });
-//   }
-// });
-
+module.exports = app;
