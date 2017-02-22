@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators } from 'react-redux';
 import { connect } from 'react-redux';
 import * as CounterActions from '../../actions/CounterActions';
 

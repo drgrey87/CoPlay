@@ -33,9 +33,8 @@ passport.deserializeUser(function (username, cb) {
 })
 
 function initPassport () {
-  console.log(2222222222222);
   passport.use(new LocalStrategy(
-    function(username, password, done) {console.log(4241431241243);
+    function(username, password, done) {
       findUser(username, function (err, user) {
         if (err) {
           return done(err)
@@ -51,39 +50,39 @@ function initPassport () {
     }
   ))
 
-  // passport.use(new VKontakteStrategy(config.startegies.VK,
-  //   function myVerifyCallbackFn(accessToken, refreshToken, params, profile, done) {
-  //
-  //     process.nextTick(function () {
-  //       // To keep the example simple, the user's VK profile is returned to
-  //       // represent the logged-in user.  In a typical application, you would want
-  //       // to associate the VK account with a user record in your database,
-  //       // and return that user instead.
-  //       request({
-  //         uri: `https://api.vk.com/method/audio.get?count=100&access_token=${params.access_token}&v=5.57`,
-  //         json: true
-  //       })
-  //         .then((response) => {
-  //           vkList = response.response.items;
-  //           done(null, profile);
-  //         })
-  //         .catch((err) => {
-  //           console.log(err);
-  //         });
-  //
-  //       // return
-  //     });
-  //   }
-  // ));
-  //
-  // passport.use(new FacebookStrategy(config.startegies.FB,
-  //   function(accessToken, refreshToken, profile, cb) {console.log('profile', profile);
-  //     return cb(null, profile);
-  //     // User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-  //     //   return cb(err, user);
-  //     // });
-  //   }
-  // ));
+  passport.use(new VKontakteStrategy(config.startegies.VK,
+    function myVerifyCallbackFn(accessToken, refreshToken, params, profile, done) {
+
+      process.nextTick(function () {
+        // To keep the example simple, the user's VK profile is returned to
+        // represent the logged-in user.  In a typical application, you would want
+        // to associate the VK account with a user record in your database,
+        // and return that user instead.
+        request({
+          uri: `https://api.vk.com/method/audio.get?count=100&access_token=${params.access_token}&v=5.57`,
+          json: true
+        })
+          .then((response) => {
+            vkList = response.response.items;
+            done(null, profile);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+
+        // return
+      });
+    }
+  ));
+
+  passport.use(new FacebookStrategy(config.startegies.FB,
+    function(accessToken, refreshToken, profile, cb) {console.log('profile', profile);
+      return cb(null, profile);
+      // User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+      //   return cb(err, user);
+      // });
+    }
+  ));
 }
 
 module.exports = initPassport

@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from 'react-redux';
 import counter from './counter';
 import netsList from './netsList';
 
