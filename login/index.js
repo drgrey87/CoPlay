@@ -2,7 +2,7 @@ const favicon = require('serve-favicon');
 const express = require('express');
 const webpack = require('webpack');
 const webpackConfig = require('./webpack.config.dev');
-const config = require('./config/config');
+const config = require('././config');
 const webpackHotMiddleWare = require('webpack-hot-middleware');
 const webpackDevMiddleWare = require('webpack-dev-middleware');
 
