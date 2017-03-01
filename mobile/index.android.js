@@ -14,48 +14,49 @@ import {
   ToolbarAndroid
 } from 'react-native';
 import App from './app/components/App'
+import Login from './app/components/Login'
 
 export default class mobile extends Component {
 
-   // render() {
-   //   return (
-   //     <App />
-   //   );
-   // }
+   render() {
+     return (
+       <App />
+     );
+   }
 
- constructor() {
-   super();
-//    this.onIconClicked = this.onIconClicked.bind(this);
- }
+//  constructor() {
+//    super();
+// //    this.onIconClicked = this.onIconClicked.bind(this);
+//  }
 
- render() {
-   let navigationView = (
-     <View style={{flex: 1, backgroundColor: '#fff'}}>
-       <Text style={{margin: 10, fontSize: 15, textAlign: 'left'}}>I'm in the Drawer!</Text>
-     </View>
-   );
-
-   return (
-     <DrawerLayoutAndroid
-       drawerWidth={300}
-       drawerPosition={DrawerLayoutAndroid.positions.Left}
-       renderNavigationView={() => navigationView}
-       ref={(drawer) => this.drawer = drawer}
-       >
-       <ToolbarAndroid
-         navIcon={require('./app/assets/1.png')}
-         style={{backgroundColor: 'red', height:50}}
-         title="AwesomeApp"
-         actions={[
-           {title: 'Settings', icon: require('./app/assets/2.png'), show: 'always'},
-           {title: 'Hamburger', icon: require('./app/assets/3.png'), show: 'always'},
-         ]}
-//          onIconClicked={this.onIconClicked}
-         onIconClicked={()=>this.drawer.openDrawer()}
-         onActionSelected={this.onActionSelected} />
-     </DrawerLayoutAndroid>
-   )
- }
+//  render() {
+//    let navigationView = (
+//      <View style={{flex: 1, backgroundColor: '#fff'}}>
+//        <Text style={{margin: 10, fontSize: 15, textAlign: 'left'}}>I'm in the Drawer!</Text>
+//      </View>
+//    );
+//
+//    return (
+//      <DrawerLayoutAndroid
+//        drawerWidth={300}
+//        drawerPosition={DrawerLayoutAndroid.positions.Left}
+//        renderNavigationView={() => navigationView}
+//        ref={(drawer) => this.drawer = drawer}
+//        >
+//        <ToolbarAndroid
+//          navIcon={require('./app/assets/1.png')}
+//          style={{backgroundColor: 'red', height:50}}
+//          title="AwesomeApp"
+//          actions={[
+//            {title: 'Settings', icon: require('./app/assets/2.png'), show: 'always'},
+//            {title: 'Hamburger', icon: require('./app/assets/3.png'), show: 'always'},
+//          ]}
+// //          onIconClicked={this.onIconClicked}
+//          onIconClicked={()=>this.drawer.openDrawer()}
+//          onActionSelected={this.onActionSelected} />
+//      </DrawerLayoutAndroid>
+//    )
+//  }
 //
 //  onIconClicked() {
 //    this.drawer.openDrawer();
