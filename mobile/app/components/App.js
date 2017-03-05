@@ -25,6 +25,15 @@ import Hercules from '../views/lighthouses/Hercules';
 import Bass from '../views/lighthouses/Bass';
 import Map from '../views/Map';
 import { Router, Scene, Actions } from 'react-native-router-flux';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+/**
+ * ### configureStore
+ *
+ *  ```configureStore``` will connect the ```reducers```
+ *
+ */
+import configureStore from '../../src/store/configureStore'
 
 class App extends Component {
 
@@ -38,7 +47,6 @@ class App extends Component {
     this._onActionSelected = this._onActionSelected.bind(this);
     this.setDrawerState = this.setDrawerState.bind(this);
     this.navBarLeftButton = this.navBarLeftButton.bind(this);
-    this.navBarRightButton = this.navBarRightButton.bind(this);
   }
 
   _onActionSelected(position) {
@@ -72,85 +80,81 @@ class App extends Component {
   navBarLeftButton() {
     return (
       <TouchableOpacity onPress={this.toggleDrawer}>
-        <Icon name='ios-menu' size={25}/>
-      </TouchableOpacity>
-    )
-  }
-
-  navBarRightButton() {
-    return (
-      <TouchableOpacity onPress={() => Actions.refresh({key: 'drawer', open: true})}>
-        <Icon name='ios-menu' size={25}/>
+        <Icon name='md-menu' size={25} style={styles.title}/>
       </TouchableOpacity>
     )
   }
 
   render() {
+    const store = configureStore(getInitialState())
+
     return(
-      <DrawerLayoutAndroid
-        drawerWidth={300}
-        ref={(drawerElement) => { this.DRAWER = drawerElement; }}
-        drawerPosition={DrawerLayoutAndroid.positions.left}
-        onDrawerOpen={this.setDrawerState}
-        onDrawerClose={this.setDrawerState}
-        renderNavigationView={() => <DrawerMenu toggleDrawer={this.toggleDrawer} />}
-      >
-        <Router renderLeftButton={this.navBarLeftButton} renderRightButton={this.navBarRightButton}>
-           <Scene key="root">
-             <Scene
-               key="home"
-               component={Home}
-               title="Home"
-               initial
-             />
-             <Scene
-               key="lindau"
-               component={Lindau}
-               title="Lindau"
-             />
-             <Scene
-               key="fanad"
-               component={Fanad}
-               title="Fanad"
-             />
-             <Scene
-               key="augustine"
-               component={Augustine}
-               title="Augustine"
-             />
-             <Scene
-               key="peggys"
-               component={Peggys}
-               title="Peggys"
-             />
-             <Scene
-               key="hercules"
-               component={Hercules}
-               title="Hercules"
-             />
-             <Scene
-               key="bass"
-               component={Bass}
-               title="Bass"
-             />
-             <Scene
-               key="about"
-               component={About}
-               title="About"
-             />
-             <Scene
-               key="credits"
-               component={Credits}
-               title="Credits"
-             />
-             <Scene
-               key="map"
-               component={Map}
-               title="Map"
-             />
-           </Scene>
-        </Router>
-      </DrawerLayoutAndroid>
+      <Provider store={store}>
+        <DrawerLayoutAndroid
+          drawerWidth={300}
+          ref={(drawerElement) => { this.DRAWER = drawerElement; }}
+          drawerPosition={DrawerLayoutAndroid.positions.left}
+          onDrawerOpen={this.setDrawerState}
+          onDrawerClose={this.setDrawerState}
+          renderNavigationView={() => <DrawerMenu toggleDrawer={this.toggleDrawer} />}
+        >
+          <Router renderLeftButton={this.navBarLeftButton} navigationBarStyle={styles.appBar} titleStyle={styles.title}>
+             <Scene key="root">
+               <Scene
+                 key="home"
+                 component={Home}
+                 title="Home"
+                 initial
+               />
+               <Scene
+                 key="lindau"
+                 component={Lindau}
+                 title="Lindau"
+               />
+               <Scene
+                 key="fanad"
+                 component={Fanad}
+                 title="Fanad"
+               />
+               <Scene
+                 key="augustine"
+                 component={Augustine}
+                 title="Augustine"
+               />
+               <Scene
+                 key="peggys"
+                 component={Peggys}
+                 title="Peggys"
+               />
+               <Scene
+                 key="hercules"
+                 component={Hercules}
+                 title="Hercules"
+               />
+               <Scene
+                 key="bass"
+                 component={Bass}
+                 title="Bass"
+               />
+               <Scene
+                 key="about"
+                 component={About}
+                 title="About"
+               />
+               <Scene
+                 key="credits"
+                 component={Credits}
+                 title="Credits"
+               />
+               <Scene
+                 key="map"
+                 component={Map}
+                 title="Map"
+               />
+             </Scene>
+          </Router>
+        </DrawerLayoutAndroid>
+      </Provider>
     );
   }
 }
@@ -161,17 +165,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#2196F3',
     elevation: 4
   },
-  appBarLogo: {
-    height: 56,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    backgroundColor: 'transparent'
-  },
-  appBarTitle: {
-    fontSize: 20,
-    color: '#fff',
-    paddingLeft: 10
+  title: {
+    color: '#fff'
   }
 });
 
