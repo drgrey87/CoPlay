@@ -24,6 +24,7 @@ import Peggys from '../views/lighthouses/Peggys';
 import Hercules from '../views/lighthouses/Hercules';
 import Bass from '../views/lighthouses/Bass';
 import Map from '../views/Map';
+import { Router, Scene, Actions } from 'react-native-router-flux';
 
 class App extends Component {
 
@@ -35,21 +36,21 @@ class App extends Component {
     }
     this.toggleDrawer = this.toggleDrawer.bind(this);
     this._onActionSelected = this._onActionSelected.bind(this);
-    this.navigateTo = this.navigateTo.bind(this);
     this.setDrawerState = this.setDrawerState.bind(this);
-    this.handlesBackButton = this.handlesBackButton.bind(this);
+    this.navBarLeftButton = this.navBarLeftButton.bind(this);
+    this.navBarRightButton = this.navBarRightButton.bind(this);
   }
 
   _onActionSelected(position) {
     switch (position) {
       case 0:
-        this.navigateTo(7);
+        Actions.about();
         break;
       case 1:
-        this.navigateTo(8);
+        Actions.credits();
         break;
       case 2:
-        this.navigateTo(9);
+        Actions.map();
         break;
     }
   }
@@ -68,53 +69,20 @@ class App extends Component {
     });
   }
 
-  navigateTo(idx) {
-    this.DRAWER.closeDrawer();
-    let _routes = this.state.routes.slice();
-    let hasRoute = false;
-    if (idx === 0) {
-      this._navigator.resetTo(routes[0]);
-      this.setState({
-        routes: [0]
-      });
-    } else {
-      _routes.some((item, index) => {
-        if (item === idx) {
-          this._navigator.popN(_routes.length -1 - index);
-          _routes = this.state.routes.slice(0, index + 1);
-          hasRoute = true;
-        }
-      });
-      if (!hasRoute) {
-        this._navigator.push(routes[idx]);
-      }
-      this.setState({
-        routes: hasRoute === true ? _routes : [ ...this.state.routes, idx]
-      });
-    }
+  navBarLeftButton() {
+    return (
+      <TouchableOpacity onPress={this.toggleDrawer}>
+        <Icon name='ios-menu' size={25}/>
+      </TouchableOpacity>
+    )
   }
 
-  handlesBackButton() {
-    if (this._navigator && this._navigator.getCurrentRoutes().length > 1) {
-      try {
-        this._navigator.pop();
-        const _routes = this.state.routes.slice();
-        _routes.pop();
-        this.setState({
-          routes: _routes
-        });
-      } catch(e) {}
-      return true;
-    }
-    return false;
-  }
-
-  componentWillMount(){
-    BackAndroid.addEventListener('hardwareBackPress', this.handlesBackButton);
-  }
-
-  componentWillUnmount() {
-    BackAndroid.removeEventListener('hardwareBackPress', this.handlesBackButton);
+  navBarRightButton() {
+    return (
+      <TouchableOpacity onPress={() => Actions.refresh({key: 'drawer', open: true})}>
+        <Icon name='ios-menu' size={25}/>
+      </TouchableOpacity>
+    )
   }
 
   render() {
@@ -125,68 +93,63 @@ class App extends Component {
         drawerPosition={DrawerLayoutAndroid.positions.left}
         onDrawerOpen={this.setDrawerState}
         onDrawerClose={this.setDrawerState}
-        renderNavigationView={() => <DrawerMenu navigate={this.navigateTo} />}
+        renderNavigationView={() => <DrawerMenu toggleDrawer={this.toggleDrawer} />}
       >
-        <Icon.ToolbarAndroid
-          titleColor='#fff'
-          // title='Lighthouses'
-          //--> Remove the View child of the Toolbar if you
-          // don't need a Icon.
-          navIconName='md-menu'
-          onIconClicked={this.toggleDrawer}
-          actions={toolbarActions}
-          onActionSelected={this._onActionSelected}
-          style={styles.appBar}
-          overflowIconName="md-more"
-        >
-          <View style={styles.appBarLogo}>
-            <TouchableOpacity
-              onPress={this.navigateTo.bind(this, 0)}
-            >
-              <Icon name="md-boat" size={30} color="#fff" />
-            </TouchableOpacity>
-            <Text
-              style={styles.appBarTitle}
-              numberOfLines={1}
-            >
-              {routes[this.state.routes[this.state.routes.length - 1]].title}
-            </Text>
-          </View>
-        </Icon.ToolbarAndroid>
-        <Navigator
-          initialRoute={routes[0]}
-          renderScene={(route, navigator) => {
-            const idx = route.index - 1;
-            switch (route.index) {
-              case 0:
-                return <Home />;
-              case 1:
-                return <Lindau index={idx} />;
-              case 2:
-                return <Fanad index={idx} />;
-              case 3:
-                return <Augustine index={idx} />;
-              case 4:
-                return <Peggys index={idx} />;
-              case 5:
-                return <Hercules index={idx} />;
-              case 6:
-                return <Bass index={idx} />;
-              case 7:
-                return <About />;
-              case 8:
-                return <Credits />;
-              case 9:
-                return <Map />;
-              default:
-                return <Home />;
-            }
-          }}
-          configureScene={(route, routeStack) =>
-            Navigator.SceneConfigs.FloatFromRight
-          }
-          ref={(nav) => { this._navigator = nav; }}
-        />
+        <Router renderLeftButton={this.navBarLeftButton} renderRightButton={this.navBarRightButton}>
+           <Scene key="root">
+             <Scene
+               key="home"
+               component={Home}
+               title="Home"
+               initial
+             />
+             <Scene
+               key="lindau"
+               component={Lindau}
+               title="Lindau"
+             />
+             <Scene
+               key="fanad"
+               component={Fanad}
+               title="Fanad"
+             />
+             <Scene
+               key="augustine"
+               component={Augustine}
+               title="Augustine"
+             />
+             <Scene
+               key="peggys"
+               component={Peggys}
+               title="Peggys"
+             />
+             <Scene
+               key="hercules"
+               component={Hercules}
+               title="Hercules"
+             />
+             <Scene
+               key="bass"
+               component={Bass}
+               title="Bass"
+             />
+             <Scene
+               key="about"
+               component={About}
+               title="About"
+             />
+             <Scene
+               key="credits"
+               component={Credits}
+               title="Credits"
+             />
+             <Scene
+               key="map"
+               component={Map}
+               title="Map"
+             />
+           </Scene>
+        </Router>
       </DrawerLayoutAndroid>
     );
   }

@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   StyleSheet
 } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import { menuItems } from '../data.service';
@@ -20,8 +21,40 @@ class DrawerMenu extends Component {
     this.navigateTo = this.navigateTo.bind(this);
   }
 
-  navigateTo(index) {
-    this.props.navigate(index);
+  navigateTo(position) {
+    this.props.toggleDrawer();
+    switch (position) {
+      case 0:
+        Actions.home();
+        break;
+      case 1:
+        Actions.lindau();
+        break;
+      case 2:
+        Actions.fanad();
+        break;
+      case 3:
+        Actions.augustine();
+        break;
+      case 4:
+        Actions.peggys();
+        break;
+      case 5:
+        Actions.hercules();
+        break;
+      case 6:
+        Actions.bass();
+        break;
+      case 7:
+        Actions.about();
+        break;
+      case 8:
+        Actions.credits();
+        break;
+      case 8:
+        Actions.map();
+        break;
+    }
   }
 
   render() {
@@ -59,7 +92,7 @@ class DrawerMenu extends Component {
 }
 
 DrawerMenu.propTypes = {
-  navigate: PropTypes.func.isRequired
+  toggleDrawer: PropTypes.func.isRequired
 }
 
 const styles = StyleSheet.create({
