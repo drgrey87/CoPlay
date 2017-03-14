@@ -28,13 +28,13 @@ import configureStore from './lib/configureStore'
 /**
  * ### Translations
  */
-// var I18n = require('react-native-i18n')
+var I18n = require('react-native-i18n')
 
 // Support fallbacks so en-US & en-BR both use en
-// I18n.fallbacks = true
+I18n.fallbacks = true
 
-// import Translations from './lib/Translations'
-// I18n.translations = Translations
+import Translations from './lib/Translations'
+I18n.translations = Translations
 
 /**
  * ### containers
