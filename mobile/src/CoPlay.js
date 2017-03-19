@@ -9,10 +9,8 @@ import {
     AppRegistry,
     StyleSheet,
     View,
+    TouchableOpacity,
     Text } from 'react-native'
-import {
-    Router,
-    Scene} from 'react-native-router-flux'
 
 import {
     Provider} from 'react-redux'
@@ -24,40 +22,6 @@ import {
  *
  */
 import configureStore from './lib/configureStore'
-
-/**
- * ### Translations
- */
-var I18n = require('react-native-i18n')
-
-// Support fallbacks so en-US & en-BR both use en
-I18n.fallbacks = true
-
-import Translations from './lib/Translations'
-I18n.translations = Translations
-
-/**
- * ### containers
- *
- * All the top level containers
- *
- */
-import App from './containers/App'
-import Login from './containers/Login'
-import Logout from './containers/Logout'
-import Register from './containers/Register'
-import ForgotPassword from './containers/ForgotPassword'
-import Profile from './containers/Profile'
-import Main from './containers/Main'
-import Subview from './containers/Subview'
-
-/**
- * ### icons
- *
- * Add icon support for use in Tabbar
- *
- */
-import Icon from 'react-native-vector-icons/FontAwesome'
 
 /**
  * ## Actions
@@ -75,12 +39,18 @@ import AuthInitialState from './reducers/auth/authInitialState'
 import DeviceInitialState from './reducers/device/deviceInitialState'
 import GlobalInitialState from './reducers/global/globalInitialState'
 import ProfileInitialState from './reducers/profile/profileInitialState'
+import drawerInitialState from './reducers/drawer/drawerInitialState'
 
 /**
  *  The version of the app but not  displayed yet
  */
 import pack from '../package'
 var VERSION = pack.version
+
+/**
+ *  import routes
+ */
+import ROUTER from './router'
 
 /**
  *
@@ -93,7 +63,8 @@ function getInitialState () {
         auth: new AuthInitialState(),
         device: (new DeviceInitialState()).set('isMobile', true),
         global: (new GlobalInitialState()),
-        profile: new ProfileInitialState()
+        profile: new ProfileInitialState(),
+        drawer: new drawerInitialState()
     }
     return _initState
 }
@@ -132,6 +103,7 @@ class TabIcon extends React.Component {
 
 export default function native (platform) {
     let CoPlay = React.createClass({
+
         render () {
             const store = configureStore(getInitialState())
 
@@ -146,62 +118,7 @@ export default function native (platform) {
             return (
 
                 <Provider store={store}>
-                    <Router sceneStyle={{ backgroundColor: 'white' }}>
-                        <Scene key='root' hideNavBar>
-                            <Scene key='App'
-                                   component={App}
-                                   type='replace'
-                                   initial />
-
-                            <Scene key='InitialLoginForm'
-                                   component={Register}
-                                   type='replace' />
-
-                            <Scene key='Login'
-                                   component={Login}
-                                   type='replace' />
-
-                            <Scene key='Register'
-                                   component={Register}
-                                   type='replace' />
-
-                            <Scene key='ForgotPassword'
-                                   component={ForgotPassword}
-                                   type='replace' />
-
-                            <Scene key='Subview'
-                                   component={Subview} />
-
-                            <Scene key='Tabbar'
-                                   tabs
-                                   hideNavBar
-                                   tabBarStyle={styles.tabBar}
-                                   default='Main'>
-
-                                <Scene key='Logout'
-                                       title={I18n.t('Snowflake.logout')}
-                                       icon={TabIcon}
-                                       iconName={'sign-out'}
-                                       hideNavBar
-                                       component={Logout} />
-
-                                <Scene key='Main'
-                                       title={I18n.t('Snowflake.main')}
-                                       iconName={'home'}
-                                       icon={TabIcon}
-                                       hideNavBar
-                                       component={Main}
-                                       initial />
-
-                                <Scene key='Profile'
-                                       title={I18n.t('Snowflake.profile')}
-                                       icon={TabIcon}
-                                       iconName={'gear'}
-                                       hideNavBar
-                                       component={Profile} />
-                            </Scene>
-                        </Scene>
-                    </Router>
+                    {ROUTER}
                 </Provider>
             )
         }

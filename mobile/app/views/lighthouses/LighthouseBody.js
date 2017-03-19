@@ -9,7 +9,7 @@ import {
   StyleSheet
 } from 'react-native';
 
-import { lighthouses } from '../../data.service';
+import { lighthouses } from '../../../src/lib/data.service';
 
 const LighthouseBody = (props) => {
   const title = lighthouses[props.pageIndex].title;

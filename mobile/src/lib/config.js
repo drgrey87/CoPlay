@@ -8,7 +8,7 @@ module.exports = {
   },
   HAPI: {
     local: {
-      url: 'http://192.168.2.157:5000'
+      url: 'http://192.168.100.2:5000'
     },
     remote: {
       url: 'https://snowflakeserver-bartonhammond.rhcloud.com/'
