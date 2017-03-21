@@ -118,7 +118,7 @@ export default function native (platform) {
             return (
 
                 <Provider store={store}>
-                    {ROUTER}
+                    <ROUTER/>
                 </Provider>
             )
         }

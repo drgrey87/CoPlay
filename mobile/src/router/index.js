@@ -13,6 +13,20 @@ import {
  */
 import Icon from 'react-native-vector-icons/FontAwesome'
 
+/*
+ * ## Imports
+ *
+ * Imports from redux
+ */
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+
+/**
+ * ## App class
+ */
+import reactMixin from 'react-mixin'
+import TimerMixin from 'react-timer-mixin'
+
 /**
  * ### containers
  *
@@ -42,6 +56,11 @@ I18n.fallbacks = true
 import Translations from '../lib/Translations'
 I18n.translations = Translations
 
+/**
+ * The actions we need
+ */
+import * as drawerActions from '../reducers/drawer/drawerActions'
+
 const styles = StyleSheet.create({
   tabBar: {
     height: 70
@@ -56,144 +75,171 @@ const styles = StyleSheet.create({
   }
 })
 
-let toggleDrawer = () => {
-
+/**
+ *  Save that state
+ */
+function mapStateToProps (state) {
+  return {
+    drawer: state.drawer
+  }
 }
 
-let navBarLeftButton = () => {
-  return (
-    <TouchableOpacity onPress={toggleDrawer}>
-      <Icon name='navicon' size={25} style={styles.title}/>
-    </TouchableOpacity>
-  )
+/**
+ * Bind all the actions from authActions, deviceActions and globalActions
+ */
+function mapDispatchToProps (dispatch) {
+  return {
+    actions: bindActionCreators({ ...drawerActions }, dispatch)
+  }
 }
 
-module.exports = <Router
-  renderLeftButton={navBarLeftButton}
-  navigationBarStyle={styles.appBar}
-  titleStyle={styles.title}
->
-  <Scene key='root'>
+let RouterWrap = ({ drawer, children, actions }) => {
+  let toggleDrawer = () => {
+    actions.setDrawerState(!drawer.isOpen);
+  }
 
-    <Scene key='App'
-           component={App}
-           hideNavBar
-           type='replace'
-           initial />
+  let navBarLeftButton = () => {
+    return (
+      <TouchableOpacity onPress={toggleDrawer}>
+        <Icon name='navicon' size={25} style={styles.title}/>
+      </TouchableOpacity>
+    )
+  }
 
-    <Scene key='InitialLoginForm'
-           component={Register}
-           hideNavBar
-           type='replace' />
+  return <Router
+      renderLeftButton={navBarLeftButton}
+      navigationBarStyle={styles.appBar}
+      titleStyle={styles.title}
+  >
+    <Scene key='root'>
 
-    <Scene key='Login'
-           component={Login}
-           hideNavBar
-           type='replace' />
+      <Scene key='App'
+             component={App}
+             hideNavBar
+             type='replace'
+             initial/>
 
-    <Scene key='Register'
-           component={Register}
-           hideNavBar
-           type='replace' />
+      <Scene key='InitialLoginForm'
+             component={Register}
+             hideNavBar
+             type='replace'/>
 
-    <Scene key='ForgotPassword'
-           component={ForgotPassword}
-           hideNavBar
-           type='replace' />
+      <Scene key='Login'
+             component={Login}
+             hideNavBar
+             type='replace'/>
 
-    <Scene key='Subview'
-           component={Subview}
-           hideNavBar />
+      <Scene key='Register'
+             component={Register}
+             hideNavBar
+             type='replace'/>
 
-    <Scene key='Drawer'
-           component={NavigationDrawer}
-           open={false}
-           type='replace' >
+      <Scene key='ForgotPassword'
+             component={ForgotPassword}
+             hideNavBar
+             type='replace'/>
 
-      <Scene key="Client" tabs={false}>
+      <Scene key='Subview'
+             component={Subview}
+             hideNavBar/>
 
-        <Scene
-          key="Home"
-          component={Home}
-          title="Home"
-          initial
-        />
-        <Scene
-          key="Lindau"
-          component={Lindau}
-          title="Lindau22"
-        />
-        {/*<Scene*/}
-        {/*key="Fanad"*/}
-        {/*component={Fanad}*/}
-        {/*title="Fanad"*/}
-        {/*/>*/}
-        {/*<Scene*/}
-        {/*key="Augustine"*/}
-        {/*component={Augustine}*/}
-        {/*title="Augustine"*/}
-        {/*/>*/}
-        {/*<Scene*/}
-        {/*key="Peggys"*/}
-        {/*component={Peggys}*/}
-        {/*title="Peggys"*/}
-        {/*/>*/}
-        {/*<Scene*/}
-        {/*key="Hercules"*/}
-        {/*component={Hercules}*/}
-        {/*title="Hercules"*/}
-        {/*/>*/}
-        {/*<Scene*/}
-        {/*key="Bass"*/}
-        {/*component={Bass}*/}
-        {/*title="Bass"*/}
-        {/*/>*/}
-        {/*<Scene*/}
-        {/*key="About"*/}
-        {/*component={About}*/}
-        {/*title="About"*/}
-        {/*/>*/}
-        {/*<Scene*/}
-        {/*key="Credits"*/}
-        {/*component={Credits}*/}
-        {/*title="Credits"*/}
-        {/*/>*/}
-        {/*<Scene*/}
-        {/*key="Map"*/}
-        {/*component={Map}*/}
-        {/*title="Map"*/}
-        {/*/>*/}
+      <Scene key='Drawer'
+             component={NavigationDrawer}
+             open={false}
+             type='replace'>
 
-        {/*old functional, will be deleted in future*/}
+        <Scene key="Client" tabs={false}>
 
-        {/*<Scene key='Tabbar'*/}
-        {/*tabs*/}
-        {/*hideNavBar*/}
-        {/*tabBarStyle={styles.tabBar}*/}
-        {/*default='Main'>*/}
+          <Scene
+            key="Home"
+            component={Home}
+            title="Home"
+            initial
+          />
+          <Scene
+            key="Lindau"
+            component={Lindau}
+            title="Lindau22"
+          />
+          {/*<Scene*/}
+          {/*key="Fanad"*/}
+          {/*component={Fanad}*/}
+          {/*title="Fanad"*/}
+          {/*/>*/}
+          {/*<Scene*/}
+          {/*key="Augustine"*/}
+          {/*component={Augustine}*/}
+          {/*title="Augustine"*/}
+          {/*/>*/}
+          {/*<Scene*/}
+          {/*key="Peggys"*/}
+          {/*component={Peggys}*/}
+          {/*title="Peggys"*/}
+          {/*/>*/}
+          {/*<Scene*/}
+          {/*key="Hercules"*/}
+          {/*component={Hercules}*/}
+          {/*title="Hercules"*/}
+          {/*/>*/}
+          {/*<Scene*/}
+          {/*key="Bass"*/}
+          {/*component={Bass}*/}
+          {/*title="Bass"*/}
+          {/*/>*/}
+          {/*<Scene*/}
+          {/*key="About"*/}
+          {/*component={About}*/}
+          {/*title="About"*/}
+          {/*/>*/}
+          {/*<Scene*/}
+          {/*key="Credits"*/}
+          {/*component={Credits}*/}
+          {/*title="Credits"*/}
+          {/*/>*/}
+          {/*<Scene*/}
+          {/*key="Map"*/}
+          {/*component={Map}*/}
+          {/*title="Map"*/}
+          {/*/>*/}
 
-        {/*<Scene key='Logout'*/}
-        {/*title={I18n.t('Snowflake.logout')}*/}
-        {/*icon={TabIcon}*/}
-        {/*iconName={'sign-out'}*/}
-        {/*hideNavBar*/}
-        {/*component={Logout} />*/}
+          {/*old functional, will be deleted in future*/}
 
-        {/*<Scene key='Main'*/}
-        {/*title={I18n.t('Snowflake.main')}*/}
-        {/*iconName={'home'}*/}
-        {/*icon={TabIcon}*/}
-        {/*hideNavBar*/}
-        {/*component={Main}*/}
-        {/*initial />*/}
+          {/*<Scene key='Tabbar'*/}
+          {/*tabs*/}
+          {/*hideNavBar*/}
+          {/*tabBarStyle={styles.tabBar}*/}
+          {/*default='Main'>*/}
 
-        {/*<Scene key='Profile'*/}
-        {/*title={I18n.t('Snowflake.profile')}*/}
-        {/*icon={TabIcon}*/}
-        {/*iconName={'gear'}*/}
-        {/*hideNavBar*/}
-        {/*component={Profile} />*/}
+          {/*<Scene key='Logout'*/}
+          {/*title={I18n.t('Snowflake.logout')}*/}
+          {/*icon={TabIcon}*/}
+          {/*iconName={'sign-out'}*/}
+          {/*hideNavBar*/}
+          {/*component={Logout} />*/}
+
+          {/*<Scene key='Main'*/}
+          {/*title={I18n.t('Snowflake.main')}*/}
+          {/*iconName={'home'}*/}
+          {/*icon={TabIcon}*/}
+          {/*hideNavBar*/}
+          {/*component={Main}*/}
+          {/*initial />*/}
+
+          {/*<Scene key='Profile'*/}
+          {/*title={I18n.t('Snowflake.profile')}*/}
+          {/*icon={TabIcon}*/}
+          {/*iconName={'gear'}*/}
+          {/*hideNavBar*/}
+          {/*component={Profile} />*/}
+        </Scene>
       </Scene>
     </Scene>
-  </Scene>
-</Router>
+  </Router>
+}
+
+// Since we're using ES6 classes, have to define the TimerMixin
+// reactMixin(RouterWrap.prototype, TimerMixin)
+/**
+ * Connect the properties
+ */
+export default connect(mapStateToProps, mapDispatchToProps)(RouterWrap)
