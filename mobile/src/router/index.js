@@ -4,7 +4,7 @@ import {
   StyleSheet,
   TouchableOpacity
 } from 'react-native'
-
+import {Actions} from 'react-native-router-flux';
 /**
  * ### icons
  *
@@ -44,6 +44,7 @@ import Subview from '../containers/Subview'
 import NavigationDrawer from '../containers/NavigationDrawer'
 import Home from '../containers/Home'
 import Lindau from '../components/Lindau'
+import Map from '../containers/Map'
 
 /**
  * ### Translations
@@ -72,6 +73,9 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#fff'
+  },
+  iconBack: {
+    tintColor: '#fff'
   }
 })
 
@@ -98,6 +102,8 @@ let RouterWrap = ({ drawer, children, actions }) => {
     actions.setDrawerState(!drawer.isOpen);
   }
 
+  let openMap = () => Actions.Map()
+
   let navBarLeftButton = () => {
     return (
       <TouchableOpacity onPress={toggleDrawer}>
@@ -106,10 +112,20 @@ let RouterWrap = ({ drawer, children, actions }) => {
     )
   }
 
+  let navBarRightButton = () => {
+    return (
+      <TouchableOpacity onPress={openMap}>
+        <Icon name='map-marker' size={25} style={styles.title}/>
+      </TouchableOpacity>
+    )
+  }
+
   return <Router
       renderLeftButton={navBarLeftButton}
+      renderRightButton={navBarRightButton}
       navigationBarStyle={styles.appBar}
       titleStyle={styles.title}
+      leftButtonIconStyle = {styles.iconBack}
   >
     <Scene key='root'>
 
@@ -196,11 +212,11 @@ let RouterWrap = ({ drawer, children, actions }) => {
           {/*component={Credits}*/}
           {/*title="Credits"*/}
           {/*/>*/}
-          {/*<Scene*/}
-          {/*key="Map"*/}
-          {/*component={Map}*/}
-          {/*title="Map"*/}
-          {/*/>*/}
+          <Scene
+          key="Map"
+          component={Map}
+          title="Map"
+          />
 
           {/*old functional, will be deleted in future*/}
 
