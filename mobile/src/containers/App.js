@@ -3,8 +3,6 @@
  *  Display startup screen and
  *  getSessionTokenAtStartup which will navigate upon completion
  *
- *
- *
  */
 'use strict'
 /*
@@ -38,6 +36,11 @@ from 'react-native'
  * The Header will display a Image and support Hot Loading
  */
 import Header from '../components/Header'
+
+/**
+ *  The version of the app but not  displayed yet
+ */
+import pack from '../../package'
 
 /**
  *  Save that state
@@ -116,7 +119,7 @@ let App = React.createClass({
           onGetState={this.props.actions.getState}
           onSetState={this.props.actions.setState} />
 
-        <Text style={styles.summary}>Snowflake {I18n.t('App.version')}:{this.props.deviceVersion}</Text>
+        <Text style={styles.summary}>{pack.name} {I18n.t('App.version')}:{this.props.deviceVersion}</Text>
 
       </View>
     )

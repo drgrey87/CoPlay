@@ -240,7 +240,8 @@ export function getSessionToken () {
         if (token) {
           dispatch(sessionTokenRequestSuccess(token))
           dispatch(logoutState())
-          Actions.Tabbar()
+          // Actions.Tabbar()
+          Actions.Drawer()
         } else {
           dispatch(sessionTokenRequestFailure())
           Actions.InitialLoginForm()
@@ -299,7 +300,8 @@ export function signup (username, email, password) {
             ))
             dispatch(logoutState())
             // navigate to Tabbar
-            Actions.Tabbar()
+            // Actions.Tabbar()
+            Actions.Drawer()
           })
       })
       .catch((error) => {
@@ -355,7 +357,8 @@ export function login (username, password) {
           .then(function () {
             dispatch(loginSuccess(json))
             // navigate to Tabbar
-            Actions.Tabbar()
+            // Actions.Tabbar()
+            Actions.Drawer()
             dispatch(logoutState())
           })
       })

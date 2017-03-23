@@ -3,26 +3,25 @@ import {
   ScrollView,
   View,
   Text,
-  Image,
   StyleSheet,
   TouchableOpacity
 } from 'react-native';
 
-import { ListItems } from '../../src/lib/data.service';
+import { ListItems } from '../lib/data.service';
 
 const Home = () => {
   return (
     <ScrollView contentContainerStyle={styles.view}>
-        <View>
-            {ListItems.map((item, idx) => (
-              <TouchableOpacity
-                key={idx}
-                style={styles.listItem}
-              >
-                <Text style={styles.listItemTitle}>{item.label}</Text>
-              </TouchableOpacity>
-            ))}
-        </View>
+      <View>
+        {ListItems.map((item, idx) => (
+          <TouchableOpacity
+            key={idx}
+            style={styles.listItem}
+          >
+            <Text style={styles.listItemTitle}>{item.label}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
     </ScrollView>
   );
 }

@@ -52,6 +52,8 @@ export default keyMirror({
 
   FORGOT_PASSWORD: null,
   LOGIN: null,
-  REGISTER: null
+  REGISTER: null,
+
+  DRAWER_TOGGLE_OPENING: null
 
 })

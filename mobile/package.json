@@ -1,5 +1,5 @@
 {
-  "name": "mobile",
+  "name": "coPlay",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -12,12 +12,13 @@
     "key-mirror": "^1.0.1",
     "react": "15.4.2",
     "react-mixin": "^3.0.5",
-    "react-native": "0.40.0",
+    "react-native": "^0.42.3",
     "react-native-config": "^0.2.2",
     "react-native-i18n": "^1.0.0",
     "react-native-maps": "^0.12.4",
     "react-native-navbar": "^1.6.3",
     "react-native-router-flux": "^3.38.0",
+    "react-native-side-menu": "^0.20.1",
     "react-native-simple-store": "^1.1.0",
     "react-native-simpledialog-android": "^1.0.8",
     "react-native-vector-icons": "^4.0.0",

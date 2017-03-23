@@ -23,7 +23,7 @@ import Augustine from '../views/lighthouses/Augustine';
 import Peggys from '../views/lighthouses/Peggys';
 import Hercules from '../views/lighthouses/Hercules';
 import Bass from '../views/lighthouses/Bass';
-import Map from '../views/Map';
+import Map from '../../src/containers/Map';
 import { Router, Scene, Actions } from 'react-native-router-flux';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
