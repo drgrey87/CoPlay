@@ -9,67 +9,29 @@ import {
   TouchableOpacity,
   StyleSheet
 } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { menuItems } from '../lib/data.service';
 
 export default class Menu extends Component {
   constructor(props) {
     super(props);
-    this.state={route: 0}
-    this.navigateTo = this.navigateTo.bind(this);
-  }
-
-  navigateTo(position) {
-    // this.props.toggleDrawer();
-    switch (position) {
-      case 0:
-        Actions.Home();
-        break;
-      case 1:
-        Actions.Lindau()
-        break;
-      {/*case 2:*/}
-        {/*Actions.Fanad();*/}
-        {/*break;*/}
-      {/*case 3:*/}
-        {/*Actions.Augustine();*/}
-        {/*break;*/}
-      {/*case 4:*/}
-        {/*Actions.Peggys();*/}
-        {/*break;*/}
-      // case 5:
-      //   Actions.Hercules();
-      //   break;
-      // case 6:
-      //   Actions.Bass();
-      //   break;
-      // case 7:
-      //   Actions.About();
-      //   break;
-      // case 8:
-      //   Actions.Dredits();
-      //   break;
-      // case 8:
-      //   Actions.Map();
-      //   break;
+    this.state={
+      route: 0
     }
   }
+
 
   render() {
     return(
       <ScrollView contentContainerStyle={styles.drawer}>
         <View style={styles.header} key={0}>
           <View style={styles.headerIcon} key={0}>
-            <Icon name="md-boat" size={50} color="#fff" />
+            <Icon name="user-circle-o" size={50} color="#fff" />
           </View>
           <View style={styles.headerInfo} key={1}>
-            <Text style={styles.headerTitle} key={0}>
-              Lighthouses
-            </Text>
             <Text style={styles.headerEmail} key={1}>
-              dr.grey_101@inbox.ru
+              {this.props.username}
             </Text>
           </View>
         </View>
@@ -83,6 +45,13 @@ export default class Menu extends Component {
                 <Text style={styles.listItemTitle}>{item.label}</Text>
               </TouchableOpacity>
             ))}
+            <TouchableOpacity
+                key={menuItems.length}
+                style={styles.listItem}
+                onPress={() => this.props.onItemSelected('Profile')}
+            >
+              <Text style={styles.listItemTitle}>Profile</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
@@ -90,8 +59,13 @@ export default class Menu extends Component {
   }
 }
 
+/**
+ * ### propTypes
+ * * onItemSelected: hide drawer
+ */
 Menu.propTypes = {
-  // toggleDrawer: PropTypes.func.isRequired
+  username: PropTypes.string.isRequired,
+  onItemSelected: PropTypes.func.isRequired
 }
 
 const styles = StyleSheet.create({

@@ -34,7 +34,8 @@ import * as drawerActions from '../reducers/drawer/drawerActions'
  */
 function mapStateToProps (state) {
   return {
-    drawer: state.drawer
+    drawer: state.drawer,
+    profile: state.global.currentUser
   }
 }
 
@@ -52,9 +53,17 @@ const styles = StyleSheet.create({})
 class NavigationDrawer extends Component {
   constructor(props) {
     super(props);
-
+    this.state = {
+      isOpen: this.props.drawer.isOpen
+    }
     this.onMenuItemSelected = this.onMenuItemSelected.bind(this);
     this.updateMenuState = this.updateMenuState.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      isOpen: nextProps.drawer.isOpen
+    })
   }
 
   toggle() {
@@ -71,13 +80,13 @@ class NavigationDrawer extends Component {
     this.setState({
       isOpen: false
     });
+    Actions[item]()
   }
 
   render() {
-    this.state = {
-      isOpen: this.props.drawer.isOpen
-    }
-    const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
+    const menu = <Menu
+        username={this.props.profile.username}
+        onItemSelected={this.onMenuItemSelected} />;
     const state = this.props.navigationState;
     const children = state.children;
     return (

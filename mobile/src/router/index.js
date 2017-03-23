@@ -241,12 +241,12 @@ let RouterWrap = ({ drawer, children, actions }) => {
           {/*component={Main}*/}
           {/*initial />*/}
 
-          {/*<Scene key='Profile'*/}
-          {/*title={I18n.t('Snowflake.profile')}*/}
-          {/*icon={TabIcon}*/}
-          {/*iconName={'gear'}*/}
-          {/*hideNavBar*/}
-          {/*component={Profile} />*/}
+          <Scene key='Profile'
+          title={I18n.t('Snowflake.profile')}
+          //icon={TabIcon}
+          //iconName={'gear'}
+          //hideNavBar
+          component={Profile} />
         </Scene>
       </Scene>
     </Scene>
