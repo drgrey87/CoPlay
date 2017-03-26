@@ -45,6 +45,7 @@ import NavigationDrawer from '../containers/NavigationDrawer'
 import Home from '../containers/Home'
 import Lindau from '../components/Lindau'
 import Map from '../containers/Map'
+import Activities from '../containers/Activities'
 
 /**
  * ### Translations
@@ -99,7 +100,7 @@ function mapDispatchToProps (dispatch) {
 
 let RouterWrap = ({ drawer, children, actions }) => {
   let toggleDrawer = () => {
-    actions.setDrawerState(!drawer.isOpen);
+    actions.setDrawerState(new Date().valueOf());
   }
 
   let openMap = () => Actions.Map()
@@ -157,6 +158,10 @@ let RouterWrap = ({ drawer, children, actions }) => {
 
       <Scene key='Subview'
              component={Subview}
+             hideNavBar/>
+
+      <Scene key='Activities'
+             component={Activities}
              hideNavBar/>
 
       <Scene key='Drawer'

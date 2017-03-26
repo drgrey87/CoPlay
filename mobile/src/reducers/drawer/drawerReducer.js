@@ -28,9 +28,7 @@ export default function drawerReducer (state = initialState, action) {
      * ### Save the sessionToken
      */
     case DRAWER_TOGGLE_OPENING:
-      console.log('state', state);
-      console.log('action.payload', action.payload);
-      return state.set('isOpen', action.payload)
+      return state.set('turn', action.payload)
   }
 
   return state

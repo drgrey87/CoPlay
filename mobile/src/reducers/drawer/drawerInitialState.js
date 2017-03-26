@@ -1,5 +1,5 @@
 /**
- * # globalInitialState.js
+ * # drawerInitialState.js
  *
  * This class is a Immutable object
  * Working *successfully* with Redux, requires
@@ -16,10 +16,10 @@ import {Record} from 'immutable'
 /**
  * ## InitialState
  *
- * * isOpen - toggle for Drawer to open/close
+ * * turn - toggle for Drawer to open/close
  *
  */
 var InitialState = Record({
-  isOpen: false
+  turn: new Date().valueOf()
 })
 export default InitialState

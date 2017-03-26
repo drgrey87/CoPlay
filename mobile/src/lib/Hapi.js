@@ -260,6 +260,40 @@ export class Hapi extends Backend {
         return res
       })
   }
+  /**
+   * ### getActivities
+   * Using the sessionToken, we'll get everything about
+   * the current user.
+   *
+   * @returns
+   *
+   * if good:
+   * {createdAt: "2015-12-30T15:29:36.611Z"
+   *  email: "barton@acclivyx.com"
+   *  objectId: "Z4yvP19OeL"
+   *  sessionToken: "r:uFeYONgIsZMPyxOWVJ6VqJGqv"
+   *  updatedAt: "2015-12-30T15:29:36.611Z"
+   *  username: "barton"}
+   *
+   * if error, {code: xxx, error: 'message'}
+   */
+  async getActivities () {
+    return await this._fetch({
+      method: 'GET',
+      url: '/activities'
+    })
+      .then((res) => {
+        if ((res.status === 200 || res.status === 201)) {
+          return res.json
+        } else {
+          throw (res.json)
+        }
+      })
+      .catch((error) => {
+        throw (error)
+      })
+  }
+
 }
 // The singleton variable
 export let hapi = new Hapi()

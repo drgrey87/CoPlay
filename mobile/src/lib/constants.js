@@ -54,6 +54,9 @@ export default keyMirror({
   LOGIN: null,
   REGISTER: null,
 
-  DRAWER_TOGGLE_OPENING: null
+  DRAWER_TOGGLE_OPENING: null,
 
+  GET_ACTIVITIES_REQUEST: null,
+  GET_ACTIVITIES_SUCCESS: null,
+  GET_ACTIVITIES_FAILURE: null
 })

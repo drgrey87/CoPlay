@@ -4,25 +4,174 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  Button
 } from 'react-native';
+import ActionButton from 'react-native-action-button';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import colors from '../styles/colors'
 
 import { ListItems } from '../lib/data.service';
 
 const Home = () => {
+
+  let onPress = () => {
+    alert(1);
+  }
+
   return (
-    <ScrollView contentContainerStyle={styles.view}>
-      <View>
-        {ListItems.map((item, idx) => (
-          <TouchableOpacity
-            key={idx}
-            style={styles.listItem}
-          >
-            <Text style={styles.listItemTitle}>{item.label}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-    </ScrollView>
+    <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.view}>
+          {ListItems.map((item, idx) => (
+            <TouchableOpacity
+              key={idx}
+              style={styles.listItem}
+            >
+              <Text style={styles.listItemTitle}>{item.label}</Text>
+            </TouchableOpacity>
+          ))}
+          {ListItems.map((item, idx) => (
+            <TouchableOpacity
+              key={idx}
+              style={styles.listItem}
+            >
+              <Text style={styles.listItemTitle}>{item.label}</Text>
+            </TouchableOpacity>
+          ))}
+          {ListItems.map((item, idx) => (
+            <TouchableOpacity
+              key={idx}
+              style={styles.listItem}
+            >
+              <Text style={styles.listItemTitle}>{item.label}</Text>
+            </TouchableOpacity>
+          ))}
+          {ListItems.map((item, idx) => (
+            <TouchableOpacity
+              key={idx}
+              style={styles.listItem}
+            >
+              <Text style={styles.listItemTitle}>{item.label}</Text>
+            </TouchableOpacity>
+          ))}
+          {ListItems.map((item, idx) => (
+            <TouchableOpacity
+              key={idx}
+              style={styles.listItem}
+            >
+              <Text style={styles.listItemTitle}>{item.label}</Text>
+            </TouchableOpacity>
+          ))}
+          {ListItems.map((item, idx) => (
+            <TouchableOpacity
+              key={idx}
+              style={styles.listItem}
+            >
+              <Text style={styles.listItemTitle}>{item.label}</Text>
+            </TouchableOpacity>
+          ))}
+          {ListItems.map((item, idx) => (
+            <TouchableOpacity
+              key={idx}
+              style={styles.listItem}
+            >
+              <Text style={styles.listItemTitle}>{item.label}</Text>
+            </TouchableOpacity>
+          ))}
+          {ListItems.map((item, idx) => (
+            <TouchableOpacity
+              key={idx}
+              style={styles.listItem}
+            >
+              <Text style={styles.listItemTitle}>{item.label}</Text>
+            </TouchableOpacity>
+          ))}
+          {ListItems.map((item, idx) => (
+            <TouchableOpacity
+              key={idx}
+              style={styles.listItem}
+            >
+              <Text style={styles.listItemTitle}>{item.label}</Text>
+            </TouchableOpacity>
+          ))}
+          {ListItems.map((item, idx) => (
+            <TouchableOpacity
+              key={idx}
+              style={styles.listItem}
+            >
+              <Text style={styles.listItemTitle}>{item.label}</Text>
+            </TouchableOpacity>
+          ))}
+          {ListItems.map((item, idx) => (
+            <TouchableOpacity
+              key={idx}
+              style={styles.listItem}
+            >
+              <Text style={styles.listItemTitle}>{item.label}</Text>
+            </TouchableOpacity>
+          ))}
+          {ListItems.map((item, idx) => (
+            <TouchableOpacity
+              key={idx}
+              style={styles.listItem}
+            >
+              <Text style={styles.listItemTitle}>{item.label}</Text>
+            </TouchableOpacity>
+          ))}
+          {ListItems.map((item, idx) => (
+            <TouchableOpacity
+              key={idx}
+              style={styles.listItem}
+            >
+              <Text style={styles.listItemTitle}>{item.label}</Text>
+            </TouchableOpacity>
+          ))}
+          {ListItems.map((item, idx) => (
+            <TouchableOpacity
+              key={idx}
+              style={styles.listItem}
+            >
+              <Text style={styles.listItemTitle}>{item.label}</Text>
+            </TouchableOpacity>
+          ))}
+          {ListItems.map((item, idx) => (
+            <TouchableOpacity
+              key={idx}
+              style={styles.listItem}
+            >
+              <Text style={styles.listItemTitle}>{item.label}</Text>
+            </TouchableOpacity>
+          ))}
+          {ListItems.map((item, idx) => (
+            <TouchableOpacity
+              key={idx}
+              style={styles.listItem}
+            >
+              <Text style={styles.listItemTitle}>{item.label}</Text>
+            </TouchableOpacity>
+          ))}
+          {ListItems.map((item, idx) => (
+            <TouchableOpacity
+              key={idx}
+              style={styles.listItem}
+            >
+              <Text style={styles.listItemTitle}>{item.label}</Text>
+            </TouchableOpacity>
+          ))}
+          {ListItems.map((item, idx) => (
+            <TouchableOpacity
+              key={idx}
+              style={styles.listItem}
+            >
+              <Text style={styles.listItemTitle}>{item.label}</Text>
+            </TouchableOpacity>
+          ))}
+      </ScrollView>
+        <ActionButton
+          buttonColor={colors.blue}
+          onPress={onPress.bind(this)}
+        />
+    </View>
   );
 }
 
@@ -51,6 +200,10 @@ const styles = StyleSheet.create({
   photo: {
     fontStyle: 'italic',
     marginBottom: 15
+  },
+
+  container: {
+    flex: 1
   }
 });
 

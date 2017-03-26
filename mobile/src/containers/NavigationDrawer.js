@@ -54,33 +54,32 @@ class NavigationDrawer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOpen: this.props.drawer.isOpen
+      isOpen: this.props.open,
+      turn: this.props.drawer.turn
     }
     this.onMenuItemSelected = this.onMenuItemSelected.bind(this);
     this.updateMenuState = this.updateMenuState.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.drawer.turn === this.state.turn) return;
     this.setState({
-      isOpen: nextProps.drawer.isOpen
+      isOpen: !this.state.isOpen,
+      turn: nextProps.drawer.turn
     })
   }
 
-  toggle() {
-    this.setState({
-      isOpen: !this.state.isOpen,
-    });
-  }
-
   updateMenuState(isOpen) {
-    this.props.actions.setDrawerState(isOpen);
+    this.setState({
+      isOpen: isOpen
+    })
   }
 
   onMenuItemSelected = (item) => {
+    Actions[item]()
     this.setState({
       isOpen: false
-    });
-    Actions[item]()
+    })
   }
 
   render() {
