@@ -39,7 +39,8 @@ import AuthInitialState from './reducers/auth/authInitialState'
 import DeviceInitialState from './reducers/device/deviceInitialState'
 import GlobalInitialState from './reducers/global/globalInitialState'
 import ProfileInitialState from './reducers/profile/profileInitialState'
-import drawerInitialState from './reducers/drawer/drawerInitialState'
+import DrawerInitialState from './reducers/drawer/drawerInitialState'
+import ActivitiesInitialState from './reducers/activities/activitiesInitialState'
 
 /**
  *  The version of the app but not  displayed yet
@@ -64,7 +65,8 @@ function getInitialState () {
         device: (new DeviceInitialState()).set('isMobile', true),
         global: (new GlobalInitialState()),
         profile: new ProfileInitialState(),
-        drawer: new drawerInitialState()
+        drawer: new DrawerInitialState(),
+        activities: new ActivitiesInitialState()
     }
     return _initState
 }

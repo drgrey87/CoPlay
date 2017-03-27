@@ -46,7 +46,14 @@ export default class Menu extends Component {
               </TouchableOpacity>
             ))}
             <TouchableOpacity
-                key={menuItems.length}
+              key={menuItems.length}
+              style={styles.listItem}
+              onPress={() => this.props.onItemSelected('Activities')}
+            >
+              <Text style={styles.listItemTitle}>Activities</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                key={menuItems.length+1}
                 style={styles.listItem}
                 onPress={() => this.props.onItemSelected('Profile')}
             >

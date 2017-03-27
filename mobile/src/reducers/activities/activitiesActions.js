@@ -41,14 +41,12 @@ export function getActivitiesFailure (json) {
 }
 /**
  * ## State actions
- * controls which form is displayed to the user
- * as in login, register, logout or reset password
  */
-export function getActivities () {
+export function getActivities (currentUser) {
   return dispatch => {
     dispatch(getActivitiesRequest())
     // store or get a sessionToken
-    return BackendFactory().getActivities()
+    return BackendFactory().getActivities(currentUser)
       .then((json) => {
         dispatch(getActivitiesSuccess(json))
       })
