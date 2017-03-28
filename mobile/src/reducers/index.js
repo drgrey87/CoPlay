@@ -15,6 +15,7 @@ import device from './device/deviceReducer'
 import global from './global/globalReducer'
 import profile from './profile/profileReducer'
 import drawer from './drawer/drawerReducer'
+import activities from './activities/activitiesReducer'
 
 import { combineReducers } from 'redux'
 
@@ -29,7 +30,8 @@ const rootReducer = combineReducers({
     device,
     global,
     profile,
-    drawer
+    drawer,
+    activities
 })
 
 export default rootReducer

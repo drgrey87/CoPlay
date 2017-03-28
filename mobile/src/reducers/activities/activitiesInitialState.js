@@ -21,11 +21,11 @@ import {Record} from 'immutable'
  */
 
 let defaultData = {
-  isActive: false,
+  is_active: false,
   rate: 5
 };
 
-const Activities = Record({
+const InitialState = Record({
   data: new (Record({
     basketball: new (Record(defaultData))(),
     football: new (Record(defaultData))(),
@@ -43,7 +43,4 @@ const Activities = Record({
   error: null
 })
 
-var InitialState = Record({
-  activities: new Activities()
-})
 export default InitialState
