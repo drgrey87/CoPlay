@@ -49,7 +49,7 @@ var I18n = require('react-native-i18n')
 import Translations from '../lib/Translations'
 I18n.translations = Translations
 
-export default class Activities extends Component {
+class Activities extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -108,4 +108,4 @@ export default class Activities extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile)
+export default connect(mapStateToProps, mapDispatchToProps)(Activities)
