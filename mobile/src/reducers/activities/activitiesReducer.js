@@ -31,8 +31,8 @@ export default function activitiesReducer (state = initialState, action) {
      * set the form to fetching
      */
     case GET_ACTIVITIES_REQUEST:
-      return state.setIn(['activities', 'isFetching'], true)
-        .setIn(['activities', 'error'], null)
+      return state.set('isFetching', true)
+        .set('error', null)
 
     /**
      * ### Request ends successfully
@@ -40,17 +40,17 @@ export default function activitiesReducer (state = initialState, action) {
      * the fetching is done, set the UI fields and the originalActivities
      */
     case GET_ACTIVITIES_SUCCESS:
-      return state.setIn(['activities', 'isFetching'], false)
-        .setIn(['activities', 'error'], null)
-        .mergeIn(['activities', 'data'], action.payload)
+      return state.set('isFetching', false)
+        .set('error', null)
+        .merge('data', action.payload)
 
     /**
      * ### Request fails
      * we're done fetching and the error needs to be displayed to the user
      */
     case GET_ACTIVITIES_FAILURE:
-      return state.setIn(['activities', 'isFetching'], false)
-        .setIn(['activities', 'error'], action.payload)
+      return state.set('isFetching', false)
+        .set('error', action.payload)
   }
 
   return state

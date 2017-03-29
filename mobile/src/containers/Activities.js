@@ -59,7 +59,7 @@ class Activities extends Component {
 
   is_filed() {
     Object.keys(this.props.activities.data).some((item)=> {
-      return this.props.activities.data[item].isActive = true || this.props.activities.data[item].rate !== 5;
+      return this.props.activities.data[item].is_active = true || this.props.activities.data[item].rate !== 5;
     })
   }
 
@@ -87,22 +87,32 @@ class Activities extends Component {
   componentDidMount () {
     if (this.is_filed()) {
       this.setState({
-        activities: this.props.activities
+        activities: this.props.activities.data
       })
     } else {
       this.props.actions.getActivities(this.props.currentUser)
     }
   }
 
+  list_items() {
+    let rows = [];
+    for (let key in this.state.activities) {
+      rows.push(
+        <View>
+          <Icon name="basketball" size={50} color="#fff"/>
+          <Text>
+            {key}
+          </Text>
+        </View>
+      )
+    }
+    return rows;
+  }
+
   render() {
     return (
       <ScrollView>
-        <View>
-          <Icon name="basketball" size={50} color="#fff" />
-          <Text>
-            {'basketball'}
-          </Text>
-        </View>
+        {this.list_items()}
       </ScrollView>
     );
   }

@@ -21,7 +21,7 @@ import {Record} from 'immutable'
  */
 
 let defaultData = {
-  isActive: false,
+  is_active: false,
   rate: 5
 };
 
