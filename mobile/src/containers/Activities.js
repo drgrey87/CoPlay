@@ -72,7 +72,7 @@ class Activities extends Component {
   componentWillReceiveProps (nextProps) {
     if (nextProps) {
       this.setState({
-        activities: nextProps
+        activities: nextProps.activities.data.toJSON()
       })
     }
   }
@@ -96,10 +96,11 @@ class Activities extends Component {
 
   list_items() {
     let rows = [];
+    let i = 0;
     for (let key in this.state.activities) {
       rows.push(
-        <View>
-          <Icon name="basketball" size={50} color="#fff"/>
+        <View key={++i}>
+          <Icon name="md-basketball" size={50} color="#fff"/>
           <Text>
             {key}
           </Text>

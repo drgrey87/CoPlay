@@ -277,7 +277,7 @@ export class Hapi extends Backend {
    *
    * if error, {code: xxx, error: 'message'}
    */
-  async getActivities (currentUser) {
+  async getActivities () {
     return await this._fetch({
       method: 'GET',
       url: '/activities'

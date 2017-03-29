@@ -3,9 +3,10 @@
  *
  */
 'use strict'
-/**
- * ## Imports
- *
+
+import {appAuthToken} from '../../lib/AppAuthToken'
+
+/** *
  * The actions for activities subscribing
  */
 const {
@@ -41,17 +42,19 @@ export function getActivitiesFailure (json) {
 }
 /**
  * ## State actions
+ *
+ *### getActivities
+ * @param sessionToken
+ *
+ * {email:"", objectId:"", sessionToken: "", username: ""}
  */
-export function getActivities (currentUser) {
+export function getActivities (sessionToken) {
   return dispatch => {
     dispatch(getActivitiesRequest())
     // store or get a sessionToken
-    return BackendFactory().getActivities(currentUser)
-      .then((json) => {
-        dispatch(getActivitiesSuccess(json))
-      })
-      .catch((error) => {
-        dispatch(getActivitiesFailure(error))
-      })
+    return appAuthToken.getSessionToken(sessionToken)
+      .then((token) => BackendFactory(token).getActivities())
+      .then((json) => dispatch(getActivitiesSuccess(json)))
+      .catch((error) => dispatch(getActivitiesFailure(error)))
   }
 }
