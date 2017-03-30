@@ -53,13 +53,15 @@ class Activities extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      activities: {}
+      data: [],
+      isFetching: false,
+      error: null
     }
   }
 
   is_filed() {
-    Object.keys(this.props.activities.data).some((item)=> {
-      return this.props.activities.data[item].is_active = true || this.props.activities.data[item].rate !== 5;
+    return this.props.activities.data.some(item => {
+      return item.is_active === true || item.rate !== 5;
     })
   }
 
@@ -72,7 +74,9 @@ class Activities extends Component {
   componentWillReceiveProps (nextProps) {
     if (nextProps) {
       this.setState({
-        activities: nextProps.activities.data.toJSON()
+        data: nextProps.activities.data,
+        isFetching: nextProps.activities.isFetching,
+        error: nextProps.activities.error
       })
     }
   }
@@ -87,7 +91,9 @@ class Activities extends Component {
   componentDidMount () {
     if (this.is_filed()) {
       this.setState({
-        activities: this.props.activities.data
+        data: this.props.activities.data,
+        isFetching: this.props.activities.isFetching,
+        error: this.props.activities.error
       })
     } else {
       this.props.actions.getActivities(this.props.currentUser)
@@ -95,19 +101,14 @@ class Activities extends Component {
   }
 
   list_items() {
-    let rows = [];
-    let i = 0;
-    for (let key in this.state.activities) {
-      rows.push(
-        <View key={++i}>
-          <Icon name="md-basketball" size={50} color="#fff"/>
-          <Text>
-            {key}
-          </Text>
-        </View>
-      )
-    }
-    return rows;
+    return this.state.data.map((item, i) => {
+      return <View key={i}>
+        <Icon name="md-basketball" size={50} color="#fff"/>
+        <Text>
+          {item.type}
+        </Text>
+      </View>
+    })
   }
 
   render() {

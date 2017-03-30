@@ -12,7 +12,7 @@
 /**
  * ## Import
  */
-import {Record} from 'immutable'
+import {Record, List, fromJS} from 'immutable'
 /**
  * ## InitialState
  *
@@ -20,27 +20,31 @@ import {Record} from 'immutable'
  *
  */
 
-let defaultData = {
-  is_active: false,
-  rate: 5
+let getDefaultData = (type) => {
+  return {
+    is_active: false,
+    rate: 5,
+    type: type
+  }
 };
 
 const InitialState = Record({
-  data: new (Record({
-    basketball: new (Record(defaultData))(),
-    football: new (Record(defaultData))(),
-    tennis: new (Record(defaultData))(),
-    badminton: new (Record(defaultData))(),
-    ice_hockey: new (Record(defaultData))(),
-    table_tennis: new (Record(defaultData))(),
-    valleyball: new (Record(defaultData))(),
-    american_football: new (Record(defaultData))(),
-    handball: new (Record(defaultData))(),
-    frisbee: new (Record(defaultData))(),
-    other: new (Record(defaultData))()
-  }))(),
+  data: List.of(
+    getDefaultData('basketball'),
+    getDefaultData('football'),
+    getDefaultData('tennis'),
+    getDefaultData('badminton'),
+    getDefaultData('ice_hockey'),
+    getDefaultData('table_tennis'),
+    getDefaultData('valleyball'),
+    getDefaultData('american_football'),
+    getDefaultData('handball'),
+    getDefaultData('frisbee'),
+    getDefaultData('other')
+  ),
   isFetching: false,
   error: null
 })
+
 
 export default InitialState
