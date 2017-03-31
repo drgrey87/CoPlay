@@ -134,56 +134,64 @@ class Activities extends Component {
     }
   }
 
+  get_itemData(item) {
+      let data = {};
+      switch (item.type) {
+          case 'basketball':
+          case 'football':
+              data.label=`md-${item.type}`;
+              data.text=item.type;
+              break;
+          case 'tennis':
+              data.label=`md-${item.type}ball`;
+              data.text=item.type;
+              break;
+          case 'badminton':
+              data.label=`md-tennisball`;
+              data.text=item.type;
+              break;
+          case 'ice_hockey':
+              data.label=`md-tennisball`;
+              data.text='hockey';
+              break;
+          case 'table_tennis':
+              data.label=`md-tennisball`;
+              data.text='table tennis';
+              break;
+          case 'valleyball':
+              data.label=`md-tennisball`;
+              data.text=item.type;
+              break;
+          case 'american_football':
+              data.label=`md-american-football`;
+              data.text='american football';
+              break;
+          case 'handball':
+              data.label=`md-tennisball`;
+              data.text=item.type;
+              break;
+          case 'frisbee':
+              data.label=`md-tennisball`;
+              data.text=item.type;
+              break;
+          case 'other':
+              data.label=`md-more`;
+              data.text=item.type;
+              break;
+          default:
+              data.label=`md-tennisball`;
+              data.text=item.type;
+      }
+      return data;
+  }
+
   list_items() {
     return this.state.data.map((item, i) => {
-      let label, text;
-      switch (item.type) {
-        case 'basketball':
-        case 'football':
-          label=`md-${item.type}`;
-          text=item.type;
-            break;
-        case 'tennis':
-          label=`md-${item.type}ball`;
-          text=item.type;
-          break;
-        case 'badminton':
-          label=`md-tennisball`;
-          text=item.type;
-          break;
-        case 'ice_hockey':
-          label=`md-tennisball`;
-          text='hockey';
-          break;
-        case 'table_tennis':
-          label=`md-tennisball`;
-          text='table tennis';
-          break;
-        case 'valleyball':
-          label=`md-tennisball`;
-          text=item.type;
-          break;
-        case 'american_football':
-          label=`md-american-football`;
-          text='american football';
-          break;
-        case 'handball':
-          label=`md-tennisball`;
-          text=item.type;
-          break;
-        case 'frisbee':
-          label=`md-tennisball`;
-          text=item.type;
-          break;
-        case 'other':
-          label=`md-more`;
-          text=item.type;
-          break;
-      }
+      let item_data = this.get_itemData(item);
       return <View key={i} style={styles.item}>
-        <Icon name={label} style={styles.icon}/>
+        <Icon name={item_data.label} style={styles.icon}/>
         <Text ellipsizeMode='tail' numberOfLines={1}>
-          {text}
+          {item_data.text}
         </Text>
       </View>
     })
