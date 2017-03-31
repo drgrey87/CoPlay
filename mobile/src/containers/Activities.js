@@ -5,7 +5,8 @@ import {
   View,
   Text,
   ScrollView,
-  StyleSheet
+  StyleSheet,
+  ActivityIndicator
 } from 'react-native';
 
 /**
@@ -41,6 +42,39 @@ function mapDispatchToProps (dispatch) {
     actions: bindActionCreators({ ...activitiesActions }, dispatch)
   }
 }
+
+/**
+ * ## Colors variables
+ * */
+import colors from '../styles/colors'
+
+/**
+ * ## Styles
+ */
+var styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    flexWrap: 'wrap'
+  },
+  item: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    margin: 10,
+    width: 100,
+    height: 100
+  },
+  spinner: {
+    backgroundColor: colors.blue,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 8,
+  },
+  icon: {
+    fontSize: 50,
+    color: colors.blue
+  }
+})
 
 /**
  * ### Translations
@@ -102,10 +136,54 @@ class Activities extends Component {
 
   list_items() {
     return this.state.data.map((item, i) => {
-      return <View key={i}>
-        <Icon name="md-basketball" size={50} color="#fff"/>
-        <Text>
-          {item.type}
+      let label, text;
+      switch (item.type) {
+        case 'basketball':
+        case 'football':
+          label=`md-${item.type}`;
+          text=item.type;
+            break;
+        case 'tennis':
+          label=`md-${item.type}ball`;
+          text=item.type;
+          break;
+        case 'badminton':
+          label=`md-tennisball`;
+          text=item.type;
+          break;
+        case 'ice_hockey':
+          label=`md-tennisball`;
+          text='hockey';
+          break;
+        case 'table_tennis':
+          label=`md-tennisball`;
+          text='table tennis';
+          break;
+        case 'valleyball':
+          label=`md-tennisball`;
+          text=item.type;
+          break;
+        case 'american_football':
+          label=`md-american-football`;
+          text='american football';
+          break;
+        case 'handball':
+          label=`md-tennisball`;
+          text=item.type;
+          break;
+        case 'frisbee':
+          label=`md-tennisball`;
+          text=item.type;
+          break;
+        case 'other':
+          label=`md-more`;
+          text=item.type;
+          break;
+      }
+      return <View key={i} style={styles.item}>
+        <Icon name={label} style={styles.icon}/>
+        <Text ellipsizeMode='tail' numberOfLines={1}>
+          {text}
         </Text>
       </View>
     })
@@ -113,8 +191,11 @@ class Activities extends Component {
 
   render() {
     return (
-      <ScrollView>
-        {this.list_items()}
+      <ScrollView contentContainerStyle={styles.container}>
+        {this.props.isFetching
+            ? <ActivityIndicator animating size='large' style={styles.spinner}/>
+            : this.list_items()
+        }
       </ScrollView>
     );
   }

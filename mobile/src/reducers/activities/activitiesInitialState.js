@@ -24,7 +24,9 @@ let getDefaultData = (type) => {
   return {
     is_active: false,
     rate: 5,
-    type: type
+    type: type,
+    _id: null,
+    user_id: null
   }
 };
 
