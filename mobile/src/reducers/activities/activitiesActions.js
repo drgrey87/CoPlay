@@ -54,7 +54,9 @@ export function getActivities (sessionToken) {
     // store or get a sessionToken
     return appAuthToken.getSessionToken(sessionToken)
       .then((token) => BackendFactory(token).getActivities())
-      .then((json) => dispatch(getActivitiesSuccess(json)))
+      .then((json) => {
+        dispatch(getActivitiesSuccess(json))
+      })
       .catch((error) => dispatch(getActivitiesFailure(error)))
   }
 }

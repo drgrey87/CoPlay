@@ -6,7 +6,8 @@ import {
   Text,
   ScrollView,
   StyleSheet,
-  ActivityIndicator
+  ActivityIndicator,
+  Dimensions
 } from 'react-native';
 
 /**
@@ -55,6 +56,7 @@ var styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
+    alignItems: 'center',
     flexWrap: 'wrap'
   },
   item: {
@@ -64,10 +66,12 @@ var styles = StyleSheet.create({
     width: 100,
     height: 100
   },
-  spinner: {
-    backgroundColor: colors.blue,
-    alignItems: 'center',
+  spinnerWrap: {
     justifyContent: 'center',
+    alignItems: 'center',
+    height: Dimensions.get("window").height
+  },
+  spinner: {
     padding: 8,
   },
   icon: {
@@ -175,7 +179,7 @@ class Activities extends Component {
               data.text=item.type;
               break;
           case 'other':
-              data.label=`md-more`;
+              data.label=`ios-more`;
               data.text=item.type;
               break;
           default:
@@ -199,12 +203,13 @@ class Activities extends Component {
 
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.container}>
-        {this.props.isFetching
-            ? <ActivityIndicator animating size='large' style={styles.spinner}/>
-            : this.list_items()
-        }
-      </ScrollView>
+      <View>
+      {this.state.isFetching
+        ? <View style={styles.spinnerWrap}><ActivityIndicator style={styles.spinner} animating size='large'/></View>
+        :
+        <ScrollView contentContainerStyle={styles.container}>{this.list_items()}</ScrollView>
+      }
+      </View>
     );
   }
 }
