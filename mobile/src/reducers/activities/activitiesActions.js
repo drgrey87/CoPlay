@@ -12,7 +12,8 @@ import {appAuthToken} from '../../lib/AppAuthToken'
 const {
   GET_ACTIVITIES_REQUEST,
   GET_ACTIVITIES_SUCCESS,
-  GET_ACTIVITIES_FAILURE
+  GET_ACTIVITIES_FAILURE,
+  SET_ACTIVITY_IS_ACTIVE
 } = require('../../lib/constants').default
 
 /**
@@ -40,6 +41,12 @@ export function getActivitiesFailure (json) {
     payload: json
   }
 }
+export function isActive (data) {
+  return {
+    type: SET_ACTIVITY_IS_ACTIVE,
+    payload: data
+  }
+}
 /**
  * ## State actions
  *
@@ -59,4 +66,8 @@ export function getActivities (sessionToken) {
       })
       .catch((error) => dispatch(getActivitiesFailure(error)))
   }
+}
+
+export function setIsActive (data) {
+  return dispatch => dispatch(isActive(data))
 }

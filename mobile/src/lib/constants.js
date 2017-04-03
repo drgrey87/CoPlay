@@ -58,5 +58,7 @@ export default keyMirror({
 
   GET_ACTIVITIES_REQUEST: null,
   GET_ACTIVITIES_SUCCESS: null,
-  GET_ACTIVITIES_FAILURE: null
+  GET_ACTIVITIES_FAILURE: null,
+
+  SET_ACTIVITY_IS_ACTIVE: null
 })

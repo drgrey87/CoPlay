@@ -7,7 +7,8 @@ import {
   ScrollView,
   StyleSheet,
   ActivityIndicator,
-  Dimensions
+  Dimensions,
+  TouchableHighlight
 } from 'react-native';
 
 /**
@@ -95,11 +96,19 @@ class Activities extends Component {
       isFetching: false,
       error: null
     }
+    this.onPressButton = this.onPressButton.bind(this)
   }
 
   is_filed() {
     return this.props.activities.data.some(item => {
       return item.is_active === true || item.rate !== 5;
+    })
+  }
+
+  onPressButton(item) {
+    this.props.actions.setIsActive({
+      type: item.type,
+      is_active: !item.is_active
     })
   }
 
@@ -192,12 +201,16 @@ class Activities extends Component {
   list_items() {
     return this.state.data.map((item, i) => {
       let item_data = this.get_itemData(item);
-      return <View key={i} style={styles.item}>
-        <Icon name={item_data.label} style={styles.icon}/>
-        <Text ellipsizeMode='tail' numberOfLines={1}>
-          {item_data.text}
-        </Text>
-      </View>
+      return <TouchableHighlight
+        key={i}
+        onPress={()=>this.onPressButton(item)}>
+        <View style={styles.item} backgroundColor={item.is_active ? 'red' : 'green'}>
+          <Icon name={item_data.label} style={styles.icon}/>
+          <Text ellipsizeMode='tail' numberOfLines={1}>
+            {item_data.text}
+          </Text>
+        </View>
+      </TouchableHighlight>
     })
   }
 

@@ -11,7 +11,8 @@
 const {
   GET_ACTIVITIES_REQUEST,
   GET_ACTIVITIES_SUCCESS,
-  GET_ACTIVITIES_FAILURE
+  GET_ACTIVITIES_FAILURE,
+  SET_ACTIVITY_IS_ACTIVE
 } = require('../../lib/constants').default
 
 import InitialState from './activitiesInitialState'
@@ -51,6 +52,17 @@ export default function activitiesReducer (state = initialState, action) {
     case GET_ACTIVITIES_FAILURE:
       return state.set('isFetching', false)
         .set('error', action.payload)
+
+    /**
+     * ### Request set activity is_active
+     */
+    case SET_ACTIVITY_IS_ACTIVE:
+      console.log('aaaa', action.payload);
+      let index = action.payload.id || state.get('data').findIndex(listItem => {
+        return listItem.type === action.payload.type;
+    });
+      console.log('index', index);
+      return state.setIn(['data', index, 'is_active'], action.payload.is_active)
   }
 
   return state
