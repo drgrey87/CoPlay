@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PureComponent} from 'react'
 import {Scene, Router} from 'react-native-router-flux';
 import {
   StyleSheet,
@@ -98,164 +98,181 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-let RouterWrap = ({ drawer, children, actions }) => {
-  let toggleDrawer = () => {
-    actions.setDrawerState(new Date().valueOf());
+class RouterWrap extends PureComponent {
+
+  constructor(props) {
+    super(props)
+    this.toggleDrawer = this.toggleDrawer.bind(this)
+    this.openMap = this.openMap.bind(this)
+    this.navBarLeftButton = this.navBarLeftButton.bind(this)
+    this.navBarRightButton = this.navBarRightButton.bind(this)
   }
 
-  let openMap = () => Actions.Map()
+  toggleDrawer () {
+    this.props.actions.setDrawerState(new Date().valueOf());
+  }
 
-  let navBarLeftButton = () => {
+  openMap () {
+    Actions.Map()
+  }
+
+  navBarLeftButton () {
     return (
-      <TouchableOpacity onPress={toggleDrawer}>
+      <TouchableOpacity onPress={this.toggleDrawer}>
         <Icon name='navicon' size={25} style={styles.title}/>
       </TouchableOpacity>
     )
   }
 
-  let navBarRightButton = () => {
+  navBarRightButton () {
     return (
-      <TouchableOpacity onPress={openMap}>
+      <TouchableOpacity onPress={this.openMap}>
         <Icon name='map-marker' size={25} style={styles.title}/>
       </TouchableOpacity>
     )
   }
 
-  return <Router
-      renderLeftButton={navBarLeftButton}
-      renderRightButton={navBarRightButton}
+  shouldComponentUpdate() {
+    return false;
+  }
+
+  render() {
+    return <Router
+      renderLeftButton={this.navBarLeftButton}
+      renderRightButton={this.navBarRightButton}
       navigationBarStyle={styles.appBar}
       titleStyle={styles.title}
-      leftButtonIconStyle = {styles.iconBack}
-  >
-    <Scene key='root'>
+      leftButtonIconStyle={styles.iconBack}
+    >
+      <Scene key='root'>
 
-      <Scene key='App'
-             component={App}
-             hideNavBar
-             type='replace'
-             initial/>
+        <Scene key='App'
+               component={App}
+               hideNavBar
+               type='replace'
+               initial/>
 
-      <Scene key='InitialLoginForm'
-             component={Register}
-             hideNavBar
-             type='replace'/>
+        <Scene key='InitialLoginForm'
+               component={Register}
+               hideNavBar
+               type='replace'/>
 
-      <Scene key='Login'
-             component={Login}
-             hideNavBar
-             type='replace'/>
+        <Scene key='Login'
+               component={Login}
+               hideNavBar
+               type='replace'/>
 
-      <Scene key='Register'
-             component={Register}
-             hideNavBar
-             type='replace'/>
+        <Scene key='Register'
+               component={Register}
+               hideNavBar
+               type='replace'/>
 
-      <Scene key='ForgotPassword'
-             component={ForgotPassword}
-             hideNavBar
-             type='replace'/>
+        <Scene key='ForgotPassword'
+               component={ForgotPassword}
+               hideNavBar
+               type='replace'/>
 
-      <Scene key='Subview'
-             component={Subview}
-             hideNavBar/>
+        <Scene key='Subview'
+               component={Subview}
+               hideNavBar/>
 
-      <Scene key='Activities'
-             component={Activities}
-             hideNavBar/>
+        <Scene key='Activities'
+               component={Activities}
+               hideNavBar/>
 
-      <Scene key='Drawer'
-             component={NavigationDrawer}
-             open={false}
-             type='replace'>
+        <Scene key='Drawer'
+               component={NavigationDrawer}
+               open={false}
+               type='replace'>
 
-        <Scene key="Client" tabs={false}>
+          <Scene key="Client" tabs={false}>
 
-          <Scene
-            key="Home"
-            component={Home}
-            title="Home"
-            initial
-          />
-          <Scene
-            key="Lindau"
-            component={Lindau}
-            title="Lindau22"
-          />
-          {/*<Scene*/}
-          {/*key="Fanad"*/}
-          {/*component={Fanad}*/}
-          {/*title="Fanad"*/}
-          {/*/>*/}
-          {/*<Scene*/}
-          {/*key="Augustine"*/}
-          {/*component={Augustine}*/}
-          {/*title="Augustine"*/}
-          {/*/>*/}
-          {/*<Scene*/}
-          {/*key="Peggys"*/}
-          {/*component={Peggys}*/}
-          {/*title="Peggys"*/}
-          {/*/>*/}
-          {/*<Scene*/}
-          {/*key="Hercules"*/}
-          {/*component={Hercules}*/}
-          {/*title="Hercules"*/}
-          {/*/>*/}
-          {/*<Scene*/}
-          {/*key="Bass"*/}
-          {/*component={Bass}*/}
-          {/*title="Bass"*/}
-          {/*/>*/}
-          {/*<Scene*/}
-          {/*key="About"*/}
-          {/*component={About}*/}
-          {/*title="About"*/}
-          {/*/>*/}
-          {/*<Scene*/}
-          {/*key="Credits"*/}
-          {/*component={Credits}*/}
-          {/*title="Credits"*/}
-          {/*/>*/}
-          <Scene
-          key="Map"
-          component={Map}
-          title="Map"
-          />
+            <Scene
+              key="Home"
+              component={Home}
+              title="Home"
+              initial
+            />
+            <Scene
+              key="Lindau"
+              component={Lindau}
+              title="Lindau22"
+            />
+            {/*<Scene*/}
+            {/*key="Fanad"*/}
+            {/*component={Fanad}*/}
+            {/*title="Fanad"*/}
+            {/*/>*/}
+            {/*<Scene*/}
+            {/*key="Augustine"*/}
+            {/*component={Augustine}*/}
+            {/*title="Augustine"*/}
+            {/*/>*/}
+            {/*<Scene*/}
+            {/*key="Peggys"*/}
+            {/*component={Peggys}*/}
+            {/*title="Peggys"*/}
+            {/*/>*/}
+            {/*<Scene*/}
+            {/*key="Hercules"*/}
+            {/*component={Hercules}*/}
+            {/*title="Hercules"*/}
+            {/*/>*/}
+            {/*<Scene*/}
+            {/*key="Bass"*/}
+            {/*component={Bass}*/}
+            {/*title="Bass"*/}
+            {/*/>*/}
+            {/*<Scene*/}
+            {/*key="About"*/}
+            {/*component={About}*/}
+            {/*title="About"*/}
+            {/*/>*/}
+            {/*<Scene*/}
+            {/*key="Credits"*/}
+            {/*component={Credits}*/}
+            {/*title="Credits"*/}
+            {/*/>*/}
+            <Scene
+              key="Map"
+              component={Map}
+              title="Map"
+            />
 
-          {/*old functional, will be deleted in future*/}
+            {/*old functional, will be deleted in future*/}
 
-          {/*<Scene key='Tabbar'*/}
-          {/*tabs*/}
-          {/*hideNavBar*/}
-          {/*tabBarStyle={styles.tabBar}*/}
-          {/*default='Main'>*/}
+            {/*<Scene key='Tabbar'*/}
+            {/*tabs*/}
+            {/*hideNavBar*/}
+            {/*tabBarStyle={styles.tabBar}*/}
+            {/*default='Main'>*/}
 
-          {/*<Scene key='Logout'*/}
-          {/*title={I18n.t('Snowflake.logout')}*/}
-          {/*icon={TabIcon}*/}
-          {/*iconName={'sign-out'}*/}
-          {/*hideNavBar*/}
-          {/*component={Logout} />*/}
+            {/*<Scene key='Logout'*/}
+            {/*title={I18n.t('Snowflake.logout')}*/}
+            {/*icon={TabIcon}*/}
+            {/*iconName={'sign-out'}*/}
+            {/*hideNavBar*/}
+            {/*component={Logout} />*/}
 
-          {/*<Scene key='Main'*/}
-          {/*title={I18n.t('Snowflake.main')}*/}
-          {/*iconName={'home'}*/}
-          {/*icon={TabIcon}*/}
-          {/*hideNavBar*/}
-          {/*component={Main}*/}
-          {/*initial />*/}
+            {/*<Scene key='Main'*/}
+            {/*title={I18n.t('Snowflake.main')}*/}
+            {/*iconName={'home'}*/}
+            {/*icon={TabIcon}*/}
+            {/*hideNavBar*/}
+            {/*component={Main}*/}
+            {/*initial />*/}
 
-          <Scene key='Profile'
-          title={I18n.t('Snowflake.profile')}
-          //icon={TabIcon}
-          //iconName={'gear'}
-          //hideNavBar
-          component={Profile} />
+            <Scene key='Profile'
+                   title={I18n.t('Snowflake.profile')}
+              //icon={TabIcon}
+              //iconName={'gear'}
+              //hideNavBar
+                   component={Profile}/>
+          </Scene>
         </Scene>
       </Scene>
-    </Scene>
-  </Router>
+    </Router>
+  }
 }
 
 // Since we're using ES6 classes, have to define the TimerMixin
