@@ -247,12 +247,12 @@ class RouterWrap extends PureComponent {
             {/*tabBarStyle={styles.tabBar}*/}
             {/*default='Main'>*/}
 
-            {/*<Scene key='Logout'*/}
-            {/*title={I18n.t('Snowflake.logout')}*/}
-            {/*icon={TabIcon}*/}
-            {/*iconName={'sign-out'}*/}
-            {/*hideNavBar*/}
-            {/*component={Logout} />*/}
+            <Scene key='Logout'
+            title={I18n.t('Snowflake.logout')}
+            //icon={TabIcon}
+            //iconName={'sign-out'}
+            hideNavBar
+            component={Logout} />
 
             {/*<Scene key='Main'*/}
             {/*title={I18n.t('Snowflake.main')}*/}

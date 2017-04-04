@@ -24,7 +24,7 @@ export default class Menu extends Component {
 
   render() {
     return(
-      <ScrollView contentContainerStyle={styles.drawer}>
+      <View style={styles.drawer}>
         <View style={styles.header} key={0}>
           <View style={styles.headerIcon} key={0}>
             <Icon name="user-circle-o" size={50} color="#fff" />
@@ -35,8 +35,8 @@ export default class Menu extends Component {
             </Text>
           </View>
         </View>
-        <View style={styles.content} key={1}>
-          <View>
+        <ScrollView contentContainerStyle={styles.content} key={1}>
+
             {menuItems.map((item, idx) => (
               <TouchableOpacity
                 key={idx}
@@ -59,9 +59,16 @@ export default class Menu extends Component {
             >
               <Text style={styles.listItemTitle}>Profile</Text>
             </TouchableOpacity>
-          </View>
-        </View>
-      </ScrollView>
+            <TouchableOpacity
+              key={menuItems.length+2}
+              style={styles.listItem}
+              onPress={() => this.props.onItemSelected('Logout')}
+            >
+              <Text style={styles.listItemTitle}>Logout</Text>
+            </TouchableOpacity>
+
+        </ScrollView>
+      </View>
     );
   }
 }
