@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { menuItems } from '../lib/data.service';
 
 export default class Menu extends Component {
   constructor(props) {
@@ -26,46 +25,58 @@ export default class Menu extends Component {
     return(
       <View style={styles.drawer}>
         <View style={styles.header} key={0}>
-          <View style={styles.headerIcon} key={0}>
+          <View style={styles.headerIcon}>
             <Icon name="user-circle-o" size={50} color="#fff" />
           </View>
           <View style={styles.headerInfo} key={1}>
-            <Text style={styles.headerEmail} key={1}>
+            <Text style={styles.headerEmail}>
               {this.props.username}
             </Text>
           </View>
         </View>
-        <ScrollView contentContainerStyle={styles.content} key={1}>
-
-            {menuItems.map((item, idx) => (
-              <TouchableOpacity
-                key={idx}
-                style={styles.listItem}
-              >
-                <Text style={styles.listItemTitle}>{item.label}</Text>
-              </TouchableOpacity>
-            ))}
+        <ScrollView contentContainerStyle={styles.content}>
             <TouchableOpacity
-              key={menuItems.length}
+              key={2}
               style={styles.listItem}
               onPress={() => this.props.onItemSelected('Activities')}
             >
               <Text style={styles.listItemTitle}>Activities</Text>
             </TouchableOpacity>
             <TouchableOpacity
-                key={menuItems.length+1}
+                key={3}
                 style={styles.listItem}
                 onPress={() => this.props.onItemSelected('Profile')}
             >
               <Text style={styles.listItemTitle}>Profile</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              key={menuItems.length+2}
+              key={4}
               style={styles.listItem}
               onPress={() => this.props.onItemSelected('Logout')}
             >
               <Text style={styles.listItemTitle}>Logout</Text>
             </TouchableOpacity>
+          <TouchableOpacity
+            key={5}
+            style={styles.listItem}
+            onPress={() => this.props.onItemSelected('Logout')}
+          >
+            <Text style={styles.listItemTitle}>Logout2</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            key={6}
+            style={styles.listItem}
+            onPress={() => this.props.onItemSelected('Logout')}
+          >
+            <Text style={styles.listItemTitle}>Logout3</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            key={7}
+            style={styles.listItem}
+            onPress={() => this.props.onItemSelected('Logout')}
+          >
+            <Text style={styles.listItemTitle}>Logout4</Text>
+          </TouchableOpacity>
 
         </ScrollView>
       </View>
@@ -92,7 +103,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#1565C0'
   },
   content: {
-    flex: 1,
     padding: 16,
     backgroundColor: '#1E88E5'
   },

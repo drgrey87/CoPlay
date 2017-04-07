@@ -43,7 +43,7 @@ export default function activitiesReducer (state = initialState, action) {
     case GET_ACTIVITIES_SUCCESS:
       return state.set('isFetching', false)
         .set('error', null)
-        .merge('data', action.payload)
+        .set('data', state.get('data').concat(action.payload))
 
     /**
      * ### Request fails
@@ -62,6 +62,8 @@ export default function activitiesReducer (state = initialState, action) {
         return listItem.type === action.payload.type;
     });
       console.log('index', index);
+      console.log('state.data', state.data.first());
+      console.log('action.payload.is_active', action.payload.is_active);
       return state.setIn(['data', index, 'is_active'], action.payload.is_active)
   }
 
