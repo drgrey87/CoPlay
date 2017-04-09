@@ -1,23 +1,13 @@
 'use strict'
 
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {
   View,
-  Text,
   ScrollView,
   StyleSheet,
   ActivityIndicator,
-  Dimensions,
-  TouchableHighlight
+  Dimensions
 } from 'react-native';
-
-/**
- * ### icons
- *
- * Add icon support for use in Tabbar and in navBar
- *
- */
-import Icon from 'react-native-vector-icons/Ionicons'
 
 /**
  * ## Imports
@@ -51,6 +41,11 @@ function mapDispatchToProps (dispatch) {
 import colors from '../styles/colors'
 
 /**
+ * ## Import components
+ * */
+import ActivityItem from '../components/ActivityItem'
+
+/**
  * ## Styles
  */
 var styles = StyleSheet.create({
@@ -60,13 +55,6 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     flexWrap: 'wrap'
   },
-  item: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    margin: 10,
-    width: 100,
-    height: 100
-  },
   spinnerWrap: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -74,10 +62,6 @@ var styles = StyleSheet.create({
   },
   spinner: {
     padding: 8,
-  },
-  icon: {
-    fontSize: 50,
-    color: colors.blue
   }
 })
 
@@ -88,7 +72,7 @@ var I18n = require('react-native-i18n')
 import Translations from '../lib/Translations'
 I18n.translations = Translations
 
-class Activities extends Component {
+class Activities extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {
@@ -152,47 +136,47 @@ class Activities extends Component {
       switch (item.type) {
           case 'basketball':
           case 'football':
-              data.label=`md-${item.type}`;
+              data.icon_name=`md-${item.type}`;
               data.text=item.type;
               break;
           case 'tennis':
-              data.label=`md-${item.type}ball`;
+              data.icon_name=`md-${item.type}ball`;
               data.text=item.type;
               break;
           case 'badminton':
-              data.label=`md-tennisball`;
+              data.icon_name=`md-tennisball`;
               data.text=item.type;
               break;
           case 'ice_hockey':
-              data.label=`md-tennisball`;
+              data.icon_name=`md-tennisball`;
               data.text='hockey';
               break;
           case 'table_tennis':
-              data.label=`md-tennisball`;
+              data.icon_name=`md-tennisball`;
               data.text='table tennis';
               break;
           case 'valleyball':
-              data.label=`md-tennisball`;
+              data.icon_name=`md-tennisball`;
               data.text=item.type;
               break;
           case 'american_football':
-              data.label=`md-american-football`;
+              data.icon_name=`md-american-football`;
               data.text='american football';
               break;
           case 'handball':
-              data.label=`md-tennisball`;
+              data.icon_name=`md-tennisball`;
               data.text=item.type;
               break;
           case 'frisbee':
-              data.label=`md-tennisball`;
+              data.icon_name=`md-tennisball`;
               data.text=item.type;
               break;
           case 'other':
-              data.label=`ios-more`;
+              data.icon_name=`ios-more`;
               data.text=item.type;
               break;
           default:
-              data.label=`md-tennisball`;
+              data.icon_name=`md-tennisball`;
               data.text=item.type;
       }
       return data;
@@ -201,16 +185,7 @@ class Activities extends Component {
   list_items() {
     return this.state.data.map((item, i) => {
       let item_data = this.get_itemData(item);
-      return <TouchableHighlight
-        key={i}
-        onPress={()=>this.onPressButton(item)}>
-        <View style={styles.item} backgroundColor={item.is_active ? 'red' : 'green'}>
-          <Icon name={item_data.label} style={styles.icon}/>
-          <Text ellipsizeMode='tail' numberOfLines={1}>
-            {item_data.text}
-          </Text>
-        </View>
-      </TouchableHighlight>
+      return <ActivityItem key={i} text={item_data.text} icon_name={item_data.icon_name} item={item} onPressButton={this.onPressButton}/>
     })
   }
 
@@ -218,7 +193,9 @@ class Activities extends Component {
     return (
       <View>
       {this.state.isFetching
-        ? <View style={styles.spinnerWrap}><ActivityIndicator style={styles.spinner} animating size='large'/></View>
+        ? <View style={styles.spinnerWrap}>
+            <ActivityIndicator style={styles.spinner} animating size='large'/>
+          </View>
         :
         <ScrollView contentContainerStyle={styles.container}>{this.list_items()}</ScrollView>
       }

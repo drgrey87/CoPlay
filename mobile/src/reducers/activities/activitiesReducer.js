@@ -18,6 +18,12 @@ const {
 import InitialState from './activitiesInitialState'
 
 const initialState = new InitialState()
+
+/**
+ * wrap item to immutable Record
+ * @function
+ */
+import {wrapToRecord} from '../../lib/helper'
 /**
  * ## activitiesReducer function
  * @param {Object} state - initialState
@@ -43,7 +49,7 @@ export default function activitiesReducer (state = initialState, action) {
     case GET_ACTIVITIES_SUCCESS:
       return state.set('isFetching', false)
         .set('error', null)
-        .set('data', state.get('data').concat(action.payload))
+        .set('data', state.get('data').concat(wrapToRecord(action.payload)))
 
     /**
      * ### Request fails
@@ -57,13 +63,9 @@ export default function activitiesReducer (state = initialState, action) {
      * ### Request set activity is_active
      */
     case SET_ACTIVITY_IS_ACTIVE:
-      console.log('aaaa', action.payload);
       let index = action.payload.id || state.get('data').findIndex(listItem => {
         return listItem.type === action.payload.type;
-    });
-      console.log('index', index);
-      console.log('state.data', state.data.first());
-      console.log('action.payload.is_active', action.payload.is_active);
+      });
       return state.setIn(['data', index, 'is_active'], action.payload.is_active)
   }
 
