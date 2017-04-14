@@ -63,7 +63,12 @@ export default class ActivityItem extends PureComponent {
       onPressButton: PropTypes.func
   }
 
+  componentWillReceiveProps (nextProps) {
+    console.log('222222222', nextProps);
+  }
+
   render() {
+    console.log('aaaaaaaaaaa', this.props.item.is_active);
     return (
       <TouchableHighlight
         underlayColor={colors.white}

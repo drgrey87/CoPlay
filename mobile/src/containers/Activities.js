@@ -6,7 +6,8 @@ import {
   ScrollView,
   StyleSheet,
   ActivityIndicator,
-  Dimensions
+  Dimensions,
+  Button
 } from 'react-native';
 
 /**
@@ -49,6 +50,9 @@ import ActivityItem from '../components/ActivityItem'
  * ## Styles
  */
 var styles = StyleSheet.create({
+  main_container: {
+    justifyContent: 'space-between'
+  },
   container: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
@@ -62,6 +66,11 @@ var styles = StyleSheet.create({
   },
   spinner: {
     padding: 8,
+  },
+  button: {
+    color: colors.blue,
+    margin: 10,
+    width: 50
   }
 })
 
@@ -76,24 +85,51 @@ class Activities extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-      data: [],
-      isFetching: false,
-      error: null
+      data: this.props.activities.data.toJSON(),
+      isFetching: this.props.activities.isFetching,
+      error: this.props.activities.error
     }
     this.onPressButton = this.onPressButton.bind(this)
+    this.sendActivities = this.sendActivities.bind(this)
   }
 
   is_filed() {
-    return this.props.activities.data.some(item => {
-      return item.is_active === true || item.rate !== 5;
-    })
+    return this.state.data.length;
   }
 
+  // onPressButton(item) {
+  //   this.props.actions.setIsActive({
+  //     type: item.type,
+  //     is_active: !item.is_active
+  //   })
+  // }
   onPressButton(item) {
-    this.props.actions.setIsActive({
-      type: item.type,
-      is_active: !item.is_active
-    })
+    item.is_active = !item.is_active;
+
+    // let index = action.payload.id || this.state.data.findIndex(listItem => {
+    //     return listItem.type === action.payload.type;
+    //   });
+    // this.setState({
+    //   data: state.setIn(['data', index, 'is_active'], action.payload.is_active)
+    // })
+    // let new_state = this.state.data.map(data_item => {
+    //   if (data_item.type === item.type) {
+    //     data_item.is_active = !data_item.is_active;
+    //   }
+    //   return data_item;
+    // });
+    // changed_item.is_active = !changed_item.is_active;
+    // this.setState({
+    //   data: new_state
+    // });
+    // this.props.actions.setIsActive({
+    //   type: item.type,
+    //   is_active: !item.is_active
+    // })
+  }
+
+  sendActivities() {
+
   }
 
   /**
@@ -105,7 +141,7 @@ class Activities extends PureComponent {
   componentWillReceiveProps (nextProps) {
     if (nextProps) {
       this.setState({
-        data: nextProps.activities.data,
+        data: nextProps.activities.data.toJSON(),
         isFetching: nextProps.activities.isFetching,
         error: nextProps.activities.error
       })
@@ -120,13 +156,7 @@ class Activities extends PureComponent {
    * form fields.  Otherwise, we need to go fetch the fields
    */
   componentDidMount () {
-    if (this.is_filed()) {
-      this.setState({
-        data: this.props.activities.data,
-        isFetching: this.props.activities.isFetching,
-        error: this.props.activities.error
-      })
-    } else {
+    if (!this.is_filed()) {
       this.props.actions.getActivities(this.props.currentUser)
     }
   }
@@ -190,8 +220,11 @@ class Activities extends PureComponent {
   }
 
   render() {
+    console.log('1111111111');
     return (
-      <View>
+      <View
+        style={styles.main_container}
+      >
       {this.state.isFetching
         ? <View style={styles.spinnerWrap}>
             <ActivityIndicator style={styles.spinner} animating size='large'/>
@@ -199,6 +232,11 @@ class Activities extends PureComponent {
         :
         <ScrollView contentContainerStyle={styles.container}>{this.list_items()}</ScrollView>
       }
+        <Button
+          onPress={this.sendActivities}
+          title={I18n.t('Buttons.ok')}
+          style={styles.button}
+        />
       </View>
     );
   }

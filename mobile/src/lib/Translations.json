@@ -109,6 +109,9 @@
       "valid_email": "Provide valid email",
       "valid_password": "6-12 in length, with a number and special character: !@#$%^&*",
       "valid_password_again": "Passwords must match"
+    },
+    "Buttons": {
+      "ok": "ok"
     }
   },
   "fr": {
@@ -221,7 +224,10 @@
       "valid_email": "Proveer de correo electrónico válida",
       "valid_password": "6-12 de longitud, con un número y carácter especial: !@#$%^&*",
       "valid_password_again": "Las contraseñas deben coincidir"
-    }    
+    },
+    "Buttons": {
+      "ok": "ok"
+    }
   }
 
 }
