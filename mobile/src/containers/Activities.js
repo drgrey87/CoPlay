@@ -85,7 +85,7 @@ class Activities extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-      data: this.props.activities.data.toJSON(),
+      data: this.props.activities.data,
       isFetching: this.props.activities.isFetching,
       error: this.props.activities.error
     }
@@ -94,38 +94,16 @@ class Activities extends PureComponent {
   }
 
   is_filed() {
-    return this.state.data.length;
+    return this.state.data.size;
   }
 
-  // onPressButton(item) {
-  //   this.props.actions.setIsActive({
-  //     type: item.type,
-  //     is_active: !item.is_active
-  //   })
-  // }
   onPressButton(item) {
-    item.is_active = !item.is_active;
-
-    // let index = action.payload.id || this.state.data.findIndex(listItem => {
-    //     return listItem.type === action.payload.type;
-    //   });
-    // this.setState({
-    //   data: state.setIn(['data', index, 'is_active'], action.payload.is_active)
-    // })
-    // let new_state = this.state.data.map(data_item => {
-    //   if (data_item.type === item.type) {
-    //     data_item.is_active = !data_item.is_active;
-    //   }
-    //   return data_item;
-    // });
-    // changed_item.is_active = !changed_item.is_active;
-    // this.setState({
-    //   data: new_state
-    // });
-    // this.props.actions.setIsActive({
-    //   type: item.type,
-    //   is_active: !item.is_active
-    // })
+    let index = this.state.data.findIndex(listItem => {
+        return listItem.type === item.type;
+      })
+    this.setState({
+      data: this.state.data.setIn([index, 'is_active'], !item.is_active)
+    })
   }
 
   sendActivities() {
@@ -141,7 +119,7 @@ class Activities extends PureComponent {
   componentWillReceiveProps (nextProps) {
     if (nextProps) {
       this.setState({
-        data: nextProps.activities.data.toJSON(),
+        data: nextProps.activities.data,
         isFetching: nextProps.activities.isFetching,
         error: nextProps.activities.error
       })
@@ -220,7 +198,6 @@ class Activities extends PureComponent {
   }
 
   render() {
-    console.log('1111111111');
     return (
       <View
         style={styles.main_container}

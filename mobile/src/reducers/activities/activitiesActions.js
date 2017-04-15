@@ -13,7 +13,10 @@ const {
   GET_ACTIVITIES_REQUEST,
   GET_ACTIVITIES_SUCCESS,
   GET_ACTIVITIES_FAILURE,
-  SET_ACTIVITY_IS_ACTIVE
+  SET_ACTIVITY_IS_ACTIVE,
+  SET_ACTIVITIES_REQUEST,
+  SET_ACTIVITIES_SUCCESS,
+  SET_ACTIVITIES_FAILURE
 } = require('../../lib/constants').default
 
 /**
@@ -47,6 +50,12 @@ export function isActive (data) {
     payload: data
   }
 }
+
+export function setActivitiesRequest () {
+  return {
+    type: SET_ACTIVITIES_REQUEST
+  }
+}
 /**
  * ## State actions
  *
@@ -70,4 +79,16 @@ export function getActivities (sessionToken) {
 
 export function setIsActive (data) {
   return dispatch => dispatch(isActive(data))
+}
+
+export function setActivities (sessionToken, data) {
+  return dispatch => {
+    dispatch(setActivitiesRequest())
+    return appAuthToken.getSessionToken(sessionToken)
+      .then((token) => BackendFactory(token).setActivities(data))
+      .then((json) => {
+        dispatch(getActivitiesSuccess(json))
+      })
+      .catch((error) => dispatch(getActivitiesFailure(error)))
+  }
 }

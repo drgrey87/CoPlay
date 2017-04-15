@@ -31,19 +31,6 @@ let getDefaultData = (type) => {
 };
 
 const InitialState = Record({
-  // data: List.of(
-  //   getDefaultData('basketball'),
-  //   getDefaultData('football'),
-  //   getDefaultData('tennis'),
-  //   getDefaultData('badminton'),
-  //   getDefaultData('ice_hockey'),
-  //   getDefaultData('table_tennis'),
-  //   getDefaultData('valleyball'),
-  //   getDefaultData('american_football'),
-  //   getDefaultData('handball'),
-  //   getDefaultData('frisbee'),
-  //   getDefaultData('other')
-  // ),
   data: List(),
   isFetching: false,
   error: null

@@ -63,15 +63,13 @@ export default class ActivityItem extends PureComponent {
       onPressButton: PropTypes.func
   }
 
-  componentWillReceiveProps (nextProps) {
-    console.log('222222222', nextProps);
-  }
-
   render() {
-    console.log('aaaaaaaaaaa', this.props.item.is_active);
     return (
       <TouchableHighlight
+        accessible={true}
+        accessibilityLabel={'Tap me!'}
         underlayColor={colors.white}
+        activeOpacity={0.8}
         onPress={()=>this.props.onPressButton(this.props.item)}
       >
         <View style={styles.item}>
