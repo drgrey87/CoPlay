@@ -56,6 +56,20 @@ export function setActivitiesRequest () {
     type: SET_ACTIVITIES_REQUEST
   }
 }
+
+export function setActivitiesSuccess (new_activities) {
+  return {
+    type: SET_ACTIVITIES_SUCCESS,
+    payload: new_activities
+  }
+}
+
+export function setActivitiesFailure (error) {
+  return {
+    type: SET_ACTIVITIES_FAILURE,
+    payload: error
+  }
+}
 /**
  * ## State actions
  *
@@ -81,14 +95,14 @@ export function setIsActive (data) {
   return dispatch => dispatch(isActive(data))
 }
 
-export function setActivities (sessionToken, data) {
+export function setActivities (sessionToken, activities) {
   return dispatch => {
     dispatch(setActivitiesRequest())
     return appAuthToken.getSessionToken(sessionToken)
-      .then((token) => BackendFactory(token).setActivities(data))
-      .then((json) => {
-        dispatch(getActivitiesSuccess(json))
+      .then((token) => BackendFactory(token).setActivities(activities))
+      .then((new_activities) => {
+        dispatch(setActivitiesSuccess(new_activities))
       })
-      .catch((error) => dispatch(getActivitiesFailure(error)))
+      .catch((error) => dispatch(setActivitiesFailure(error)))
   }
 }

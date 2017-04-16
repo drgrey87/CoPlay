@@ -77,6 +77,21 @@ export default function activitiesReducer (state = initialState, action) {
     case SET_ACTIVITIES_REQUEST:
       return state.set('isFetching', true)
         .set('error', null)
+
+    /**
+     * ### Success set activities
+     */
+    case SET_ACTIVITIES_SUCCESS:
+      return state.set('isFetching', false)
+        .set('error', null)
+        .set('data', wrapToRecord(action.payload))
+
+    /**
+     * ### Failure set activities
+     */
+    case SET_ACTIVITIES_FAILURE:
+      return state.set('isFetching', false)
+        .set('error', action.payload)
   }
 
   return state

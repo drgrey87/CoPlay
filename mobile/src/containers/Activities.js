@@ -87,7 +87,9 @@ class Activities extends PureComponent {
     this.state = {
       data: this.props.activities.data,
       isFetching: this.props.activities.isFetching,
-      error: this.props.activities.error
+      error: this.props.activities.error,
+      is_active_button: false,
+      changed_data: {}
     }
     this.onPressButton = this.onPressButton.bind(this)
     this.sendActivities = this.sendActivities.bind(this)
@@ -98,16 +100,18 @@ class Activities extends PureComponent {
   }
 
   onPressButton(item) {
+    let changed_data = this.state.changed_data;
     let index = this.state.data.findIndex(listItem => {
         return listItem.type === item.type;
       })
     this.setState({
-      data: this.state.data.setIn([index, 'is_active'], !item.is_active)
+      data: this.state.data.setIn([index, 'is_active'], !item.is_active),
+      is_active_button: true
     })
   }
 
   sendActivities() {
-
+    this.props.actions.setActivities(this.props.currentUser, this.state.data.toJSON())
   }
 
   /**

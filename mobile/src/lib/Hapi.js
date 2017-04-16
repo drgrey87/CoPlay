@@ -294,6 +294,31 @@ export class Hapi extends Backend {
       })
   }
 
+  /**
+   * ### setActivities
+   * Using the sessionToken, we'll get everything about
+   * the current user.
+   *
+   * @returns
+   */
+  async setActivities (activities) {
+    return await this._fetch({
+      method: 'POST',
+      url: '/activities',
+      body: activities
+    })
+      .then((res) => {
+        if ((res.status === 200 || res.status === 201)) {
+          return res.json
+        } else {
+          throw (res.json)
+        }
+      })
+      .catch((error) => {
+        throw (error)
+      })
+  }
+
 }
 // The singleton variable
 export let hapi = new Hapi()
