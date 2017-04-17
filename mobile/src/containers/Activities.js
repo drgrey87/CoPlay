@@ -10,6 +10,8 @@ import {
   Button
 } from 'react-native';
 
+import {keys as _keys} from 'lodash/object';
+
 /**
  * ## Imports
  *
@@ -88,9 +90,9 @@ class Activities extends PureComponent {
       data: this.props.activities.data,
       isFetching: this.props.activities.isFetching,
       error: this.props.activities.error,
-      is_active_button: false,
-      changed_data: {}
+      is_active_button: false
     }
+    this.changed_data = {};
     this.onPressButton = this.onPressButton.bind(this)
     this.sendActivities = this.sendActivities.bind(this)
   }
@@ -100,13 +102,18 @@ class Activities extends PureComponent {
   }
 
   onPressButton(item) {
-    let changed_data = this.state.changed_data;
+    if (this.changed_data[item._id]) {
+      delete this.changed_data[item._id];
+    } else {
+      this.changed_data[item._id] = item._id;
+    }
+
     let index = this.state.data.findIndex(listItem => {
         return listItem.type === item.type;
       })
     this.setState({
       data: this.state.data.setIn([index, 'is_active'], !item.is_active),
-      is_active_button: true
+      is_active_button: !!_keys(this.changed_data).length
     })
   }
 
@@ -213,11 +220,22 @@ class Activities extends PureComponent {
         :
         <ScrollView contentContainerStyle={styles.container}>{this.list_items()}</ScrollView>
       }
-        <Button
-          onPress={this.sendActivities}
-          title={I18n.t('Buttons.ok')}
-          style={styles.button}
-        />
+
+        {this.state.is_active_button
+          ?
+            <Button
+            onPress={this.sendActivities}
+            title={I18n.t('Buttons.ok')}
+            style={styles.button}
+            />
+          :
+            <Button
+            onPress={this.sendActivities}
+            title={I18n.t('Buttons.ok')}
+            style={styles.button}
+            disabled
+            />
+        }
       </View>
     );
   }
