@@ -41,6 +41,7 @@ import GlobalInitialState from './reducers/global/globalInitialState'
 import ProfileInitialState from './reducers/profile/profileInitialState'
 import DrawerInitialState from './reducers/drawer/drawerInitialState'
 import ActivitiesInitialState from './reducers/activities/activitiesInitialState'
+import CreateEventsInitialState from './reducers/create_events/createEventsInitialState'
 
 /**
  *  The version of the app but not  displayed yet
@@ -66,7 +67,8 @@ function getInitialState () {
         global: (new GlobalInitialState()),
         profile: new ProfileInitialState(),
         drawer: new DrawerInitialState(),
-        activities: new ActivitiesInitialState()
+        activities: new ActivitiesInitialState(),
+        create_Events: new CreateEventsInitialState()
     }
     return _initState
 }

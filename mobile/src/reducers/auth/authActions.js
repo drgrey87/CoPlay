@@ -301,7 +301,7 @@ export function signup (username, email, password) {
             dispatch(logoutState())
             // navigate to Tabbar
             // Actions.Tabbar()
-            Actions.Drawer()
+            Actions.Activities()
           })
       })
       .catch((error) => {

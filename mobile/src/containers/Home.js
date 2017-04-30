@@ -10,13 +10,14 @@ import {
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import colors from '../styles/colors'
+import {Actions} from 'react-native-router-flux'
 
 import { ListItems } from '../lib/data.service';
 
 const Home = () => {
 
   let onPress = () => {
-    alert(1);
+    Actions.CreateEvent()
   }
 
   return (

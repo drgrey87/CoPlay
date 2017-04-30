@@ -9,7 +9,7 @@ import {
   Dimensions,
   Button
 } from 'react-native';
-
+import {Actions} from 'react-native-router-flux'
 import {keys as _keys} from 'lodash/object';
 
 /**
@@ -119,6 +119,7 @@ class Activities extends PureComponent {
 
   sendActivities() {
     this.props.actions.setActivities(this.props.currentUser, this.state.data.toJSON())
+    Actions.Drawer();
   }
 
   /**

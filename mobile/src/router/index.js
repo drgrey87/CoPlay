@@ -1,10 +1,16 @@
 import React, {PureComponent} from 'react'
-import {Scene, Router} from 'react-native-router-flux';
+import {
+  Scene,
+  Router,
+  Actions,
+  Modal
+} from 'react-native-router-flux';
 import {
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  Navigator
+
 } from 'react-native'
-import {Actions} from 'react-native-router-flux';
 /**
  * ### icons
  *
@@ -12,7 +18,6 @@ import {Actions} from 'react-native-router-flux';
  *
  */
 import Icon from 'react-native-vector-icons/FontAwesome'
-
 /*
  * ## Imports
  *
@@ -46,6 +51,8 @@ import Home from '../containers/Home'
 import Lindau from '../components/Lindau'
 import Map from '../containers/Map'
 import Activities from '../containers/Activities'
+import Event from '../components/create_event/Event'
+import TabIcon from '../components/TabIcon'
 
 /**
  * ### Translations
@@ -185,14 +192,37 @@ class RouterWrap extends PureComponent {
                open={false}
                type='replace'>
 
-          <Scene key="Client" tabs={false}>
+          <Scene key="Client">
 
             <Scene
               key="Home"
               component={Home}
               title="Home"
+              sceneStyle={{paddingTop: Navigator.NavigationBar.Styles.General.TotalNavHeight}}
               initial
             />
+
+            <Scene
+              key='CreateEvent'
+              //component={Modal}
+              tabs
+              //hideNavBar
+              tabBarStyle={{backgroundColor: '#eee'}}
+              tabBarSelectedItemStyle={{backgroundColor: '#ddd'}}
+            >
+              <Scene
+                key="Event"
+                component={Event}
+                title="Create Event"
+                //navigationBarStyle={{ backgroundColor: 'red' }}
+                //titleStyle={{ color: 'white' }}
+                icon={TabIcon}
+                //hideNavBar
+                initial
+                sceneStyle={{paddingTop: Navigator.NavigationBar.Styles.General.TotalNavHeight}}
+              />
+            </Scene>
+
             <Scene
               key="Lindau"
               component={Lindau}

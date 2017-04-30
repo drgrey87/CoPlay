@@ -53,6 +53,14 @@
       "valid_email": "请提供有效邮箱地址",
       "valid_password": "请输入6-12个数字和特殊字符: !@#$%^&*",
       "valid_password_again": "密码不匹配"
+    },
+    "Buttons": {
+      "ok": "ok"
+    },
+    "Events": {
+      "name_txt": "Event name",
+      "name_placeholder": "Add event name here",
+      "types": "What types of Event is it?"
     }
   },
   "en": {
@@ -112,6 +120,11 @@
     },
     "Buttons": {
       "ok": "ok"
+    },
+    "Events": {
+      "name_txt": "Event name",
+      "name_placeholder": "Add event name here",
+      "types": "What types of Event is it?"
     }
   },
   "fr": {
@@ -168,7 +181,15 @@
       "valid_email": "Fournir email valide",
       "valid_password": "6-12 en longueur, avec un nombre et un caractère spécial: !@#$%^&*",
       "valid_password_again": "les mots de passe doivent correspondre"
-    }    
+    },
+    "Buttons": {
+      "ok": "ok"
+    },
+    "Events": {
+      "name_txt": "Event name",
+      "name_placeholder": "Add event name here",
+      "types": "What types of Event is it?"
+    }
   },
   "es": {
     "App": {
@@ -227,6 +248,11 @@
     },
     "Buttons": {
       "ok": "ok"
+    },
+    "Events": {
+      "name_txt": "Event name",
+      "name_placeholder": "Add event name here",
+      "types": "What types of Event is it?"
     }
   }
 
