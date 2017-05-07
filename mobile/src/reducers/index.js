@@ -16,6 +16,7 @@ import global from './global/globalReducer'
 import profile from './profile/profileReducer'
 import drawer from './drawer/drawerReducer'
 import activities from './activities/activitiesReducer'
+import create_events from './create_events/createEventsReducer'
 
 import { combineReducers } from 'redux'
 
@@ -31,7 +32,8 @@ const rootReducer = combineReducers({
     global,
     profile,
     drawer,
-    activities
+    activities,
+    create_events
 })
 
 export default rootReducer

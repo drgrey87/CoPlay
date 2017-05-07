@@ -24,18 +24,17 @@ import { connect } from 'react-redux'
 /**
  * The actions we need
  */
-import * as activitiesActions from '../../reducers/activities/activitiesActions'
+import * as createEventsActions from '../../reducers/create_events/createEventsActions'
 let mapStateToProps = (state) => {
   return {
-    activities: state.activities,
     currentUser: state.global.currentUser,
-    create_events: state.create_Events
+    create_events: state.create_events
   }
 }
 
 let mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ ...activitiesActions }, dispatch)
+    actions: bindActionCreators({ ...createEventsActions }, dispatch)
   }
 }
 

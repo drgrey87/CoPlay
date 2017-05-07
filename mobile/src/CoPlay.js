@@ -68,7 +68,7 @@ function getInitialState () {
         profile: new ProfileInitialState(),
         drawer: new DrawerInitialState(),
         activities: new ActivitiesInitialState(),
-        create_Events: new CreateEventsInitialState()
+        create_events: new CreateEventsInitialState()
     }
     return _initState
 }
