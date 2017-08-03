@@ -1,16 +1,21 @@
 import React, {PureComponent} from 'react'
-import {
-  Scene,
-  Router,
-  Actions,
-  Modal
-} from 'react-native-router-flux';
+// import {
+//   Scene,
+//   // Router,
+//   Actions,
+//   Modal
+// } from 'react-native-router-flux';
+
 import {
   StyleSheet,
   TouchableOpacity,
-  Navigator
-
+  Navigator,
+  View,
+  Text
 } from 'react-native'
+
+import { StackNavigator } from 'react-navigation';
+
 /**
  * ### icons
  *
@@ -144,164 +149,182 @@ class RouterWrap extends PureComponent {
   }
 
   render() {
-    return <Router
-      renderLeftButton={this.navBarLeftButton}
-      renderRightButton={this.navBarRightButton}
-      navigationBarStyle={styles.appBar}
-      titleStyle={styles.title}
-      leftButtonIconStyle={styles.iconBack}
-    >
-      <Scene key='root'>
-
-        <Scene key='App'
-               component={App}
-               hideNavBar
-               type='replace'
-               initial/>
-
-        <Scene key='InitialLoginForm'
-               component={Register}
-               hideNavBar
-               type='replace'/>
-
-        <Scene key='Login'
-               component={Login}
-               hideNavBar
-               type='replace'/>
-
-        <Scene key='Register'
-               component={Register}
-               hideNavBar
-               type='replace'/>
-
-        <Scene key='ForgotPassword'
-               component={ForgotPassword}
-               hideNavBar
-               type='replace'/>
-
-        <Scene key='Subview'
-               component={Subview}
-               hideNavBar/>
-
-        <Scene key='Activities'
-               component={Activities}
-               hideNavBar/>
-
-        <Scene key='Drawer'
-               component={NavigationDrawer}
-               open={false}
-               type='replace'>
-
-          <Scene key="Client">
-
-            <Scene
-              key="Home"
-              component={Home}
-              title="Home"
-              sceneStyle={{paddingTop: Navigator.NavigationBar.Styles.General.TotalNavHeight}}
-              initial
-            />
-
-            <Scene
-              key='CreateEvent'
-              //component={Modal}
-              tabs
-              //hideNavBar
-              tabBarStyle={{backgroundColor: '#eee'}}
-              tabBarSelectedItemStyle={{backgroundColor: '#ddd'}}
-            >
-              <Scene
-                key="Event"
-                component={Event}
-                title="Create Event"
-                //navigationBarStyle={{ backgroundColor: 'red' }}
-                //titleStyle={{ color: 'white' }}
-                icon={TabIcon}
-                //hideNavBar
-                initial
-                sceneStyle={{paddingTop: Navigator.NavigationBar.Styles.General.TotalNavHeight}}
-              />
-            </Scene>
-
-            <Scene
-              key="Lindau"
-              component={Lindau}
-              title="Lindau22"
-            />
-            {/*<Scene*/}
-            {/*key="Fanad"*/}
-            {/*component={Fanad}*/}
-            {/*title="Fanad"*/}
-            {/*/>*/}
-            {/*<Scene*/}
-            {/*key="Augustine"*/}
-            {/*component={Augustine}*/}
-            {/*title="Augustine"*/}
-            {/*/>*/}
-            {/*<Scene*/}
-            {/*key="Peggys"*/}
-            {/*component={Peggys}*/}
-            {/*title="Peggys"*/}
-            {/*/>*/}
-            {/*<Scene*/}
-            {/*key="Hercules"*/}
-            {/*component={Hercules}*/}
-            {/*title="Hercules"*/}
-            {/*/>*/}
-            {/*<Scene*/}
-            {/*key="Bass"*/}
-            {/*component={Bass}*/}
-            {/*title="Bass"*/}
-            {/*/>*/}
-            {/*<Scene*/}
-            {/*key="About"*/}
-            {/*component={About}*/}
-            {/*title="About"*/}
-            {/*/>*/}
-            {/*<Scene*/}
-            {/*key="Credits"*/}
-            {/*component={Credits}*/}
-            {/*title="Credits"*/}
-            {/*/>*/}
-            <Scene
-              key="Map"
-              component={Map}
-              title="Map"
-            />
-
-            {/*old functional, will be deleted in future*/}
-
-            {/*<Scene key='Tabbar'*/}
-            {/*tabs*/}
-            {/*hideNavBar*/}
-            {/*tabBarStyle={styles.tabBar}*/}
-            {/*default='Main'>*/}
-
-            <Scene key='Logout'
-            title={I18n.t('Snowflake.logout')}
-            //icon={TabIcon}
-            //iconName={'sign-out'}
-            hideNavBar
-            component={Logout} />
-
-            {/*<Scene key='Main'*/}
-            {/*title={I18n.t('Snowflake.main')}*/}
-            {/*iconName={'home'}*/}
-            {/*icon={TabIcon}*/}
-            {/*hideNavBar*/}
-            {/*component={Main}*/}
-            {/*initial />*/}
-
-            <Scene key='Profile'
-                   title={I18n.t('Snowflake.profile')}
-              //icon={TabIcon}
-              //iconName={'gear'}
-              //hideNavBar
-                   component={Profile}/>
-          </Scene>
-        </Scene>
-      </Scene>
-    </Router>
+    // return (
+    //     <View>
+    //       <Text>Hello people</Text>
+    //     </View>
+    // );
+    let Router = StackNavigator({
+      App: { screen: App },
+      Register: {screen: Register},
+      Login: {screen: Login},
+      ForgotPassword: {screen: ForgotPassword},
+      Subview: {screen: Subview},
+      Activities: {screen: Activities},
+      Home: {screen: Home},
+      Event: {screen: Event},
+      Logout: {screen: Logout},
+      Profile: {screen: Profile}
+    });
+    return <Router/>;
+    // return <Router
+    //   renderLeftButton={this.navBarLeftButton}
+    //   renderRightButton={this.navBarRightButton}
+    //   navigationBarStyle={styles.appBar}
+    //   titleStyle={styles.title}
+    //   leftButtonIconStyle={styles.iconBack}
+    // >
+    //   <Scene key='root'>
+    //
+    //     <Scene key='App'
+    //            component={App}
+    //            hideNavBar
+    //            type='replace'
+    //            initial/>
+    //
+    //     <Scene key='InitialLoginForm'
+    //            component={Register}
+    //            hideNavBar
+    //            type='replace'/>
+    //
+    //     <Scene key='Login'
+    //            component={Login}
+    //            hideNavBar
+    //            type='replace'/>
+    //
+    //     <Scene key='Register'
+    //            component={Register}
+    //            hideNavBar
+    //            type='replace'/>
+    //
+    //     <Scene key='ForgotPassword'
+    //            component={ForgotPassword}
+    //            hideNavBar
+    //            type='replace'/>
+    //
+    //     <Scene key='Subview'
+    //            component={Subview}
+    //            hideNavBar/>
+    //
+    //     <Scene key='Activities'
+    //            component={Activities}
+    //            hideNavBar/>
+    //
+    //     <Scene key='Drawer'
+    //            component={NavigationDrawer}
+    //            open={false}
+    //            type='replace'>
+    //
+    //       <Scene key="Client">
+    //
+    //         <Scene
+    //           key="Home"
+    //           component={Home}
+    //           title="Home"
+    //           sceneStyle={{paddingTop: Navigator.NavigationBar.Styles.General.TotalNavHeight}}
+    //           initial
+    //         />
+    //
+    //         <Scene
+    //           key='CreateEvent'
+    //           //component={Modal}
+    //           tabs
+    //           //hideNavBar
+    //           tabBarStyle={{backgroundColor: '#eee'}}
+    //           tabBarSelectedItemStyle={{backgroundColor: '#ddd'}}
+    //         >
+    //           <Scene
+    //             key="Event"
+    //             component={Event}
+    //             title="Create Event"
+    //             //navigationBarStyle={{ backgroundColor: 'red' }}
+    //             //titleStyle={{ color: 'white' }}
+    //             icon={TabIcon}
+    //             //hideNavBar
+    //             initial
+    //             sceneStyle={{paddingTop: Navigator.NavigationBar.Styles.General.TotalNavHeight}}
+    //           />
+    //         </Scene>
+    //
+    //         <Scene
+    //           key="Lindau"
+    //           component={Lindau}
+    //           title="Lindau22"
+    //         />
+    //         {/*<Scene*/}
+    //         {/*key="Fanad"*/}
+    //         {/*component={Fanad}*/}
+    //         {/*title="Fanad"*/}
+    //         {/*/>*/}
+    //         {/*<Scene*/}
+    //         {/*key="Augustine"*/}
+    //         {/*component={Augustine}*/}
+    //         {/*title="Augustine"*/}
+    //         {/*/>*/}
+    //         {/*<Scene*/}
+    //         {/*key="Peggys"*/}
+    //         {/*component={Peggys}*/}
+    //         {/*title="Peggys"*/}
+    //         {/*/>*/}
+    //         {/*<Scene*/}
+    //         {/*key="Hercules"*/}
+    //         {/*component={Hercules}*/}
+    //         {/*title="Hercules"*/}
+    //         {/*/>*/}
+    //         {/*<Scene*/}
+    //         {/*key="Bass"*/}
+    //         {/*component={Bass}*/}
+    //         {/*title="Bass"*/}
+    //         {/*/>*/}
+    //         {/*<Scene*/}
+    //         {/*key="About"*/}
+    //         {/*component={About}*/}
+    //         {/*title="About"*/}
+    //         {/*/>*/}
+    //         {/*<Scene*/}
+    //         {/*key="Credits"*/}
+    //         {/*component={Credits}*/}
+    //         {/*title="Credits"*/}
+    //         {/*/>*/}
+    //         <Scene
+    //           key="Map"
+    //           component={Map}
+    //           title="Map"
+    //         />
+    //
+    //         {/*old functional, will be deleted in future*/}
+    //
+    //         {/*<Scene key='Tabbar'*/}
+    //         {/*tabs*/}
+    //         {/*hideNavBar*/}
+    //         {/*tabBarStyle={styles.tabBar}*/}
+    //         {/*default='Main'>*/}
+    //
+    //         <Scene key='Logout'
+    //         title={I18n.t('Snowflake.logout')}
+    //         //icon={TabIcon}
+    //         //iconName={'sign-out'}
+    //         hideNavBar
+    //         component={Logout} />
+    //
+    //         {/*<Scene key='Main'*/}
+    //         {/*title={I18n.t('Snowflake.main')}*/}
+    //         {/*iconName={'home'}*/}
+    //         {/*icon={TabIcon}*/}
+    //         {/*hideNavBar*/}
+    //         {/*component={Main}*/}
+    //         {/*initial />*/}
+    //
+    //         <Scene key='Profile'
+    //                title={I18n.t('Snowflake.profile')}
+    //           //icon={TabIcon}
+    //           //iconName={'gear'}
+    //           //hideNavBar
+    //                component={Profile}/>
+    //       </Scene>
+    //     </Scene>
+    //   </Scene>
+    // </Router>
   }
 }
 
