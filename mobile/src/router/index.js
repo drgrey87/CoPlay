@@ -14,7 +14,7 @@ import {
   Text
 } from 'react-native'
 
-import { StackNavigator } from 'react-navigation';
+//import { StackNavigator } from 'react-navigation';
 
 /**
  * ### icons

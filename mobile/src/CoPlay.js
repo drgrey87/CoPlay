@@ -122,7 +122,9 @@ export default function native (platform) {
             return (
 
                 <Provider store={store}>
-                    <ROUTER/>
+                    <View>
+                        <Text>App.version</Text>
+                    </View>
                 </Provider>
             )
         }

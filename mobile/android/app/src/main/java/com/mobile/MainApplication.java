@@ -2,8 +2,8 @@ package com.mobile;
 
 import android.app.Application;
 import android.util.Log;
+import android.support.annotation.NonNull;
 
-import com.facebook.react.ReactApplication;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.airbnb.android.react.maps.MapsPackage;
@@ -13,38 +13,32 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.burnweb.rnsimplealertdialog.RNSimpleAlertDialogPackage;
+import com.reactnativenavigation.NavigationApplication;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class MainApplication extends Application implements ReactApplication {
+public class MainApplication extends NavigationApplication {
 
-  private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
-    @Override
-    public boolean getUseDeveloperSupport() {
+  @Override
+  public boolean isDebug() {
       return BuildConfig.DEBUG;
-    }
+  }
+
+  @NonNull
+  @Override
+  public List<ReactPackage> createAdditionalReactPackages() {
+      return Arrays.<ReactPackage>asList(
+        new VectorIconsPackage(),
+        new ReactNativeConfigPackage(),
+        new MapsPackage(),
+        new RNSimpleAlertDialogPackage()
+      );
+  }
 
     @Override
-    protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(
-          new MainReactPackage(),
-            new VectorIconsPackage(),
-            new ReactNativeConfigPackage(),
-            new MapsPackage(),
-            new RNSimpleAlertDialogPackage()
-      );
+    public void onCreate() {
+      super.onCreate();
+      SoLoader.init(this, /* native exopackage */ false);
     }
-  };
-
-  @Override
-  public ReactNativeHost getReactNativeHost() {
-    return mReactNativeHost;
-  }
-
-  @Override
-  public void onCreate() {
-    super.onCreate();
-    SoLoader.init(this, /* native exopackage */ false);
-  }
 }
