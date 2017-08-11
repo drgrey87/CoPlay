@@ -1,23 +1,39 @@
-import { combineReducers } from 'react-redux';
-import counter from './counter';
-import netsList from './netsList';
+/**
+ * # reducers
+ *
+ * This class combines all the reducers into one
+ *
+ */
+'use strict'
+/**
+ * ## Imports
+ *
+ * our 5 reducers
+ */
+import auth from './auth/authReducer'
+import device from './device/deviceReducer'
+import global from './global/globalReducer'
+import profile from './profile/profileReducer'
+import drawer from './drawer/drawerReducer'
+import activities from './activities/activitiesReducer'
+import create_events from './create_events/createEventsReducer'
+
+import { combineReducers } from 'redux'
 
 /**
- * combineReducers is important to understand. As your app might grow in size
- * and complexity, you will likely begin to split your reducers into separate
- * functions - with each one managing a separate slice of the state! This helper
- * function from 'redux' simply merges the reducers. Keep in mind we are using
- * the ES6 shorthand for property notation.
+ * ## CombineReducers
  *
- * If you're transitioning from Flux, you will notice we only use one store, but
- * instead of relying on multiple stores to manage diff parts of the state, we use
- * various reducers and combine them.
- *
- * More info: http://rackt.org/redux/docs/api/combineReducers.html
+ * the rootReducer will call each and every reducer with the state and action
+ * EVERY TIME there is a basic action
  */
 const rootReducer = combineReducers({
-  counter, // you might be used to: counter: counter,
-  netsList
-});
+    auth,
+    device,
+    global,
+    profile,
+    drawer,
+    activities,
+    create_events
+})
 
-export default rootReducer;
+export default rootReducer

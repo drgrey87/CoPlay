@@ -1,79 +1,133 @@
-import React, { Component, PropTypes } from 'react';
-import { bindActionCreators } from 'react-redux';
-import { connect } from 'react-redux';
-import * as CounterActions from '../actions/CounterActions';
-import Counter from '../components/Counter';
-import Footer from '../components/Footer';
-import NetsList from '../components/subComponents/NetsList';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-
-injectTapEventPlugin();
-
-//https://api.vk.com/method/audion.get&access_token=rT1T5bMFGX1OnYEkiQ3l&v=5.52
 /**
- * It is common practice to have a 'Root' container/component require our main App (this one).
- * Again, this is because it serves to wrap the rest of our application with the Provider
- * component to make the Redux store available to the rest of the app.
+ * # app.js
+ *  Display startup screen and
+ *  getSessionTokenAtStartup which will navigate upon completion
+ *
  */
-class App extends Component {
+'use strict'
+/*
+ * ## Imports
+ *
+ * Imports from redux
+ */
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
-  render() {
-    // we can use ES6's object destructuring to effectively 'unpack' our props
-    const { netsList, data, actions } = this.props;
-    return (
-      <MuiThemeProvider>
-        <div className="main-app-container">
-          <NetsList netsList={netsList.nets} actions={actions} />
-          <Counter counter={data.state} actions={actions} />
-          <Footer />
-        </div>
-      </MuiThemeProvider>
-    );
+/**
+ * Project actions
+ */
+import * as authActions from '../reducers/auth/authActions'
+import * as deviceActions from '../reducers/device/deviceActions'
+import * as globalActions from '../reducers/global/globalActions'
+
+/**
+ * The components we need from ReactNative
+ */
+import React from 'react'
+import
+{
+    StyleSheet,
+    View,
+    Text
+}
+from 'react-native'
+
+/**
+ * The Header will display a Image and support Hot Loading
+ */
+import Header from '../components/Header'
+
+/**
+ *  The version of the app but not  displayed yet
+ */
+import pack from '../../package'
+
+/**
+ *  Save that state
+ */
+function mapStateToProps (state) {
+  return {
+    deviceVersion: state.device.version,
+    auth: {
+      form: {
+        isFetching: state.auth.form.isFetching
+      }
+    },
+    global: {
+      currentState: state.global.currentState,
+      showState: state.global.showState
+    }
   }
 }
 
-App.propTypes = {
-  data: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired,
-  netsList: PropTypes.object.isRequired
-};
-
 /**
- * Keep in mind that 'state' isn't the state of local object, but your single
- * state in this Redux application. 'counter' is a property within our store/state
- * object. By mapping it to props, we can pass it to the child component Counter.
+ * Bind all the actions from authActions, deviceActions and globalActions
  */
-function mapStateToProps(state) {
+function mapDispatchToProps (dispatch) {
   return {
-    data: state.counter,
-    netsList: state.netsList
-  };
+    actions: bindActionCreators({ ...authActions, ...deviceActions, ...globalActions }, dispatch)
+  }
 }
 
-/**
- * Turns an object whose values are 'action creators' into an object with the same
- * keys but with every action creator wrapped into a 'dispatch' call that we can invoke
- * directly later on. Here we imported the actions specified in 'CounterActions.js' and
- * used the bindActionCreators function Redux provides us.
- *
- * More info: http://redux.js.org/docs/api/bindActionCreators.html
- */
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(CounterActions, dispatch)
-  };
-}
+var styles = StyleSheet.create({
+  container: {
+    borderTopWidth: 2,
+    borderBottomWidth: 2,
+    marginTop: 80,
+    padding: 10
+  },
+  summary: {
+    fontFamily: 'BodoniSvtyTwoITCTT-Book',
+    fontSize: 18,
+    fontWeight: 'bold'
+  }
+})
 
 /**
- * 'connect' is provided to us by the bindings offered by 'react-redux'. It simply
- * connects a React component to a Redux store. It never modifies the component class
- * that is passed into it, it actually returns a new connected componet class for use.
- *
- * More info: https://github.com/rackt/react-redux
+ * ## App class
  */
+var reactMixin = require('react-mixin')
+import TimerMixin from 'react-timer-mixin'
+/**
+ * ### Translations
+ */
+var I18n = require('react-native-i18n')
+import Translations from '../lib/Translations'
+I18n.translations = Translations
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+let App = React.createClass({
+    /**
+     * See if there's a sessionToken from a previous login
+     *
+     */
+  componentDidMount () {
+        // Use a timer so App screen is displayed
+    this.setTimeout(
+            () => {
+              this.props.actions.getSessionToken()
+            },
+            2500
+        )
+  },
+
+  render () {
+    return (
+      <View style={styles.container}>
+        <Header isFetching={this.props.auth.form.isFetching}
+          showState={this.props.global.showState}
+          currentState={this.props.global.currentState}
+          onGetState={this.props.actions.getState}
+          onSetState={this.props.actions.setState} />
+
+        <Text style={styles.summary}>{pack.name} {I18n.t('App.version')}:{this.props.deviceVersion}</Text>
+
+      </View>
+    )
+  }
+})
+// Since we're using ES6 classes, have to define the TimerMixin
+reactMixin(App.prototype, TimerMixin)
+/**
+ * Connect the properties
+ */
+export default connect(mapStateToProps, mapDispatchToProps)(App)
