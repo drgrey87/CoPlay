@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import SideMenu from 'react-native-side-menu'
-import Menu from '../components/Menu'
+import Drawer from '../components/Drawer'
 // import {Actions, DefaultRenderer} from 'react-native-router-flux';
 import {
   StyleSheet,
@@ -83,7 +83,7 @@ class NavigationDrawer extends Component {
   }
 
   render() {
-    const menu = <Menu
+    const menu = <Drawer
         username={this.props.profile.username}
         onItemSelected={this.onMenuItemSelected} />;
     const state = this.props.navigationState;

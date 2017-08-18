@@ -14,27 +14,37 @@ import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.burnweb.rnsimplealertdialog.RNSimpleAlertDialogPackage;
 import com.reactnativenavigation.NavigationApplication;
+import com.facebook.FacebookSdk;
+import com.facebook.CallbackManager;
+import com.facebook.appevents.AppEventsLogger;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class MainApplication extends NavigationApplication {
 
-  @Override
-  public boolean isDebug() {
-      return BuildConfig.DEBUG;
-  }
+    private static CallbackManager mCallbackManager = CallbackManager.Factory.create();
 
-  @NonNull
-  @Override
-  public List<ReactPackage> createAdditionalReactPackages() {
+    protected static CallbackManager getCallbackManager() {
+      return mCallbackManager;
+    }
+
+    @Override
+    public boolean isDebug() {
+      return BuildConfig.DEBUG;
+    }
+
+    @NonNull
+    @Override
+    public List<ReactPackage> createAdditionalReactPackages() {
       return Arrays.<ReactPackage>asList(
         new VectorIconsPackage(),
         new ReactNativeConfigPackage(),
         new MapsPackage(),
-        new RNSimpleAlertDialogPackage()
+        new RNSimpleAlertDialogPackage(),
+        new FBSDKPackage(mCallbackManager)
       );
-  }
+    }
 
     @Override
     public void onCreate() {

@@ -1,13 +1,11 @@
 'use strict'
 
 /**
- * ## imports
+ * ## imports libs
  *
  */
 import React, { Component } from 'react'
-
 import {Provider} from 'react-redux'
-
 import { Navigation } from 'react-native-navigation';
 
 /**
@@ -24,6 +22,7 @@ import configureStore from './lib/configureStore'
  */
 import {setPlatform, setVersion} from './reducers/device/deviceActions'
 import {setStore} from './reducers/global/globalActions'
+import {getSessionToken} from './reducers/auth/authActions'
 
 /**
  * ## States
@@ -47,7 +46,7 @@ const VERSION = pack.version
 /**
  *  import routes
  */
-import { registerScreens } from './register_screans';
+import { registerScreens } from './register_screens';
 
 /**
  *
@@ -83,12 +82,12 @@ export default (platform) => {
         statusBarColor: 'black',
         statusBarTextColorScheme: 'light',
         navigationBarColor: 'black',
-        navBarBackgroundColor: '#0a0a0a',
-        navBarTextColor: 'white',
-        navBarButtonColor: 'white',
+        navBarBackgroundColor: '#2196F3',
+        navBarTextColor: '#fff',
+        navBarButtonColor: '#fff',
         tabBarButtonColor: 'red',
         tabBarSelectedButtonColor: 'red',
-        tabBarBackgroundColor: 'white',
+        tabBarBackgroundColor: '#fff',
         topBarElevationShadowEnabled: false,
         navBarHideOnScroll: true,
         tabBarHidden: true,
@@ -102,21 +101,41 @@ export default (platform) => {
 
     registerScreens(store, Provider);
 
-    Navigation.startSingleScreenApp({
-        screen: {
-            screen: 'mobile.Home',
-            // title: 'Movies',
-            // navigatorStyle,
-            // leftButtons: [
-            //     {
-            //         id: 'sideMenu'
-            //     }
-            // ]
-        },
-        // drawer: {
-        //     left: {
-        //         screen: 'movieapp.Drawer'
-        //     }
-        // }
+    store.subscribe(() => {
+        if(store.getState().auth.form.fields.email) {
+            Navigation.startSingleScreenApp({
+                screen: {
+                    screen: 'mobile.Home',
+                    title: 'Home',
+                    navigatorStyle,
+                    leftButtons: [
+                        {
+                            id: 'sideMenu'
+                        }
+                    ]
+                },
+                drawer: {
+                    left: {
+                        screen: 'mobile.Drawer'
+                    }
+                }
+            });
+        } else {
+            Navigation.startSingleScreenApp({
+                screen: {
+                    screen: 'mobile.Login',
+                    title: 'Login',
+                    navigatorStyle,
+                    // leftButtons: [
+                    //     {
+                    //         id: 'sideMenu'
+                    //     }
+                    // ]
+                }
+            });
+        }
+
     });
+
+    store.dispatch(getSessionToken());
 }

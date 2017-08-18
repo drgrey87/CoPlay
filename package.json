@@ -16,6 +16,7 @@
     "react-native": "0.44.0",
     "react-native-action-button": "^2.6.4",
     "react-native-config": "^0.3.1",
+    "react-native-fbsdk": "^0.6.1",
     "react-native-i18n": "^1.0.0",
     "react-native-maps": "^0.15.0",
     "react-native-navbar": "^1.6.3",

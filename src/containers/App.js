@@ -23,7 +23,7 @@ import * as globalActions from '../reducers/global/globalActions'
 /**
  * The components we need from ReactNative
  */
-import React from 'react'
+import React, {Component} from 'react'
 import
 {
     StyleSheet,
@@ -95,36 +95,67 @@ var I18n = require('react-native-i18n')
 import Translations from '../lib/Translations'
 I18n.translations = Translations
 
-let App = React.createClass({
+class App extends Component{
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isLoading: true,
+      // isRefreshing: false
+    };
+
+    this._viewMovie = this._viewMovie.bind(this);
+    this._onRefresh = this._onRefresh.bind(this);
+  }
+
+  componentWillMount() {
+    this.props.actions.getSessionToken()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.auth.form.isFetching) {
+      this.props.navigator.showModal({
+        title,
+        screen: 'movieapp.MoviesList',
+        passProps: {
+          type
+        },
+        navigatorButtons: {
+          rightButtons
+        }
+      });
+    }
+  }
     /**
      * See if there's a sessionToken from a previous login
      *
      */
-  componentDidMount () {
-        // Use a timer so App screen is displayed
-    this.setTimeout(
-            () => {
-              this.props.actions.getSessionToken()
-            },
-            2500
-        )
-  },
+  // componentDidMount () {
+  //       // Use a timer so App screen is displayed
+  //   this.setTimeout(
+  //           () => {
+  //             this.props.actions.getSessionToken()
+  //           },
+  //           2500
+  //       )
+  // }
 
-  render () {
-    return (
-      <View style={styles.container}>
-        <Header isFetching={this.props.auth.form.isFetching}
-          showState={this.props.global.showState}
-          currentState={this.props.global.currentState}
-          onGetState={this.props.actions.getState}
-          onSetState={this.props.actions.setState} />
-
-        <Text style={styles.summary}>{pack.name} {I18n.t('App.version')}:{this.props.deviceVersion}</Text>
-
-      </View>
-    )
-  }
-})
+  // render () {
+  //   return (
+  //     <View style={styles.container}>
+  //       <Header isFetching={this.props.auth.form.isFetching}
+  //         showState={this.props.global.showState}
+  //         currentState={this.props.global.currentState}
+  //         onGetState={this.props.actions.getState}
+  //         onSetState={this.props.actions.setState} />
+  //
+  //       <Text style={styles.summary}>{pack.name} {I18n.t('App.version')}:{this.props.deviceVersion}</Text>
+  //
+  //     </View>
+  //   )
+  // }
+}
 // Since we're using ES6 classes, have to define the TimerMixin
 reactMixin(App.prototype, TimerMixin)
 /**

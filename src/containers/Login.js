@@ -7,12 +7,12 @@
 'use strict'
 /**
  * ## Imports
- *
- * Redux
  */
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-
+import React from 'react'
+import Translations from '../lib/Translations'
+import I18n from 'react-native-i18n'
 /**
  * The actions we need
  */
@@ -22,11 +22,6 @@ import * as authActions from '../reducers/auth/authActions'
  *   LoginRender
  */
 import LoginRender from '../components/LoginRender'
-
-/**
- * The necessary React components
- */
-import React from 'react'
 
 const {
   LOGIN,
@@ -58,11 +53,11 @@ function buttonPressHandler (login, username, password) {
 /**
  * ### Translations
  */
-var I18n = require('react-native-i18n')
-import Translations from '../lib/Translations'
+
+
 I18n.translations = Translations
 
-let Login = React.createClass({
+const Login = React.createClass({
 
   render () {
     let loginButtonText = I18n.t('Login.login')

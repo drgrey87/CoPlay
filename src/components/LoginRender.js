@@ -258,12 +258,6 @@ class LoginRender extends Component {
       <View style={styles.container}>
         <ScrollView horizontal={false} width={width} height={height}>
           <View>
-            <Header isFetching={this.props.auth.form.isFetching}
-              showState={this.props.global.showState}
-              currentState={this.props.global.currentState}
-              onGetState={this.props.actions.getState}
-              onSetState={this.props.actions.setState} />
-
             <View style={styles.inputs}>
               <LoginForm
                 formType={formType}

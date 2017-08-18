@@ -15,9 +15,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 export default class Menu extends Component {
   constructor(props) {
     super(props);
-    this.state={
-      route: 0
-    }
   }
 
 
@@ -88,10 +85,10 @@ export default class Menu extends Component {
  * ### propTypes
  * * onItemSelected: hide drawer
  */
-Menu.propTypes = {
-  username: PropTypes.string.isRequired,
-  onItemSelected: PropTypes.func.isRequired
-}
+// Menu.propTypes = {
+//   username: PropTypes.string.isRequired,
+//   onItemSelected: PropTypes.func.isRequired
+// }
 
 const styles = StyleSheet.create({
   drawer: {

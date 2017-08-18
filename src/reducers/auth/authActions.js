@@ -236,9 +236,10 @@ export function getSessionToken () {
       .then((token) => {
         if (token) {
           dispatch(sessionTokenRequestSuccess(token))
-          dispatch(logoutState())
+          // dispatch(logoutState())
         } else {
-          dispatch(sessionTokenRequestFailure())
+          // dispatch(sessionTokenRequestFailure())
+          dispatch(logoutState())
         }
       })
 
