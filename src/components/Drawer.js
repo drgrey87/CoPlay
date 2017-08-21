@@ -7,7 +7,7 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -19,7 +19,7 @@ export default class Menu extends Component {
 
 
   render() {
-    return(
+    return (
       <View style={styles.drawer}>
         <View style={styles.header} key={0}>
           <View style={styles.headerIcon}>
@@ -32,27 +32,27 @@ export default class Menu extends Component {
           </View>
         </View>
         <ScrollView contentContainerStyle={styles.content}>
-            <TouchableOpacity
-              key={2}
-              style={styles.listItem}
-              onPress={() => this.props.onItemSelected('Activities')}
-            >
-              <Text style={styles.listItemTitle}>Activities</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                key={3}
-                style={styles.listItem}
-                onPress={() => this.props.onItemSelected('Profile')}
-            >
-              <Text style={styles.listItemTitle}>Profile</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              key={4}
-              style={styles.listItem}
-              onPress={() => this.props.onItemSelected('Logout')}
-            >
-              <Text style={styles.listItemTitle}>Logout</Text>
-            </TouchableOpacity>
+          <TouchableOpacity
+            key={2}
+            style={styles.listItem}
+            onPress={() => this.props.onItemSelected('Activities')}
+          >
+            <Text style={styles.listItemTitle}>Activities</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            key={3}
+            style={styles.listItem}
+            onPress={() => this.props.onItemSelected('Profile')}
+          >
+            <Text style={styles.listItemTitle}>Profile</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            key={4}
+            style={styles.listItem}
+            onPress={() => this.props.onItemSelected('Logout')}
+          >
+            <Text style={styles.listItemTitle}>Logout</Text>
+          </TouchableOpacity>
           <TouchableOpacity
             key={5}
             style={styles.listItem}
@@ -97,14 +97,14 @@ const styles = StyleSheet.create({
   header: {
     height: 180,
     padding: 16,
-    backgroundColor: '#1565C0'
+    backgroundColor: '#1565C0',
   },
   content: {
     padding: 16,
-    backgroundColor: '#1E88E5'
+    backgroundColor: '#1E88E5',
   },
   headerInfo: {
-    height: 56
+    height: 56,
   },
   headerIcon: {
     width: 70,
@@ -113,26 +113,26 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#2196F3'
+    backgroundColor: '#2196F3',
   },
   headerTitle: {
     color: '#fff',
-    fontSize: 20
+    fontSize: 20,
   },
   headerEmail: {
     color: '#fff',
-    fontSize: 16
+    fontSize: 16,
   },
   listItem: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     height: 80,
-    marginBottom: 10
+    marginBottom: 10,
   },
   listItemTitle: {
     fontSize: 18,
     flexShrink: 1,
-    color: '#fff'
-  }
+    color: '#fff',
+  },
 });

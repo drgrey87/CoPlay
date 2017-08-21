@@ -7,7 +7,7 @@
  * fails, setting it back to false.
  *
  */
-'use strict'
+
 
 /**
  * ## Imports
@@ -42,18 +42,18 @@ const {
 
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
-  RESET_PASSWORD_FAILURE
+  RESET_PASSWORD_FAILURE,
 
-} = require('../../lib/constants').default
+} = require('../../lib/constants').default;
 
 /**
  * Project requirements
  */
-const BackendFactory = require('../../lib/BackendFactory').default
+const BackendFactory = require('../../lib/BackendFactory').default;
 
-import {appAuthToken} from '../../lib/AppAuthToken'
+import { appAuthToken } from '../../lib/AppAuthToken';
 
-const _ = require('underscore')
+const _ = require('underscore');
 
 /**
  * ## State actions
@@ -61,48 +61,48 @@ const _ = require('underscore')
  * as in login, register, logout or reset password
  */
 
-export function logoutState () {
+export function logoutState() {
   return {
-    type: LOGOUT
-  }
+    type: LOGOUT,
+  };
 }
-export function registerState () {
+export function registerState() {
   return {
-    type: REGISTER
-  }
-}
-
-export function loginState () {
-  return {
-    type: LOGIN
-  }
+    type: REGISTER,
+  };
 }
 
-export function forgotPasswordState () {
+export function loginState() {
   return {
-    type: FORGOT_PASSWORD
-  }
+    type: LOGIN,
+  };
+}
+
+export function forgotPasswordState() {
+  return {
+    type: FORGOT_PASSWORD,
+  };
 }
 
 /**
  * ## Logout actions
  */
-export function logoutRequest () {
+export function logoutRequest() {
   return {
-    type: LOGOUT_REQUEST
-  }
+    type: LOGOUT_REQUEST,
+  };
 }
 
-export function logoutSuccess () {
+export function logoutSuccess() {
   return {
-    type: LOGOUT_SUCCESS
-  }
+    type: LOGOUT_SUCCESS,
+  };
 }
-export function logoutFailure (error) {
+export function logoutFailure(error) {
   return {
     type: LOGOUT_FAILURE,
-    payload: error
-  }
+    payload: error,
+  };
 }
 /**
  * ## Login
@@ -122,90 +122,88 @@ export function logoutFailure (error) {
  * haven't used the app for a long time.  Or they used another
  * device and logged out there.
  */
-export function logout () {
-  return dispatch => {
-    dispatch(logoutRequest())
+export function logout() {
+  return (dispatch) => {
+    dispatch(logoutRequest());
     return appAuthToken.getSessionToken()
 
-      .then((token) => {
-        return BackendFactory(token).logout()
-      })
+      .then(token => BackendFactory(token).logout())
 
       .then(() => {
-        dispatch(loginState())
-        dispatch(logoutSuccess())
-        dispatch(deleteSessionToken())
+        dispatch(loginState());
+        dispatch(logoutSuccess());
+        dispatch(deleteSessionToken());
       })
 
       .catch((error) => {
-        dispatch(loginState())
-        dispatch(logoutFailure(error))
-      })
-  }
+        dispatch(loginState());
+        dispatch(logoutFailure(error));
+      });
+  };
 }
 /**
  * ## onAuthFormFieldChange
  * Set the payload so the reducer can work on it
  */
-export function onAuthFormFieldChange (field, value) {
+export function onAuthFormFieldChange(field, value) {
   return {
     type: ON_AUTH_FORM_FIELD_CHANGE,
-    payload: {field: field, value: value}
-  }
+    payload: { field, value },
+  };
 }
 /**
  * ## Signup actions
  */
-export function signupRequest () {
+export function signupRequest() {
   return {
-    type: SIGNUP_REQUEST
-  }
+    type: SIGNUP_REQUEST,
+  };
 }
-export function signupSuccess (json) {
+export function signupSuccess(json) {
   return {
     type: SIGNUP_SUCCESS,
-    payload: json
-  }
+    payload: json,
+  };
 }
-export function signupFailure (error) {
+export function signupFailure(error) {
   return {
     type: SIGNUP_FAILURE,
-    payload: error
-  }
+    payload: error,
+  };
 }
 /**
  * ## SessionToken actions
  */
-export function sessionTokenRequest () {
+export function sessionTokenRequest() {
   return {
-    type: SESSION_TOKEN_REQUEST
-  }
+    type: SESSION_TOKEN_REQUEST,
+  };
 }
-export function sessionTokenRequestSuccess (token) {
+export function sessionTokenRequestSuccess(token) {
   return {
     type: SESSION_TOKEN_SUCCESS,
-    payload: token
-  }
+    payload: token,
+  };
 }
-export function sessionTokenRequestFailure (error) {
+export function sessionTokenRequestFailure(error) {
   return {
     type: SESSION_TOKEN_FAILURE,
-    payload: _.isUndefined(error) ? null : error
-  }
+    payload: _.isUndefined(error) ? null : error,
+  };
 }
 
 /**
  * ## DeleteToken actions
  */
-export function deleteTokenRequest () {
+export function deleteTokenRequest() {
   return {
-    type: DELETE_TOKEN_REQUEST
-  }
+    type: DELETE_TOKEN_REQUEST,
+  };
 }
-export function deleteTokenRequestSuccess () {
+export function deleteTokenRequestSuccess() {
   return {
-    type: DELETE_TOKEN_SUCCESS
-  }
+    type: DELETE_TOKEN_SUCCESS,
+  };
 }
 
 /**
@@ -213,14 +211,14 @@ export function deleteTokenRequestSuccess () {
  *
  * Call the AppAuthToken deleteSessionToken
  */
-export function deleteSessionToken () {
-  return dispatch => {
-    dispatch(deleteTokenRequest())
+export function deleteSessionToken() {
+  return (dispatch) => {
+    dispatch(deleteTokenRequest());
     return appAuthToken.deleteSessionToken()
       .then(() => {
-        dispatch(deleteTokenRequestSuccess())
-      })
-  }
+        dispatch(deleteTokenRequestSuccess());
+      });
+  };
 }
 /**
  * ## Token
@@ -228,26 +226,26 @@ export function deleteSessionToken () {
  * so set the state to logout.
  * Otherwise, the user will default to the login in screen.
  */
-export function getSessionToken () {
-  return dispatch => {
-    dispatch(sessionTokenRequest())
+export function getSessionToken() {
+  return (dispatch) => {
+    dispatch(sessionTokenRequest());
     return appAuthToken.getSessionToken()
 
       .then((token) => {
         if (token) {
-          dispatch(sessionTokenRequestSuccess(token))
+          dispatch(sessionTokenRequestSuccess(token));
           // dispatch(logoutState())
         } else {
           // dispatch(sessionTokenRequestFailure())
-          dispatch(logoutState())
+          dispatch(logoutState());
         }
       })
 
       .catch((error) => {
-        dispatch(sessionTokenRequestFailure(error))
-        dispatch(loginState())
-      })
-  }
+        dispatch(sessionTokenRequestFailure(error));
+        dispatch(loginState());
+      });
+  };
 }
 
 /**
@@ -255,8 +253,8 @@ export function getSessionToken () {
  * @param {Object} response - to return to keep the promise chain
  * @param {Object} json - object with sessionToken
  */
-export function saveSessionToken (json) {
-  return appAuthToken.storeSessionToken(json)
+export function saveSessionToken(json) {
+  return appAuthToken.storeSessionToken(json);
 }
 /**
  * ## signup
@@ -269,59 +267,57 @@ export function saveSessionToken (json) {
  *
  * Otherwise, dispatch the error so the user can see
  */
-export function signup (username, email, password) {
-  return dispatch => {
-    dispatch(signupRequest())
+export function signup(username, email, password) {
+  return (dispatch) => {
+    dispatch(signupRequest());
     return BackendFactory().signup({
-      username: username,
-      email: email,
-      password: password
+      username,
+      email,
+      password,
     })
 
-      .then((json) => {
-        return saveSessionToken(
-          Object.assign({}, json,
-            { username: username,
-              email: email
-            })
-          )
-          .then(() => {
-            dispatch(signupSuccess(
-              Object.assign({}, json,
-               { username: username,
-                 email: email
-               })
-            ))
-            dispatch(logoutState())
-          })
-      })
+      .then(json => saveSessionToken(
+        Object.assign({}, json,
+          { username,
+            email,
+          }),
+      )
+        .then(() => {
+          dispatch(signupSuccess(
+            Object.assign({}, json,
+              { username,
+                email,
+              }),
+          ));
+          dispatch(logoutState());
+        }))
       .catch((error) => {
-        dispatch(signupFailure(error))
-      })
-  }
+        dispatch(signupFailure(error));
+      });
+  };
 }
 
 /**
  * ## Login actions
  */
-export function loginRequest () {
+export function loginRequest() {
   return {
-    type: LOGIN_REQUEST
-  }
+    type: LOGIN_REQUEST,
+  };
 }
 
-export function loginSuccess (json) {
+export function loginSuccess(json) {
   return {
     type: LOGIN_SUCCESS,
-    payload: json
-  }
+    payload: json,
+  };
 }
 
-export function loginFailure (error) {
+export function loginFailure(error) {
   return {
     type: LOGIN_FAILURE,
-    payload: error
-  }
+    payload: error,
+  };
 }
 /**
  * ## Login
@@ -335,47 +331,45 @@ export function loginFailure (error) {
  * otherwise, dispatch a failure
  */
 
-export function login (username, password) {
-  return dispatch => {
-    dispatch(loginRequest())
+export function login(username, password) {
+  return (dispatch) => {
+    dispatch(loginRequest());
     return BackendFactory().login({
-      username: username,
-      password: password
+      username,
+      password,
     })
 
-      .then(function (json) {
-        return saveSessionToken(json)
-          .then(function () {
-            dispatch(loginSuccess(json))
-            dispatch(logoutState())
-          })
-      })
+      .then(json => saveSessionToken(json)
+        .then(() => {
+          dispatch(loginSuccess(json));
+          dispatch(logoutState());
+        }))
       .catch((error) => {
-        dispatch(loginFailure(error))
-      })
-  }
+        dispatch(loginFailure(error));
+      });
+  };
 }
 
 /**
  * ## ResetPassword actions
  */
-export function resetPasswordRequest () {
+export function resetPasswordRequest() {
   return {
-    type: RESET_PASSWORD_REQUEST
-  }
+    type: RESET_PASSWORD_REQUEST,
+  };
 }
 
-export function resetPasswordSuccess () {
+export function resetPasswordSuccess() {
   return {
-    type: RESET_PASSWORD_SUCCESS
-  }
+    type: RESET_PASSWORD_SUCCESS,
+  };
 }
 
-export function resetPasswordFailure (error) {
+export function resetPasswordFailure(error) {
   return {
     type: RESET_PASSWORD_FAILURE,
-    payload: error
-  }
+    payload: error,
+  };
 }
 /**
  * ## ResetPassword
@@ -389,18 +383,18 @@ export function resetPasswordFailure (error) {
  * With that enabled, an email can be sent w/ a
  * form for setting the new password.
  */
-export function resetPassword (email) {
-  return dispatch => {
-    dispatch(resetPasswordRequest())
+export function resetPassword(email) {
+  return (dispatch) => {
+    dispatch(resetPasswordRequest());
     return BackendFactory().resetPassword({
-      email: email
+      email,
     })
       .then(() => {
-        dispatch(loginState())
-        dispatch(resetPasswordSuccess())
+        dispatch(loginState());
+        dispatch(resetPasswordSuccess());
       })
       .catch((error) => {
-        dispatch(resetPasswordFailure(error))
-      })
-  }
+        dispatch(resetPasswordFailure(error));
+      });
+  };
 }

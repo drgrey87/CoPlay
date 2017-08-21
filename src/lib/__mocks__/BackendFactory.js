@@ -5,10 +5,10 @@
  *
  *
  */
-'use strict'
 
-const Backend = require('./Backend').default
 
-export default function BackendFactory (token = null) {
-  return new Backend()
+const Backend = require('./Backend').default;
+
+export default function BackendFactory(token = null) {
+  return new Backend();
 }

@@ -3,73 +3,77 @@
  *
  * Allow user to register
  */
-'use strict'
+
+
 /**
  * ## Imports
  *
  * Redux
  */
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 /**
  * The actions we need
  */
-import * as authActions from '../reducers/auth/authActions'
+import * as authActions from '../reducers/auth/authActions';
 
 /**
  *   LoginRender
  */
-import LoginRender from '../components/LoginRender'
+import LoginRender from '../components/LoginRender';
 
 /**
  * The necessary React
  */
-import React from 'react'
+import React from 'react';
 
 const {
   LOGIN,
   REGISTER,
-  FORGOT_PASSWORD
-} = require('../lib/constants').default
+  FORGOT_PASSWORD,
+} = require('../lib/constants').default;
 
 /**
  * ## Redux boilerplate
  */
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     auth: state.auth,
-    global: state.global
-  }
+    global: state.global,
+  };
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(authActions, dispatch)
-  }
+    actions: bindActionCreators(authActions, dispatch),
+  };
 }
 
-function buttonPressHandler (signup, username, email, password) {
-  signup(username, email, password)
+function buttonPressHandler(signup, username, email, password) {
+  signup(username, email, password);
 }
 
 /**
  * ### Translations
  */
-var I18n = require('react-native-i18n')
-import Translations from '../lib/Translations'
-I18n.translations = Translations
+const I18n = require('react-native-i18n');
 
-let Register = React.createClass({
+import Translations from '../lib/Translations';
 
-  render () {
-    let loginButtonText = I18n.t('Register.register')
-    let onButtonPress = buttonPressHandler.bind(null,
-                                                this.props.actions.signup,
-                                                this.props.auth.form.fields.username,
-                                                this.props.auth.form.fields.email,
-                                                this.props.auth.form.fields.password)
+I18n.translations = Translations;
+
+const Register = React.createClass({
+
+  render() {
+    console.log('aaaaasdfasfasdfasdfasfdasdf');
+    const loginButtonText = I18n.t('Register.register');
+    const onButtonPress = buttonPressHandler.bind(null,
+      this.props.actions.signup,
+      this.props.auth.form.fields.username,
+      this.props.auth.form.fields.email,
+      this.props.auth.form.fields.password);
 
     return (
       <LoginRender
@@ -83,7 +87,7 @@ let Register = React.createClass({
         global={this.props.global}
       />
 
-    )
-  }
-})
-export default connect(mapStateToProps, mapDispatchToProps)(Register)
+    );
+  },
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

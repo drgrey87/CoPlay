@@ -3,7 +3,8 @@
  *
  *
  */
-'use strict'
+
+
 /**
  * ## Imports
  * The InitialState for create event
@@ -11,20 +12,20 @@
 const {
   GET_CREATE_EVENT_REQUEST,
   GET_CREATE_EVENT_SUCCESS,
-  GET_CREATE_EVENT_FAILURE
-} = require('../../lib/constants').default
+  GET_CREATE_EVENT_FAILURE,
+} = require('../../lib/constants').default;
 
-import InitialState from './createEventsInitialState'
+import InitialState from './createEventsInitialState';
 
-const initialState = new InitialState()
+const initialState = new InitialState();
 
 /**
  * ## createEventReducer function
  * @param {Object} state - initialState
  * @param {Object} action - type and payload
  */
-export default function createEventReducer (state = initialState, action) {
-  if (!(state instanceof InitialState)) return initialState.merge(state)
+export default function createEventReducer(state = initialState, action) {
+  if (!(state instanceof InitialState)) return initialState.merge(state);
 
   switch (action.type) {
     /**
@@ -33,7 +34,7 @@ export default function createEventReducer (state = initialState, action) {
      */
     case GET_CREATE_EVENT_REQUEST:
       return state.set('isFetching', true)
-        .set('error', null)
+        .set('error', null);
 
     /**
      * ### Request ends successfully
@@ -43,7 +44,7 @@ export default function createEventReducer (state = initialState, action) {
     case GET_CREATE_EVENT_SUCCESS:
       return state.set('isFetching', false)
         .set('error', null)
-        .set('data', state.get('data').concat(wrapToRecord(action.payload)))
+        .set('data', state.get('data').concat(wrapToRecord(action.payload)));
 
     /**
      * ### Request fails
@@ -51,7 +52,7 @@ export default function createEventReducer (state = initialState, action) {
      */
     case GET_CREATE_EVENT_FAILURE:
       return state.set('isFetching', false)
-        .set('error', action.payload)
+        .set('error', action.payload);
 
     // /**
     //  * ### Request set activity is_active
@@ -85,5 +86,5 @@ export default function createEventReducer (state = initialState, action) {
     //     .set('error', action.payload)
   }
 
-  return state
+  return state;
 }

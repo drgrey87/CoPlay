@@ -6,7 +6,7 @@ import {
   Image,
   Text,
   Linking,
-  StyleSheet
+  StyleSheet,
 } from 'react-native';
 
 import { lighthouses } from '../lib/data.service';
@@ -17,11 +17,11 @@ const LighthouseBody = (props) => {
   const image = lighthouses[props.pageIndex].image;
   const photo = lighthouses[props.pageIndex].photo;
   const photoUrl = lighthouses[props.pageIndex].url;
-  return(
+  return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.h1}>{title}</Text>
       <View style={styles.figure}>
-        <Image source={{ uri: image }} style={styles.img}/>
+        <Image source={{ uri: image }} style={styles.img} />
         <View style={styles.credits}>
           <Text style={styles.labelCredits}>Photo: </Text>
           <Text
@@ -35,21 +35,21 @@ const LighthouseBody = (props) => {
       <Text style={styles.p}>{content}</Text>
     </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     alignItems: 'center',
-    padding: 15
+    padding: 15,
   },
   h1: {
     fontSize: 22,
-    marginBottom: 20
+    marginBottom: 20,
   },
   p: {
     fontSize: 16,
-    lineHeight: 24
+    lineHeight: 24,
   },
   figure: {
     marginBottom: 20,
@@ -59,18 +59,18 @@ const styles = StyleSheet.create({
     height: 300,
     marginRight: 10,
     marginBottom: 10,
-    backgroundColor: '#000'
+    backgroundColor: '#000',
   },
   credits: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   labelCredits: {
-    fontSize: 18
+    fontSize: 18,
   },
   linkCredits: {
     fontStyle: 'italic',
-    color: '#2962FF'
-  }
+    color: '#2962FF',
+  },
 });
 
 export default LighthouseBody;

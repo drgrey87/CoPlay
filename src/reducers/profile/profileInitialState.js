@@ -8,9 +8,9 @@
  * By using Immutable, it's enforced.  Just saying....
  *
  */
-'use strict'
 
-const {Record} = require('immutable')
+
+const { Record } = require('immutable');
 
 /**
  * ## Form
@@ -25,7 +25,7 @@ const Form = Record({
     username: null,
     email: null,
     objectId: null,
-    emailVerified: null
+    emailVerified: null,
   }))(),
   disabled: false,
   error: null,
@@ -38,12 +38,12 @@ const Form = Record({
     email: '',
     emailHasError: false,
     emailErrorMsg: '',
-    emailVerified: false
-  }))()
-})
+    emailVerified: false,
+  }))(),
+});
 
-var InitialState = Record({
-  form: new Form()
-})
+const InitialState = Record({
+  form: new Form(),
+});
 
-export default InitialState
+export default InitialState;

@@ -4,50 +4,51 @@
  *  The container to display the Login form
  *
  */
-'use strict'
+
+
 /**
  * ## Imports
  */
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import React from 'react'
-import Translations from '../lib/Translations'
-import I18n from 'react-native-i18n'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import React from 'react';
+import Translations from '../lib/Translations';
+import I18n from 'react-native-i18n';
 /**
  * The actions we need
  */
-import * as authActions from '../reducers/auth/authActions'
+import * as authActions from '../reducers/auth/authActions';
 
 /**
  *   LoginRender
  */
-import LoginRender from '../components/LoginRender'
+import LoginRender from '../components/LoginRender';
 
 const {
   LOGIN,
   REGISTER,
-  FORGOT_PASSWORD
-} = require('../lib/constants').default
+  FORGOT_PASSWORD,
+} = require('../lib/constants').default;
 
 /**
  * ## Redux boilerplate
  */
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     auth: state.auth,
-    global: state.global
-  }
+    global: state.global,
+  };
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(authActions, dispatch)
-  }
+    actions: bindActionCreators(authActions, dispatch),
+  };
 }
 
-function buttonPressHandler (login, username, password) {
-  login(username, password)
+function buttonPressHandler(login, username, password) {
+  login(username, password);
 }
 
 /**
@@ -55,17 +56,17 @@ function buttonPressHandler (login, username, password) {
  */
 
 
-I18n.translations = Translations
+I18n.translations = Translations;
 
 const Login = React.createClass({
 
-  render () {
-    let loginButtonText = I18n.t('Login.login')
-    let onButtonPress = buttonPressHandler.bind(null,
-                                                this.props.actions.login,
-                                                this.props.auth.form.fields.username,
-                                                this.props.auth.form.fields.password
-                                               )
+  render() {
+    const loginButtonText = I18n.t('Login.login');
+    const onButtonPress = buttonPressHandler.bind(null,
+      this.props.actions.login,
+      this.props.auth.form.fields.username,
+      this.props.auth.form.fields.password,
+    );
 
     return (
       <LoginRender
@@ -77,9 +78,10 @@ const Login = React.createClass({
         rightMessageType={FORGOT_PASSWORD}
         auth={this.props.auth}
         global={this.props.global}
+        navigator={this.props.navigator}
       />
-    )
-  }
-})
+    );
+  },
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -8,14 +8,15 @@
  * By using Immutable, it's enforced.  Just saying....
  *
  */
-'use strict'
+
+
 /**
  * ## Import
  */
-const {Record} = require('immutable')
+const { Record } = require('immutable');
 const {
-  REGISTER
-} = require('../../lib/constants').default
+  REGISTER,
+} = require('../../lib/constants').default;
 
 /**
  * ## Form
@@ -41,16 +42,16 @@ const Form = Record({
     passwordAgain: '',
     passwordAgainHasError: false,
     passwordAgainErrorMsg: '',
-    showPassword: false
-  }))()
-})
+    showPassword: false,
+  }))(),
+});
 
 /**
  * ## InitialState
  * The form is set
  */
-var InitialState = Record({
-  form: new Form()
-})
-export default InitialState
+const InitialState = Record({
+  form: new Form(),
+});
+export default InitialState;
 

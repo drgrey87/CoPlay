@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import {
   ScrollView,
   View,
-  Text
+  Text,
 } from 'react-native';
 
 import LighthouseBody from './LighthouseBody';

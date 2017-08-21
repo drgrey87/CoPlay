@@ -4,14 +4,15 @@
  *  This is called from main to demonstrate the back button
  *
  */
-'use strict'
+
+
 /*
  * ## Imports
  *
  * Imports from redux
  */
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 /**
  * Router
@@ -21,25 +22,25 @@ import { connect } from 'react-redux'
 /**
  * Navigation Bar
  */
-import NavigationBar from 'react-native-navbar'
+import NavigationBar from 'react-native-navbar';
 
 /**
  * The necessary components from React
  */
-import React from 'react'
+import React from 'react';
 import
 {
   StyleSheet,
   View,
-  Text
+  Text,
 }
-from 'react-native'
+  from 'react-native';
 
 /**
  * Use device options so we can reference the Version
  *
  */
-import * as deviceActions from '../reducers/device/deviceActions'
+import * as deviceActions from '../reducers/device/deviceActions';
 
 /**
 * ## Redux boilerplate
@@ -50,71 +51,74 @@ import * as deviceActions from '../reducers/device/deviceActions'
  *  You probably want to explicitly enumerate only those which Main.js will depend on.
  *
  */
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
-    deviceVersion: state.device.version
-  }
+    deviceVersion: state.device.version,
+  };
 }
 
 /*
  * Bind all the actions in deviceActions
  */
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(deviceActions, dispatch)
-  }
+    actions: bindActionCreators(deviceActions, dispatch),
+  };
 }
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     borderTopWidth: 2,
     borderBottomWidth: 2,
     marginTop: 80,
-    padding: 10
+    padding: 10,
   },
   summary: {
     fontFamily: 'BodoniSvtyTwoITCTT-Book',
     fontSize: 18,
-    fontWeight: 'bold'
-  }
-})
+    fontWeight: 'bold',
+  },
+});
 /**
  * ### Translations
  */
-var I18n = require('react-native-i18n')
-import Translations from '../lib/Translations'
-I18n.translations = Translations
+const I18n = require('react-native-i18n');
+
+import Translations from '../lib/Translations';
+
+I18n.translations = Translations;
 
 /**
  * ## Subview class
  */
-let Subview = React.createClass({
+const Subview = React.createClass({
 
-  render () {
-    var titleConfig = {
-      title: I18n.t('Subview.subview')
-    }
+  render() {
+    const titleConfig = {
+      title: I18n.t('Subview.subview'),
+    };
 
-    var leftButtonConfig = {
+    const leftButtonConfig = {
       title: I18n.t('Subview.back'),
       // handler: Actions.pop
-    }
+    };
 
     return (
       <View>
         <NavigationBar
           title={titleConfig}
-          leftButton={leftButtonConfig} />
+          leftButton={leftButtonConfig}
+        />
         <View style={styles.container}>
           <Text style={styles.summary}>{I18n.t('Subview.subview')} {I18n.t('App.version')}: {this.props.deviceVersion}
           </Text>
         </View>
       </View>
-    )
-  }
-})
+    );
+  },
+});
 
 /**
  * Connect the properties
  */
-export default connect(mapStateToProps, mapDispatchToProps)(Subview)
+export default connect(mapStateToProps, mapDispatchToProps)(Subview);

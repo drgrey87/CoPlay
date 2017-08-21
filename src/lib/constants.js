@@ -1,4 +1,4 @@
-import keyMirror from 'key-mirror'
+import keyMirror from 'key-mirror';
 
 export default keyMirror({
   SET_PLATFORM: null,
@@ -67,5 +67,5 @@ export default keyMirror({
 
   GET_CREATE_EVENT_REQUEST: null,
   GET_CREATE_EVENT_SUCCESS: null,
-  GET_CREATE_EVENT_FAILURE: null
-})
+  GET_CREATE_EVENT_FAILURE: null,
+});

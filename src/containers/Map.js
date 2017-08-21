@@ -11,7 +11,7 @@ import {
 import Config from 'react-native-config';
 import MapView from 'react-native-maps';
 
-let { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
 
 // (Initial Static Location) Mumbai
@@ -22,7 +22,6 @@ const LATITUDE_DELTA = +Config.LATITUDE_DELTA;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 export default class Map extends Component {
-
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -30,7 +29,7 @@ export default class Map extends Component {
         latitude: LATITUDE,
         longitude: LONGITUDE,
         latitudeDelta: LATITUDE_DELTA,
-        longitudeDelta: LONGITUDE_DELTA
+        longitudeDelta: LONGITUDE_DELTA,
       },
     };
   }
@@ -43,11 +42,11 @@ export default class Map extends Component {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
             latitudeDelta: LATITUDE_DELTA,
-            longitudeDelta: LONGITUDE_DELTA
-          }
+            longitudeDelta: LONGITUDE_DELTA,
+          },
         });
       },
-      (error) => alert(error.message),
+      error => alert(error.message),
       // {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
     );
 
@@ -56,8 +55,8 @@ export default class Map extends Component {
         latitude: position.coords.latitude,
         longitude: position.coords.longitude,
         latitudeDelta: LATITUDE_DELTA,
-        longitudeDelta: LONGITUDE_DELTA
-      }
+        longitudeDelta: LONGITUDE_DELTA,
+      };
 
       this.onRegionChange(newRegion);
     });
@@ -76,19 +75,19 @@ export default class Map extends Component {
       <MapView
         style={styles.map}
         region={this.state.region}
-        showsUserLocation={true}
-        followUserLocation={true}
-        loadingEnabled={true}
-        showsMyLocationButton={true}
+        showsUserLocation
+        followUserLocation
+        loadingEnabled
+        showsMyLocationButton
       />
     );
   }
-};
+}
 
 let styles = StyleSheet.create({
   map: {
     flex: 1,
-    width:width,
-    height:height
-  }
+    width,
+    height,
+  },
 });

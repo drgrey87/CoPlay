@@ -4,99 +4,102 @@
  *  getSessionTokenAtStartup which will navigate upon completion
  *
  */
-'use strict'
+
+
 /*
  * ## Imports
  *
  * Imports from redux
  */
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 /**
  * Project actions
  */
-import * as authActions from '../reducers/auth/authActions'
-import * as deviceActions from '../reducers/device/deviceActions'
-import * as globalActions from '../reducers/global/globalActions'
+import * as authActions from '../reducers/auth/authActions';
+import * as deviceActions from '../reducers/device/deviceActions';
+import * as globalActions from '../reducers/global/globalActions';
 
 /**
  * The components we need from ReactNative
  */
-import React, {Component} from 'react'
+import React, { Component } from 'react';
 import
 {
-    StyleSheet,
-    View,
-    Text
+  StyleSheet,
+  View,
+  Text,
 }
-from 'react-native'
+  from 'react-native';
 
 /**
  * The Header will display a Image and support Hot Loading
  */
-import Header from '../components/Header'
+import Header from '../components/Header';
 
 /**
  *  The version of the app but not  displayed yet
  */
-import pack from '../../package'
+import pack from '../../package';
 
 /**
  *  Save that state
  */
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     deviceVersion: state.device.version,
     auth: {
       form: {
-        isFetching: state.auth.form.isFetching
-      }
+        isFetching: state.auth.form.isFetching,
+      },
     },
     global: {
       currentState: state.global.currentState,
-      showState: state.global.showState
-    }
-  }
+      showState: state.global.showState,
+    },
+  };
 }
 
 /**
  * Bind all the actions from authActions, deviceActions and globalActions
  */
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...authActions, ...deviceActions, ...globalActions }, dispatch)
-  }
+    actions: bindActionCreators({ ...authActions, ...deviceActions, ...globalActions }, dispatch),
+  };
 }
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     borderTopWidth: 2,
     borderBottomWidth: 2,
     marginTop: 80,
-    padding: 10
+    padding: 10,
   },
   summary: {
     fontFamily: 'BodoniSvtyTwoITCTT-Book',
     fontSize: 18,
-    fontWeight: 'bold'
-  }
-})
+    fontWeight: 'bold',
+  },
+});
 
 /**
  * ## App class
  */
-var reactMixin = require('react-mixin')
-import TimerMixin from 'react-timer-mixin'
+const reactMixin = require('react-mixin');
+
+import TimerMixin from 'react-timer-mixin';
 /**
  * ### Translations
  */
-var I18n = require('react-native-i18n')
-import Translations from '../lib/Translations'
-I18n.translations = Translations
+const I18n = require('react-native-i18n');
 
-class App extends Component{
+import Translations from '../lib/Translations';
 
+I18n.translations = Translations;
+
+class App extends Component {
   constructor(props) {
     super(props);
 
@@ -110,7 +113,7 @@ class App extends Component{
   }
 
   componentWillMount() {
-    this.props.actions.getSessionToken()
+    this.props.actions.getSessionToken();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -119,15 +122,15 @@ class App extends Component{
         title,
         screen: 'movieapp.MoviesList',
         passProps: {
-          type
+          type,
         },
         navigatorButtons: {
-          rightButtons
-        }
+          rightButtons,
+        },
       });
     }
   }
-    /**
+  /**
      * See if there's a sessionToken from a previous login
      *
      */
@@ -157,8 +160,8 @@ class App extends Component{
   // }
 }
 // Since we're using ES6 classes, have to define the TimerMixin
-reactMixin(App.prototype, TimerMixin)
+reactMixin(App.prototype, TimerMixin);
 /**
  * Connect the properties
  */
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(App);

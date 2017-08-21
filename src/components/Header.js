@@ -16,14 +16,14 @@
  *
  * When the mark image is clicked, it is just toggled to display or hide.
 */
-'use strict'
+
 
 /**
  * ## Imports
  *
  * React
 */
-import React, {PropTypes} from 'react'
+import React, { PropTypes } from 'react';
 import
 {
   ActivityIndicator,
@@ -32,52 +32,54 @@ import
   Text,
   TextInput,
   TouchableHighlight,
-  View
-} from 'react-native'
+  View,
+} from 'react-native';
 
 /**
  * Project component that will respond to onPress
  */
-const FormButton = require('./FormButton')
+const FormButton = require('./FormButton');
 /**
  * ## Styles
  */
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     flex: 1,
-    marginTop: 10
+    marginTop: 10,
   },
   header: {
     marginTop: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
   },
   mark: {
     height: 100,
-    width: 100
-  }
+    width: 100,
+  },
 
-})
+});
 
 /**
  * ### Translations
  */
-var I18n = require('react-native-i18n')
-import Translations from '../lib/Translations'
-I18n.translations = Translations
+const I18n = require('react-native-i18n');
 
-var Header = React.createClass({
+import Translations from '../lib/Translations';
+
+I18n.translations = Translations;
+
+const Header = React.createClass({
   /**
    * ## Header.class
    * set the initial state of having the button be disabled.
    */
-  getInitialState () {
+  getInitialState() {
     return {
       text: '',
-      isDisabled: true
-    }
+      isDisabled: true,
+    };
   },
   /**
    * ### propTypes
@@ -92,31 +94,31 @@ var Header = React.createClass({
     showState: PropTypes.bool,
     currentState: PropTypes.object,
     onGetState: PropTypes.func,
-    onSetState: PropTypes.func
+    onSetState: PropTypes.func,
   },
   /**
    * ### _onPressMark
    * Call the onGetState action passing the state prop
    */
-  _onPressMark () {
-    this.props.onGetState(!this.props.showState)
+  _onPressMark() {
+    this.props.onGetState(!this.props.showState);
   },
   /**
    * ### _onChangeText
    * when the textinput value changes, set the state for that component
    */
-  _onChangeText (text) {
+  _onChangeText(text) {
     this.setState({
       text,
-      isDisabled: false
-    })
+      isDisabled: false,
+    });
   },
   /**
    * ### _updateStateButtonPress
    * When the button for the state is pressed, call ```onSetState```
    */
-  _updateStateButtonPress () {
-    this.props.onSetState(this.state.text)
+  _updateStateButtonPress() {
+    this.props.onSetState(this.state.text);
   },
 
   /**
@@ -132,10 +134,10 @@ var Header = React.createClass({
    * ```_updateStateButtonPress``` and away we go...
    *
    */
-  render () {
-    let displayText
+  render() {
+    let displayText;
     if (this.props.showState) {
-      displayText = JSON.stringify(this.props.currentState)
+      displayText = JSON.stringify(this.props.currentState);
     }
 
     return (
@@ -144,37 +146,43 @@ var Header = React.createClass({
 
           <TouchableHighlight onPress={this._onPressMark}>
 
-            <Image style={styles.mark}
+            <Image
+              style={styles.mark}
               source={require('../images/Snowflake.png')}
             />
           </TouchableHighlight>
           {this.props.isFetching
-           ? <ActivityIndicator animating size='large' />
-           : null
+            ? <ActivityIndicator animating size="large" />
+            : null
           }
 
         </View>
         {this.props.showState
-         ? <View style={styles.container}>
-           <Text>{I18n.t('Header.current_state')} ({I18n.t('Header.see_console')})</Text>
-           <TextInput style={{height: 100, borderColor: 'gray', borderWidth: 1}}
-             value={displayText}
-             editable
-             multiline
-             onChangeText={(text) => this._onChangeText(text)}
-             numberOfLines={20} />
-           <View style={{
-             marginTop: 10
-           }}>
-             <FormButton isDisabled={this.state.isDisabled}
-               onPress={this._updateStateButtonPress}
-               buttonText={I18n.t('Header.update_state')} />
-           </View>
-         </View>
-         : null}
+          ? <View style={styles.container}>
+            <Text>{I18n.t('Header.current_state')} ({I18n.t('Header.see_console')})</Text>
+            <TextInput
+              style={{ height: 100, borderColor: 'gray', borderWidth: 1 }}
+              value={displayText}
+              editable
+              multiline
+              onChangeText={text => this._onChangeText(text)}
+              numberOfLines={20}
+            />
+            <View style={{
+              marginTop: 10,
+            }}
+            >
+              <FormButton
+                isDisabled={this.state.isDisabled}
+                onPress={this._updateStateButtonPress}
+                buttonText={I18n.t('Header.update_state')}
+              />
+            </View>
+          </View>
+          : null}
       </View>
-    )
-  }
-})
+    );
+  },
+});
 
-module.exports = Header
+module.exports = Header;

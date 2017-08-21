@@ -8,11 +8,12 @@
  * By using Immutable, it's enforced.  Just saying....
  *
  */
-'use strict'
+
+
 /**
  * ## Import
  */
-import {Record, List, fromJS} from 'immutable'
+import { Record, List, fromJS } from 'immutable';
 /**
  * ## InitialState
  *
@@ -20,21 +21,19 @@ import {Record, List, fromJS} from 'immutable'
  *
  */
 
-let getDefaultData = (type) => {
-  return {
-    is_active: false,
-    rate: 5,
-    type: type,
-    _id: null,
-    user_id: null
-  }
-};
+const getDefaultData = type => ({
+  is_active: false,
+  rate: 5,
+  type,
+  _id: null,
+  user_id: null,
+});
 
 const InitialState = Record({
   data: List(),
   isFetching: false,
-  error: null
-})
+  error: null,
+});
 
 
-export default InitialState
+export default InitialState;

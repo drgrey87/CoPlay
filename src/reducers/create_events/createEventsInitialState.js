@@ -8,19 +8,20 @@
  * By using Immutable, it's enforced.  Just saying....
  *
  */
-'use strict'
+
+
 /**
  * ## Import
  */
-import {Record, List} from 'immutable'
+import { Record, List } from 'immutable';
 
 const InitialState = Record({
   types: List(),
   event_name: '',
   chosen_types: List(),
   isFetching: false,
-  error: null
-})
+  error: null,
+});
 
 
-export default InitialState
+export default InitialState;

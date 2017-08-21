@@ -3,7 +3,8 @@
  *
  * The actions to support the users profile
  */
-'use strict'
+
+
 /**
  * ## Imports
  *
@@ -18,77 +19,76 @@ const {
   PROFILE_UPDATE_SUCCESS,
   PROFILE_UPDATE_FAILURE,
 
-  ON_PROFILE_FORM_FIELD_CHANGE
-} = require('../../lib/constants').default
+  ON_PROFILE_FORM_FIELD_CHANGE,
+} = require('../../lib/constants').default;
 
 /**
  * BackendFactory - base class for server implementation
  * AppAuthToken for localStorage sessionToken access
  */
-const BackendFactory = require('../../lib/BackendFactory').default
-import {appAuthToken} from '../../lib/AppAuthToken'
+const BackendFactory = require('../../lib/BackendFactory').default;
+
+import { appAuthToken } from '../../lib/AppAuthToken';
 
 /**
  * ## retreiving profile actions
  */
-export function getProfileRequest () {
+export function getProfileRequest() {
   return {
-    type: GET_PROFILE_REQUEST
-  }
+    type: GET_PROFILE_REQUEST,
+  };
 }
-export function getProfileSuccess (json) {
+export function getProfileSuccess(json) {
   return {
     type: GET_PROFILE_SUCCESS,
-    payload: json
-  }
+    payload: json,
+  };
 }
-export function getProfileFailure (json) {
+export function getProfileFailure(json) {
   return {
     type: GET_PROFILE_FAILURE,
-    payload: json
-  }
+    payload: json,
+  };
 }
 /**
  * ## State actions
  * controls which form is displayed to the user
  * as in login, register, logout or reset password
  */
-export function getProfile (sessionToken) {
-  return dispatch => {
-    dispatch(getProfileRequest())
+export function getProfile(sessionToken) {
+  return (dispatch) => {
+    dispatch(getProfileRequest());
     // store or get a sessionToken
     return appAuthToken.getSessionToken(sessionToken)
-      .then((token) => {
-        return BackendFactory(token).getProfile()
-      })
+      .then(token => BackendFactory(token).getProfile())
       .then((json) => {
-        dispatch(getProfileSuccess(json))
+        dispatch(getProfileSuccess(json));
       })
       .catch((error) => {
-        dispatch(getProfileFailure(error))
-      })
-  }
+        dispatch(getProfileFailure(error));
+      });
+  };
 }
 /**
  * ## State actions
  * controls which form is displayed to the user
  * as in login, register, logout or reset password
  */
-export function profileUpdateRequest () {
+export function profileUpdateRequest() {
   return {
-    type: PROFILE_UPDATE_REQUEST
-  }
+    type: PROFILE_UPDATE_REQUEST,
+  };
 }
-export function profileUpdateSuccess () {
+export function profileUpdateSuccess() {
   return {
-    type: PROFILE_UPDATE_SUCCESS
-  }
+    type: PROFILE_UPDATE_SUCCESS,
+  };
 }
-export function profileUpdateFailure (json) {
+export function profileUpdateFailure(json) {
   return {
     type: PROFILE_UPDATE_FAILURE,
-    payload: json
-  }
+    payload: json,
+  };
 }
 /**
  * ## updateProfile
@@ -104,34 +104,32 @@ export function profileUpdateFailure (json) {
  * the data as now persisted on the serverx
  *
  */
-export function updateProfile (userId, username, email, sessionToken) {
-  return dispatch => {
-    dispatch(profileUpdateRequest())
+export function updateProfile(userId, username, email, sessionToken) {
+  return (dispatch) => {
+    dispatch(profileUpdateRequest());
     return appAuthToken.getSessionToken(sessionToken)
-      .then((token) => {
-        return BackendFactory(token).updateProfile(userId,
-          {
-            username: username,
-            email: email
-          }
-        )
-      })
+      .then(token => BackendFactory(token).updateProfile(userId,
+        {
+          username,
+          email,
+        },
+      ))
       .then(() => {
-        dispatch(profileUpdateSuccess())
-        dispatch(getProfile())
+        dispatch(profileUpdateSuccess());
+        dispatch(getProfile());
       })
       .catch((error) => {
-        dispatch(profileUpdateFailure(error))
-      })
-  }
+        dispatch(profileUpdateFailure(error));
+      });
+  };
 }
 /**
  * ## onProfileFormFieldChange
  *
  */
-export function onProfileFormFieldChange (field, value) {
+export function onProfileFormFieldChange(field, value) {
   return {
     type: ON_PROFILE_FORM_FIELD_CHANGE,
-    payload: {field: field, value: value}
-  }
+    payload: { field, value },
+  };
 }

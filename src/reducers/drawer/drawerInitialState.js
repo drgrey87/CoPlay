@@ -8,18 +8,19 @@
  * By using Immutable, it's enforced.  Just saying....
  *
  */
-'use strict'
+
+
 /**
  * ## Import
  */
-import {Record} from 'immutable'
+import { Record } from 'immutable';
 /**
  * ## InitialState
  *
  * * turn - toggle for Drawer to open/close
  *
  */
-var InitialState = Record({
-  turn: new Date().valueOf()
-})
-export default InitialState
+const InitialState = Record({
+  turn: new Date().valueOf(),
+});
+export default InitialState;

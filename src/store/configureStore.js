@@ -4,30 +4,30 @@
  * A Redux boilerplate setup
  *
  */
-'use strict'
+
 
 /**
  * ## Imports
  *
  * redux functions
  */
-import { createStore, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk'
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 
 /**
  * ## Reducer
  * The reducer contains the 4 reducers from
  * device, global, auth, profile
  */
-import reducer from '../reducers'
+import reducer from '../reducers';
 
 /**
  * ## creatStoreWithMiddleware
  * Like the name...
  */
 const createStoreWithMiddleware = applyMiddleware(
-  thunk
-)(createStore)
+  thunk,
+)(createStore);
 
 /**
  * ## configureStore
@@ -35,6 +35,6 @@ const createStoreWithMiddleware = applyMiddleware(
  * device, global, auth, profile
  *
  */
-export default function configureStore (initialState) {
-  return createStoreWithMiddleware(reducer, initialState)
+export default function configureStore(initialState) {
+  return createStoreWithMiddleware(reducer, initialState);
 }

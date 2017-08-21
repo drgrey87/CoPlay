@@ -4,20 +4,21 @@
  * This class is a little complicated as it handles multiple states.
  *
  */
-'use strict'
+
+
 /**
  * ## Imports
  *
  * Redux
  */
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 /**
  * The actions we need
  */
-import * as authActions from '../reducers/auth/authActions'
-import * as globalActions from '../reducers/global/globalActions'
+import * as authActions from '../reducers/auth/authActions';
+import * as globalActions from '../reducers/global/globalActions';
 
 /**
  * Router actions
@@ -27,41 +28,42 @@ import * as globalActions from '../reducers/global/globalActions'
 /**
  * The Header will display a Image and support Hot Loading
  */
-import Header from '../components/Header'
+import Header from '../components/Header';
 /**
  * The ErrorAlert displays an alert for both ios & android
  */
-import ErrorAlert from '../components/ErrorAlert'
+import ErrorAlert from '../components/ErrorAlert';
 /**
  * The FormButton will change it's text between the 4 states as necessary
  */
-import FormButton from '../components/FormButton'
+import FormButton from '../components/FormButton';
 /**
  *  The LoginForm does the heavy lifting of displaying the fields for
  * textinput and displays the error messages
  */
-import LoginForm from '../components/LoginForm'
+import LoginForm from '../components/LoginForm';
 /**
  * The itemCheckbox will toggle the display of the password fields
  */
-import ItemCheckbox from '../components/ItemCheckbox'
+import ItemCheckbox from '../components/ItemCheckbox';
 
 /**
  * The necessary React components
  */
-import React, {Component} from 'react'
+import React, { Component } from 'react';
 import
 {
   StyleSheet,
   ScrollView,
   Text,
   TouchableHighlight,
-  View
+  View,
 }
-from 'react-native'
+  from 'react-native';
 
-import Dimensions from 'Dimensions'
-var {height, width} = Dimensions.get('window') // Screen dimensions in current orientation
+import Dimensions from 'Dimensions';
+
+const { height, width } = Dimensions.get('window'); // Screen dimensions in current orientation
 
 /**
  * The states were interested in
@@ -69,74 +71,76 @@ var {height, width} = Dimensions.get('window') // Screen dimensions in current o
 const {
   LOGIN,
   REGISTER,
-  FORGOT_PASSWORD
-} = require('../lib/constants').default
+  FORGOT_PASSWORD,
+} = require('../lib/constants').default;
 
 /**
  * ## Styles
  */
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
-    flex: 1
+    flex: 1,
   },
   inputs: {
     marginTop: 10,
     marginBottom: 10,
     marginLeft: 10,
-    marginRight: 10
+    marginRight: 10,
   },
   forgotContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 10,
     marginLeft: 10,
-    marginRight: 10
-  }
-})
+    marginRight: 10,
+  },
+});
 /**
  * ## Redux boilerplate
  */
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...authActions, ...globalActions }, dispatch)
-  }
+    actions: bindActionCreators({ ...authActions, ...globalActions }, dispatch),
+  };
 }
 /**
  * ### Translations
  */
-var I18n = require('react-native-i18n')
-import Translations from '../lib/Translations'
-I18n.translations = Translations
+const I18n = require('react-native-i18n');
+
+import Translations from '../lib/Translations';
+
+I18n.translations = Translations;
 
 class LoginRender extends Component {
-  constructor (props) {
-    super(props)
-    this.errorAlert = new ErrorAlert()
+  constructor(props) {
+    super(props);
+    this.errorAlert = new ErrorAlert();
     this.state = {
       value: {
         username: this.props.auth.form.fields.username,
         email: this.props.auth.form.fields.email,
         password: this.props.auth.form.fields.password,
-        passwordAgain: this.props.auth.form.fields.passwordAgain
-      }
-    }
+        passwordAgain: this.props.auth.form.fields.passwordAgain,
+      },
+    };
   }
 
   /**
    * ### componentWillReceiveProps
    * As the properties are validated they will be set here.
    */
-  componentWillReceiveProps (nextprops) {
+  componentWillReceiveProps(nextprops) {
     this.setState({
       value: {
         username: nextprops.auth.form.fields.username,
         email: nextprops.auth.form.fields.email,
         password: nextprops.auth.form.fields.password,
-        passwordAgain: nextprops.auth.form.fields.passwordAgain
-      }
-    })
+        passwordAgain: nextprops.auth.form.fields.passwordAgain,
+      },
+    });
   }
 
   /**
@@ -148,63 +152,72 @@ class LoginRender extends Component {
    * meet the requirements.
    * *Note* that the fields are validated by the authReducer
    */
-  onChange (value) {
+  onChange(value) {
     if (value.username !== '') {
-      this.props.actions.onAuthFormFieldChange('username', value.username)
+      this.props.actions.onAuthFormFieldChange('username', value.username);
     }
     if (value.email !== '') {
-      this.props.actions.onAuthFormFieldChange('email', value.email)
+      this.props.actions.onAuthFormFieldChange('email', value.email);
     }
     if (value.password !== '') {
-      this.props.actions.onAuthFormFieldChange('password', value.password)
+      this.props.actions.onAuthFormFieldChange('password', value.password);
     }
     if (value.passwordAgain !== '') {
-      this.props.actions.onAuthFormFieldChange('passwordAgain', value.passwordAgain)
+      this.props.actions.onAuthFormFieldChange('passwordAgain', value.passwordAgain);
     }
     this.setState(
-      {value}
-    )
+      { value },
+    );
   }
   /**
   *  Get the appropriate message for the current action
   *  @param messageType FORGOT_PASSWORD, or LOGIN, or REGISTER
   *  @param actions the action for the message type
   */
-  getMessage (messageType, actions) {
-    let forgotPassword =
-      <TouchableHighlight
+  getMessage(messageType, actions) {
+    const forgotPassword =
+      (<TouchableHighlight
         onPress={() => {
-          actions.forgotPasswordState()
-          //Actions.ForgotPassword()
-        }} >
+          actions.forgotPasswordState();
+          this.props.navigator.push({
+            screen: 'mobile.ForgotPassword',
+            title: `${I18n.t('LoginRender.forgot_password')}`
+          });
+        }}
+      >
         <Text>{I18n.t('LoginRender.forgot_password')}</Text>
-      </TouchableHighlight>
+      </TouchableHighlight>);
 
-    let alreadyHaveAccount =
-      <TouchableHighlight
+    const alreadyHaveAccount =
+      (<TouchableHighlight
         onPress={() => {
-          actions.loginState()
-          //Actions.Login()
-        }} >
+          actions.loginState();
+          // Actions.Login()
+        }}
+      >
         <Text>{I18n.t('LoginRender.already_have_account')}</Text>
-      </TouchableHighlight>
+      </TouchableHighlight>);
 
-    let register =
-      <TouchableHighlight
+    const register =
+      (<TouchableHighlight
         onPress={() => {
-          actions.registerState()
-          //Actions.Register()
-        }} >
+          actions.registerState();
+          this.props.navigator.push({
+            screen: 'mobile.Register',
+            title: `${I18n.t('LoginRender.register')}`
+          });
+        }}
+      >
         <Text>{I18n.t('LoginRender.register')}</Text>
-      </TouchableHighlight>
+      </TouchableHighlight>);
 
     switch (messageType) {
       case FORGOT_PASSWORD:
-        return forgotPassword
+        return forgotPassword;
       case LOGIN:
-        return alreadyHaveAccount
+        return alreadyHaveAccount;
       case REGISTER:
-        return register
+        return register;
     }
   }
 
@@ -212,38 +225,37 @@ class LoginRender extends Component {
    * ### render
    * Setup some default presentations and render
    */
-  render () {
-    var formType = this.props.formType
-    var loginButtonText = this.props.loginButtonText
-    var onButtonPress = this.props.onButtonPress
-    var displayPasswordCheckbox = this.props.displayPasswordCheckbox
-    var leftMessageType = this.props.leftMessageType
-    var rightMessageType = this.props.rightMessageType
+  render() {
+    const formType = this.props.formType;
+    const loginButtonText = this.props.loginButtonText;
+    const onButtonPress = this.props.onButtonPress;
+    const displayPasswordCheckbox = this.props.displayPasswordCheckbox;
+    const leftMessageType = this.props.leftMessageType;
+    const rightMessageType = this.props.rightMessageType;
+    let passwordCheckbox = <Text />;
+    const leftMessage = this.getMessage(leftMessageType, this.props.actions);
+    const rightMessage = this.getMessage(rightMessageType, this.props.actions);
 
-    var passwordCheckbox = <Text />
-    let leftMessage = this.getMessage(leftMessageType, this.props.actions)
-    let rightMessage = this.getMessage(rightMessageType, this.props.actions)
-
-    let self = this
+    const self = this;
 
     // display the login / register / change password screens
-    this.errorAlert.checkError(this.props.auth.form.error)
+    this.errorAlert.checkError(this.props.auth.form.error);
 
     /**
      * Toggle the display of the Password and PasswordAgain fields
      */
     if (displayPasswordCheckbox) {
       passwordCheckbox =
-        <ItemCheckbox
+        (<ItemCheckbox
           text={I18n.t('LoginRender.show_password')}
           disabled={this.props.auth.form.isFetching}
           onCheck={() => {
-            this.props.actions.onAuthFormFieldChange('showPassword', true)
+            this.props.actions.onAuthFormFieldChange('showPassword', true);
           }}
           onUncheck={() => {
-            this.props.actions.onAuthFormFieldChange('showPassword', false)
+            this.props.actions.onAuthFormFieldChange('showPassword', false);
           }}
-      />
+        />);
     }
 
     /**
@@ -263,14 +275,16 @@ class LoginRender extends Component {
                 formType={formType}
                 form={this.props.auth.form}
                 value={this.state.value}
-                onChange={self.onChange.bind(self)} />
+                onChange={self.onChange.bind(self)}
+              />
               {passwordCheckbox}
             </View>
 
             <FormButton
               isDisabled={!this.props.auth.form.isValid || this.props.auth.form.isFetching}
               onPress={onButtonPress}
-              buttonText={loginButtonText} />
+              buttonText={loginButtonText}
+            />
 
             <View >
               <View style={styles.forgotContainer}>
@@ -278,11 +292,10 @@ class LoginRender extends Component {
                 {rightMessage}
               </View>
             </View>
-
           </View>
         </ScrollView>
       </View>
-    )
+    );
   }
 }
-export default connect(null, mapDispatchToProps)(LoginRender)
+export default connect(null, mapDispatchToProps)(LoginRender);
