@@ -52,3 +52,11 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
 /src/lib/config.js
+
+# TypeScript
+#
+lib/
+
+# Jest
+#
+.jest/

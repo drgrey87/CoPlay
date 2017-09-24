@@ -4,13 +4,6 @@
  * The reducer for all the actions from the various log states
  */
 
-
-/**
- * ## Imports
- * The InitialState for auth
- * fieldValidation for validating the fields
- * formValidation for setting the form's valid flag
- */
 const InitialState = require('./authInitialState').default;
 const fieldValidation = require('../../lib/fieldValidation').default;
 const formValidation = require('./authFormValidation').default;
@@ -52,12 +45,40 @@ const {
 } = require('../../lib/constants').default;
 
 const initialState = new InitialState();
+
+interface action {
+  type: string;
+  payload: {
+    field: string,
+    value: string,
+    auth: {
+      form: {
+        state: object,
+        disabled: string,
+        error: object,
+        isValid: boolean,
+        isFetching: boolean,
+        fields: {
+          username: string,
+          usernameHasError: boolean,
+          email: string,
+          emailHasError: string,
+          password: string,
+          passwordHasError: boolean,
+          passwordAgain: string,
+          passwordAgainHasError: boolean
+        }
+      }
+    }
+  };
+}
+
 /**
  * ## authReducer function
  * @param {Object} state - initialState
  * @param {Object} action - type and payload
  */
-export default function authReducer(state = initialState, action) {
+export default function authReducer(state = initialState, action: action) {
   if (!(state instanceof InitialState)) return initialState.mergeDeep(state);
 
   switch (action.type) {
@@ -154,9 +175,9 @@ export default function authReducer(state = initialState, action) {
      * Set all the field values from the payload
      */
     case SET_STATE:
-      var form = JSON.parse(action.payload).auth.form;
+      let form = action.payload.auth.form;
 
-      var next = state.setIn(['form', 'state'], form.state)
+      let next = state.setIn(['form', 'state'], form.state)
         .setIn(['form', 'disabled'], form.disabled)
         .setIn(['form', 'error'], form.error)
         .setIn(['form', 'isValid'], form.isValid)
@@ -175,12 +196,10 @@ export default function authReducer(state = initialState, action) {
     case DELETE_TOKEN_REQUEST:
     case DELETE_TOKEN_SUCCESS:
       /**
-         * no state change, just an ability to track action requests...
-         */
+       * no state change, just an ability to track action requests...
+       */
+      return state;
+    default:
       return state;
   }
-  /**
-   * ## Default
-   */
-  return state;
 }

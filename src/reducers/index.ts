@@ -5,12 +5,6 @@
  *
  */
 
-
-/**
- * ## Imports
- *
- * our 5 reducers
- */
 import auth from './auth/authReducer';
 import device from './device/deviceReducer';
 import global from './global/globalReducer';

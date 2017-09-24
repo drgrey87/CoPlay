@@ -1,34 +1,12 @@
-
-
-/**
- * ## imports libs
- *
- */
-import React, { Component } from 'react';
+///<reference path="../node_modules/@types/react-native/index.d.ts"/>
 import { Provider } from 'react-redux';
-import { Navigation } from 'react-native-navigation';
-
-/**
- * ### configureStore
- *
- *  ```configureStore``` will connect the ```reducers```, the
- *
- */
+// import { Navigation } from 'react-native-navigation';
+import { registerScreens } from './register_screens';
 import configureStore from './lib/configureStore';
-
-/**
- * ## Actions
- *  The necessary actions for dispatching our bootstrap values
- */
 import { setPlatform, setVersion } from './reducers/device/deviceActions';
 import { setStore } from './reducers/global/globalActions';
 import { getSessionToken } from './reducers/auth/authActions';
 
-/**
- * ## States
- * Snowflake explicitly defines initial state
- *
- */
 import AuthInitialState from './reducers/auth/authInitialState';
 import DeviceInitialState from './reducers/device/deviceInitialState';
 import GlobalInitialState from './reducers/global/globalInitialState';
@@ -37,18 +15,10 @@ import DrawerInitialState from './reducers/drawer/drawerInitialState';
 import ActivitiesInitialState from './reducers/activities/activitiesInitialState';
 import CreateEventsInitialState from './reducers/create_events/createEventsInitialState';
 
-/**
- *  The version of the app but not  displayed yet
- */
-import pack from '../package';
+const {Navigation} = require('react-native-navigation');
 
+const pack = require('../package.json');
 const VERSION = pack.version;
-
-/**
- *  import routes
- */
-import { registerScreens } from './register_screens';
-
 /**
  *
  * ## Initial state
@@ -56,7 +26,7 @@ import { registerScreens } from './register_screens';
  * @returns {Object} object with 4 keys
  */
 function getInitialState() {
-  const _initState = {
+  const initState = {
     auth: new AuthInitialState(),
     device: (new DeviceInitialState()).set('isMobile', true),
     global: (new GlobalInitialState()),
@@ -65,7 +35,7 @@ function getInitialState() {
     activities: new ActivitiesInitialState(),
     create_events: new CreateEventsInitialState(),
   };
-  return _initState;
+  return initState;
 }
 
 /**
@@ -77,7 +47,7 @@ function getInitialState() {
  * will be used when doing hot loading
  */
 
-export default (platform) => {
+export default (platform: string) => {
   const store = configureStore(getInitialState());
   const navigatorStyle = {
     statusBarColor: 'black',
@@ -94,7 +64,7 @@ export default (platform) => {
     tabBarHidden: true,
     drawUnderTabBar: true,
   };
-  let is_inited_app = null;
+  let is_inited_app = false;
   // configureStore will combine reducers from snowflake and main application
   // it will then create the store based on aggregate state from all reducers
   store.dispatch(setPlatform(platform));
