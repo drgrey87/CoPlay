@@ -60,14 +60,13 @@ function buttonPressHandler(signup, username, email, password) {
  */
 const I18n = require('react-native-i18n');
 
-import Translations from '../lib/Translations';
+import Translations from '../lib/Translations.json';
 
 I18n.translations = Translations;
 
 const Register = React.createClass({
 
   render() {
-    console.log('aaaaasdfasfasdfasdfasfdasdf');
     const loginButtonText = I18n.t('Register.register');
     const onButtonPress = buttonPressHandler.bind(null,
       this.props.actions.signup,

@@ -7,59 +7,21 @@
  * ```App``` and ```Login```
  */
 
-
-/**
-* ## Imports
-*
-* Redux
-*/
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
-/**
- * The actions we need
- */
+import React, { Component } from 'react';
+import { StyleSheet, View } from 'react-native';
+import t from 'tcomb-form-native';
+import I18n from 'react-native-i18n';
 import * as profileActions from '../reducers/profile/profileActions';
 import * as globalActions from '../reducers/global/globalActions';
-
-/**
- * The ErrorAlert will display any and all errors
- */
 import ErrorAlert from '../components/ErrorAlert';
-/**
- * The FormButton will respond to the press
- */
 import FormButton from '../components/FormButton';
-/**
- * The Header will display a Image and support Hot Loading
- */
 import Header from '../components/Header';
-
-/**
- * The itemCheckbox will display the state of the email verified
- */
 import ItemCheckbox from '../components/ItemCheckbox';
-/**
- * The necessary React components
- */
-import React, { Component } from 'react';
-import
-{
-  StyleSheet,
-  View,
-}
-  from 'react-native';
-
-/**
-* The form processing component
-*/
-import t from 'tcomb-form-native';
+import Translations from '../lib/Translations.json';
 
 const Form = t.form.Form;
-
-/**
- * ## Styles
- */
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
@@ -73,10 +35,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
 });
-
-/**
-* ## Redux boilerplate
-*/
 
 function mapStateToProps(state) {
   return {
@@ -94,12 +52,6 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators({ ...profileActions, ...globalActions }, dispatch),
   };
 }
-/**
- * ### Translations
- */
-const I18n = require('react-native-i18n');
-
-import Translations from '../lib/Translations';
 
 I18n.translations = Translations;
 

@@ -1,19 +1,7 @@
-/**
- * # authActions.js
- *
- * All the request actions have 3 variations, the request, a success
- * and a failure. They all follow the pattern that the request will
- * set the ```isFetching``` to true and the whether it's successful or
- * fails, setting it back to false.
- *
- */
+import { Navigation } from 'react-native-navigation';
+import { appAuthToken } from '../../lib/AppAuthToken';
+import { navigatorStyle } from '../../register_screens';
 
-
-/**
- * ## Imports
- *
- * The actions supported
- */
 const {
   SESSION_TOKEN_REQUEST,
   SESSION_TOKEN_SUCCESS,
@@ -50,9 +38,6 @@ const {
  * Project requirements
  */
 const BackendFactory = require('../../lib/BackendFactory').default;
-
-import { appAuthToken } from '../../lib/AppAuthToken';
-
 const _ = require('underscore');
 
 /**
@@ -126,13 +111,23 @@ export function logout() {
   return (dispatch) => {
     dispatch(logoutRequest());
     return appAuthToken.getSessionToken()
-
       .then(token => BackendFactory(token).logout())
-
       .then(() => {
         dispatch(loginState());
         dispatch(logoutSuccess());
         dispatch(deleteSessionToken());
+        Navigation.startSingleScreenApp({
+          screen: {
+            screen: 'mobile.Login',
+            title: 'Login',
+            navigatorStyle,
+          },
+          drawer: {
+            left: {
+              screen: 'mobile.Drawer',
+            },
+          },
+        });
       })
 
       .catch((error) => {
@@ -234,9 +229,25 @@ export function getSessionToken() {
       .then((token) => {
         if (token) {
           dispatch(sessionTokenRequestSuccess(token));
-          // dispatch(logoutState())
+          Navigation.startSingleScreenApp({
+            screen: {
+              screen: 'mobile.Home',
+              title: 'Home',
+              navigatorStyle,
+              leftButtons: [
+                {
+                  id: 'sideMenu',
+                },
+              ],
+            },
+            drawer: {
+              left: {
+                screen: 'mobile.Drawer',
+              },
+            },
+          });
         } else {
-          // dispatch(sessionTokenRequestFailure())
+          dispatch(sessionTokenRequestFailure());
           dispatch(logoutState());
         }
       })
@@ -289,7 +300,6 @@ export function signup(username, email, password) {
                 email,
               }),
           ));
-          dispatch(logoutState());
         }))
       .catch((error) => {
         dispatch(signupFailure(error));
@@ -342,7 +352,23 @@ export function login(username, password) {
       .then(json => saveSessionToken(json)
         .then(() => {
           dispatch(loginSuccess(json));
-          dispatch(logoutState());
+          Navigation.startSingleScreenApp({
+            screen: {
+              screen: 'mobile.Home',
+              title: 'Home',
+              navigatorStyle,
+              leftButtons: [
+                {
+                  id: 'sideMenu',
+                },
+              ],
+            },
+            drawer: {
+              left: {
+                screen: 'mobile.Drawer',
+              },
+            },
+          });
         }))
       .catch((error) => {
         dispatch(loginFailure(error));

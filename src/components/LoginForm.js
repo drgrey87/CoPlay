@@ -14,7 +14,7 @@
  * React
  */
 import React, { PropTypes } from 'react';
-import Translations from '../lib/Translations';
+import Translations from '../lib/Translations.json';
 /**
  * States of login display
  */
@@ -156,7 +156,9 @@ const LoginForm = React.createClass({
         options.fields.email.autoCapitalize = 'none';
         options.fields.email.placeholder = I18n.t('LoginForm.email');
         break;
-    } // switch
+      default:
+        break;
+    }
 
     /**
      * ### Return

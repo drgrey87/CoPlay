@@ -11,6 +11,7 @@
     "immutable": "^3.8.1",
     "key-mirror": "^1.0.1",
     "lodash": "^4.17.4",
+    "prop-types": "^15.6.0",
     "react": "16.0.0-alpha.6",
     "react-mixin": "^3.0.5",
     "react-native": "0.44.0",
@@ -19,7 +20,7 @@
     "react-native-fbsdk": "^0.6.1",
     "react-native-i18n": "^1.0.0",
     "react-native-maps": "^0.15.0",
-    "react-native-navbar": "^1.6.3",
+    "react-native-navbar": "^2.1.0",
     "react-native-navigation": "^1.1.84",
     "react-native-side-menu": "^0.20.1",
     "react-native-simple-store": "^1.1.0",
@@ -33,6 +34,7 @@
     "validate.js": "^0.11.1"
   },
   "devDependencies": {
+    "babel-eslint": "^8.1.2",
     "babel-jest": "18.0.0",
     "babel-preset-react-native": "1.9.1",
     "eslint": "^4.5.0",

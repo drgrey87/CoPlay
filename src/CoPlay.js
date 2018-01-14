@@ -1,34 +1,9 @@
-
-
-/**
- * ## imports libs
- *
- */
-import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { Navigation } from 'react-native-navigation';
-
-/**
- * ### configureStore
- *
- *  ```configureStore``` will connect the ```reducers```, the
- *
- */
 import configureStore from './lib/configureStore';
-
-/**
- * ## Actions
- *  The necessary actions for dispatching our bootstrap values
- */
 import { setPlatform, setVersion } from './reducers/device/deviceActions';
 import { setStore } from './reducers/global/globalActions';
 import { getSessionToken } from './reducers/auth/authActions';
-
-/**
- * ## States
- * Snowflake explicitly defines initial state
- *
- */
 import AuthInitialState from './reducers/auth/authInitialState';
 import DeviceInitialState from './reducers/device/deviceInitialState';
 import GlobalInitialState from './reducers/global/globalInitialState';
@@ -36,19 +11,10 @@ import ProfileInitialState from './reducers/profile/profileInitialState';
 import DrawerInitialState from './reducers/drawer/drawerInitialState';
 import ActivitiesInitialState from './reducers/activities/activitiesInitialState';
 import CreateEventsInitialState from './reducers/create_events/createEventsInitialState';
-
-/**
- *  The version of the app but not  displayed yet
- */
-import pack from '../package';
+import pack from '../package.json';
+import { registerScreens, navigatorStyle } from './register_screens';
 
 const VERSION = pack.version;
-
-/**
- *  import routes
- */
-import { registerScreens } from './register_screens';
-
 /**
  *
  * ## Initial state
@@ -56,7 +22,7 @@ import { registerScreens } from './register_screens';
  * @returns {Object} object with 4 keys
  */
 function getInitialState() {
-  const _initState = {
+  return {
     auth: new AuthInitialState(),
     device: (new DeviceInitialState()).set('isMobile', true),
     global: (new GlobalInitialState()),
@@ -65,7 +31,6 @@ function getInitialState() {
     activities: new ActivitiesInitialState(),
     create_events: new CreateEventsInitialState(),
   };
-  return _initState;
 }
 
 /**
@@ -79,21 +44,6 @@ function getInitialState() {
 
 export default (platform) => {
   const store = configureStore(getInitialState());
-  const navigatorStyle = {
-    statusBarColor: 'black',
-    statusBarTextColorScheme: 'light',
-    navigationBarColor: 'black',
-    navBarBackgroundColor: '#2196F3',
-    navBarTextColor: '#fff',
-    navBarButtonColor: '#fff',
-    tabBarButtonColor: 'red',
-    tabBarSelectedButtonColor: 'red',
-    tabBarBackgroundColor: '#fff',
-    topBarElevationShadowEnabled: false,
-    navBarHideOnScroll: true,
-    tabBarHidden: true,
-    drawUnderTabBar: true,
-  };
   let is_inited_app = null;
   // configureStore will combine reducers from snowflake and main application
   // it will then create the store based on aggregate state from all reducers
@@ -130,11 +80,6 @@ export default (platform) => {
           screen: 'mobile.Login',
           title: 'Login',
           navigatorStyle,
-          // leftButtons: [
-          //     {
-          //         id: 'sideMenu'
-          //     }
-          // ]
         },
       });
     }

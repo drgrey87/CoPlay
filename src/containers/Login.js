@@ -9,11 +9,12 @@
 /**
  * ## Imports
  */
+import I18n from 'react-native-i18n';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import React from 'react';
-import Translations from '../lib/Translations';
-import I18n from 'react-native-i18n';
+import React, { Component } from 'react';
+import Translations from '../lib/Translations.json';
+
 /**
  * The actions we need
  */
@@ -47,7 +48,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-function buttonPressHandler(login, username, password) {
+function buttonPressHandler(login, username, password) {console.log(2222222222);
   login(username, password);
 }
 
@@ -58,21 +59,32 @@ function buttonPressHandler(login, username, password) {
 
 I18n.translations = Translations;
 
-const Login = React.createClass({
+class Login extends Component {
+  constructor() {
+    super();
+    this.onButtonPress = this.onButtonPress.bind(this);
+  }
 
-  render() {
-    const loginButtonText = I18n.t('Login.login');
-    const onButtonPress = buttonPressHandler.bind(null,
+  onButtonPress() {
+    buttonPressHandler(
       this.props.actions.login,
       this.props.auth.form.fields.username,
       this.props.auth.form.fields.password,
     );
+  }
+  render() {
+    const loginButtonText = I18n.t('Login.login');
+    // const onButtonPress = buttonPressHandler.bind(null,
+    //   this.props.actions.login,
+    //   this.props.auth.form.fields.username,
+    //   this.props.auth.form.fields.password,
+    // );
 
     return (
       <LoginRender
         formType={LOGIN}
         loginButtonText={loginButtonText}
-        onButtonPress={onButtonPress}
+        onButtonPress={this.onButtonPress}
         displayPasswordCheckbox
         leftMessageType={REGISTER}
         rightMessageType={FORGOT_PASSWORD}
@@ -81,7 +93,7 @@ const Login = React.createClass({
         navigator={this.props.navigator}
       />
     );
-  },
-});
+  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

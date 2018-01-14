@@ -4,12 +4,10 @@
  * The actions to support the users profile
  */
 
+import { Navigation } from 'react-native-navigation';
+import { navigatorStyle } from '../../register_screens';
+import { appAuthToken } from '../../lib/AppAuthToken';
 
-/**
- * ## Imports
- *
- * The actions for profile
- */
 const {
   GET_PROFILE_REQUEST,
   GET_PROFILE_SUCCESS,
@@ -27,9 +25,6 @@ const {
  * AppAuthToken for localStorage sessionToken access
  */
 const BackendFactory = require('../../lib/BackendFactory').default;
-
-import { appAuthToken } from '../../lib/AppAuthToken';
-
 /**
  * ## retreiving profile actions
  */
@@ -63,6 +58,23 @@ export function getProfile(sessionToken) {
       .then(token => BackendFactory(token).getProfile())
       .then((json) => {
         dispatch(getProfileSuccess(json));
+        Navigation.startSingleScreenApp({
+          screen: {
+            screen: 'mobile.Profile',
+            title: 'Profile',
+            navigatorStyle,
+            leftButtons: [
+              {
+                id: 'sideMenu',
+              },
+            ],
+          },
+          drawer: {
+            left: {
+              screen: 'mobile.Drawer',
+            },
+          },
+        });
       })
       .catch((error) => {
         dispatch(getProfileFailure(error));
