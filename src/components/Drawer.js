@@ -1,94 +1,17 @@
-import React, { Component, PropTypes } from 'react';
-
 import {
   View,
   ScrollView,
   Text,
-  Image,
-  Dimensions,
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-
+import React, { Component } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
-export default class Menu extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-
-  render() {
-    return (
-      <View style={styles.drawer}>
-        <View style={styles.header} key={0}>
-          <View style={styles.headerIcon}>
-            <Icon name="user-circle-o" size={50} color="#fff" />
-          </View>
-          <View style={styles.headerInfo} key={1}>
-            <Text style={styles.headerEmail}>
-              {this.props.username}
-            </Text>
-          </View>
-        </View>
-        <ScrollView contentContainerStyle={styles.content}>
-          <TouchableOpacity
-            key={2}
-            style={styles.listItem}
-            onPress={() => this.props.onItemSelected('Activities')}
-          >
-            <Text style={styles.listItemTitle}>Activities</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            key={3}
-            style={styles.listItem}
-            onPress={() => this.props.onItemSelected('Profile')}
-          >
-            <Text style={styles.listItemTitle}>Profile</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            key={4}
-            style={styles.listItem}
-            onPress={() => this.props.onItemSelected('Logout')}
-          >
-            <Text style={styles.listItemTitle}>Logout</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            key={5}
-            style={styles.listItem}
-            onPress={() => this.props.onItemSelected('Logout')}
-          >
-            <Text style={styles.listItemTitle}>Logout2</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            key={6}
-            style={styles.listItem}
-            onPress={() => this.props.onItemSelected('Logout')}
-          >
-            <Text style={styles.listItemTitle}>Logout3</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            key={7}
-            style={styles.listItem}
-            onPress={() => this.props.onItemSelected('Logout')}
-          >
-            <Text style={styles.listItemTitle}>Logout4</Text>
-          </TouchableOpacity>
-
-        </ScrollView>
-      </View>
-    );
-  }
-}
-
-/**
- * ### propTypes
- * * onItemSelected: hide drawer
- */
-// Menu.propTypes = {
-//   username: PropTypes.string.isRequired,
-//   onItemSelected: PropTypes.func.isRequired
-// }
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import * as AuthActions from '../reducers/auth/authActions';
+import * as ProfileActions from '../reducers/profile/profileActions';
 
 const styles = StyleSheet.create({
   drawer: {
@@ -136,3 +59,66 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
 });
+
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators({ ...AuthActions, ...ProfileActions }, dispatch),
+});
+
+const mapStateToProps = state => ({
+  username: state.auth.get('form').fields.username,
+  sessionToken: state.global.get('currentUser'),
+});
+
+class Menu extends Component {
+  render() {
+    return (
+      <View style={styles.drawer}>
+        <View style={styles.header} key={0}>
+          <View style={styles.headerIcon}>
+            <Icon name="user-circle-o" size={50} color="#fff" />
+          </View>
+          <View style={styles.headerInfo} key={1}>
+            <Text style={styles.headerEmail}>
+              {this.props.username}
+            </Text>
+          </View>
+        </View>
+        <ScrollView contentContainerStyle={styles.content}>
+          <TouchableOpacity
+            key={2}
+            style={styles.listItem}
+            onPress={() => this.on_item_selected('Activities')}
+          >
+            <Text style={styles.listItemTitle}>Activities</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            key={3}
+            style={styles.listItem}
+            onPress={() => this.props.actions.getProfile(this.props.sessionToken)}
+          >
+            <Text style={styles.listItemTitle}>Profile</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            key={4}
+            style={styles.listItem}
+            onPress={this.props.actions.logout}
+          >
+            <Text style={styles.listItemTitle}>Logout</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </View>
+    );
+  }
+}
+Menu.propTypes = {
+  username: PropTypes.string.isRequired,
+  sessionToken: PropTypes.string.isRequired,
+  actions: React.PropTypes.shape({
+    logout: PropTypes.func.isRequired,
+    getProfile: PropTypes.func.isRequired,
+  }),
+};
+Menu.defaultProps = {
+  actions: {},
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);
