@@ -46,39 +46,12 @@ const {
 
 const initialState = new InitialState();
 
-interface action {
-  type: string;
-  payload: {
-    field: string,
-    value: string,
-    auth: {
-      form: {
-        state: object,
-        disabled: string,
-        error: object,
-        isValid: boolean,
-        isFetching: boolean,
-        fields: {
-          username: string,
-          usernameHasError: boolean,
-          email: string,
-          emailHasError: string,
-          password: string,
-          passwordHasError: boolean,
-          passwordAgain: string,
-          passwordAgainHasError: boolean
-        }
-      }
-    }
-  };
-}
-
 /**
  * ## authReducer function
  * @param {Object} state - initialState
  * @param {Object} action - type and payload
  */
-export default function authReducer(state = initialState, action: action) {
+export default function authReducer(state = initialState, action) {
   if (!(state instanceof InitialState)) return initialState.mergeDeep(state);
 
   switch (action.type) {
