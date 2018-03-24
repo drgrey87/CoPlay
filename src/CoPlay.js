@@ -1,6 +1,6 @@
 import { Provider } from 'react-redux';
 import { Navigation } from 'react-native-navigation';
-import configureStore from './lib/configureStore';
+import configureStore from './store/configureStore';
 import { setPlatform, setVersion } from './reducers/device/deviceActions';
 import { setStore } from './reducers/global/globalActions';
 import { getSessionToken } from './reducers/auth/authActions';
