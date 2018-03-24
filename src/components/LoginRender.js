@@ -110,7 +110,7 @@ function mapDispatchToProps(dispatch) {
  */
 const I18n = require('react-native-i18n');
 
-import Translations from '../lib/Translations';
+import Translations from '../lib/Translations.json';
 
 I18n.translations = Translations;
 

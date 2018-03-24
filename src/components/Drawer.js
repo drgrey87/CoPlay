@@ -64,10 +64,12 @@ const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators({ ...AuthActions, ...ProfileActions }, dispatch),
 });
 
-const mapStateToProps = state => ({
-  username: state.auth.get('form').fields.username,
-  sessionToken: state.global.get('currentUser'),
-});
+const mapStateToProps = (state) => {
+  return {
+    username: state.auth.get('form').fields.username,
+    sessionToken: state.global.get('currentUser'),
+  };
+};
 
 class Menu extends Component {
   render() {
