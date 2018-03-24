@@ -101,7 +101,6 @@ export default function authReducer(state = initialState, action) {
     case LOGIN:
     case REGISTER:
     case FORGOT_PASSWORD:
-      console.log(324214143124132);
       return formValidation(
         state.setIn(['form', 'state'], action.type)
           .setIn(['form', 'error'], null),

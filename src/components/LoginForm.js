@@ -1,19 +1,5 @@
-/**
- * # LoginForm.js
- *
- * This class utilizes the ```tcomb-form-native``` library and just
- * sets up the options required for the 3 states of Login, namely
- * Login, Register or Reset Password
- *
- */
-
-
-/**
- * ## Import
- *
- * React
- */
 import React, { PropTypes } from 'react';
+import I18n from 'react-native-i18n';
 import Translations from '../lib/Translations.json';
 /**
  * States of login display
@@ -30,12 +16,7 @@ const {
 const t = require('tcomb-form-native');
 
 const Form = t.form.Form;
-
-/**
- * ### Translations
- */
-const I18n = require('react-native-i18n');
-
+I18n.fallbacks = true;
 I18n.translations = Translations;
 
 const LoginForm = React.createClass({

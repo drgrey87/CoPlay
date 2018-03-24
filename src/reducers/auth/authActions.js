@@ -57,9 +57,10 @@ export function registerState() {
   };
 }
 
-export function loginState() {
+export function loginState(json) {
   return {
     type: LOGIN,
+    payload: json,
   };
 }
 
@@ -113,7 +114,6 @@ export function logout() {
     return appAuthToken.getSessionToken()
       .then(token => BackendFactory(token).logout())
       .then(() => {
-        dispatch(loginState());
         dispatch(logoutSuccess());
         dispatch(deleteSessionToken());
         Navigation.startSingleScreenApp({
@@ -122,16 +122,10 @@ export function logout() {
             title: 'Login',
             navigatorStyle,
           },
-          drawer: {
-            left: {
-              screen: 'mobile.Drawer',
-            },
-          },
         });
       })
 
       .catch((error) => {
-        dispatch(loginState());
         dispatch(logoutFailure(error));
       });
   };
@@ -254,7 +248,6 @@ export function getSessionToken() {
 
       .catch((error) => {
         dispatch(sessionTokenRequestFailure(error));
-        dispatch(loginState());
       });
   };
 }
@@ -348,8 +341,7 @@ export function login(username, password) {
       username,
       password,
     })
-
-      .then(json => saveSessionToken(json)
+      .then(json => Promise.all([saveSessionToken(json), dispatch(loginState(json))])
         .then(() => {
           dispatch(loginSuccess(json));
           Navigation.startSingleScreenApp({
