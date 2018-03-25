@@ -18,22 +18,46 @@ import Login_new from '../containers/Login_new';
 import Translations from '../lib/Translations.json';
 
 export const navigatorStyle = {
-  statusBarColor: 'black',
-  statusBarTextColorScheme: 'light',
-  navigationBarColor: 'black',
-  navBarBackgroundColor: '#2196F3',
-  navBarTextColor: '#fff',
-  navBarButtonColor: '#fff',
-  tabBarButtonColor: 'red',
-  tabBarSelectedButtonColor: 'red',
-  tabBarBackgroundColor: '#fff',
-  topBarElevationShadowEnabled: false,
-  navBarHideOnScroll: true,
-  tabBarHidden: true,
-  drawUnderTabBar: true,
-};
+    statusBarColor: 'black',
+    statusBarTextColorScheme: 'light',
+    navigationBarColor: 'black',
+    navBarBackgroundColor: '#2196F3',
+    navBarTextColor: '#fff',
+    navBarButtonColor: '#fff',
+    tabBarButtonColor: 'red',
+    tabBarSelectedButtonColor: 'red',
+    tabBarBackgroundColor: '#fff',
+    topBarElevationShadowEnabled: false,
+    navBarHideOnScroll: true,
+    tabBarHidden: true,
+    drawUnderTabBar: true,
+  },
+  login_screen = () => Navigation.startSingleScreenApp({
+    screen: {
+      screen: 'mobile.Login',
+      title: 'Login',
+      navigatorStyle,
+    },
+  }),
+  home_screen = () => Navigation.startSingleScreenApp({
+    screen: {
+      screen: 'mobile.Home',
+      title: 'Home',
+      navigatorStyle,
+      leftButtons: [
+        {
+          id: 'sideMenu',
+        },
+      ],
+    },
+    drawer: {
+      left: {
+        screen: 'mobile.Drawer',
+      },
+    },
+  });
 
-export const registerScreens = (store, Provider) => {
+export default (store, Provider) => {
   // Navigation.registerComponent('mobile.App', () => App, store, Provider);
   Navigation.registerComponent('mobile.Register', () => Register, store, Provider);
   Navigation.registerComponent('mobile.ForgotPassword', () => ForgotPassword, store, Provider);

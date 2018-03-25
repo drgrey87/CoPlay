@@ -5,7 +5,7 @@
  */
 
 import { Navigation } from 'react-native-navigation';
-import { navigatorStyle } from '../../register_screens';
+import { navigatorStyle } from '../../navigation';
 import { appAuthToken } from '../../lib/AppAuthToken';
 
 const {

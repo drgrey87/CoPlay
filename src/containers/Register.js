@@ -1,17 +1,7 @@
-/**
- * Register.js
- *
- * Allow user to register
- */
-
-
-/**
- * ## Imports
- *
- * Redux
- */
+import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Translations from '../lib/Translations.json';
 
 /**
  * The actions we need
@@ -22,11 +12,6 @@ import * as authActions from '../reducers/auth/authActions';
  *   LoginRender
  */
 import LoginRender from '../components/LoginRender';
-
-/**
- * The necessary React
- */
-import React from 'react';
 
 const {
   LOGIN,
@@ -59,8 +44,6 @@ function buttonPressHandler(signup, username, email, password) {
  * ### Translations
  */
 const I18n = require('react-native-i18n');
-
-import Translations from '../lib/Translations.json';
 
 I18n.translations = Translations;
 

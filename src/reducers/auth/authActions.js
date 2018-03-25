@@ -1,6 +1,8 @@
-import { Navigation } from 'react-native-navigation';
 import { appAuthToken } from '../../lib/AppAuthToken';
-import { navigatorStyle } from '../../register_screens';
+import {
+  login_screen,
+  home_screen,
+} from '../../navigation';
 
 const {
   SESSION_TOKEN_REQUEST,
@@ -114,15 +116,10 @@ export function logout() {
     return appAuthToken.getSessionToken()
       .then(token => BackendFactory(token).logout())
       .then(() => {
+        dispatch(logoutState());
         dispatch(logoutSuccess());
         dispatch(deleteSessionToken());
-        Navigation.startSingleScreenApp({
-          screen: {
-            screen: 'mobile.Login',
-            title: 'Login',
-            navigatorStyle,
-          },
-        });
+        login_screen();
       })
 
       .catch((error) => {
@@ -219,30 +216,15 @@ export function getSessionToken() {
   return (dispatch) => {
     dispatch(sessionTokenRequest());
     return appAuthToken.getSessionToken()
-
       .then((token) => {
         if (token) {
           dispatch(sessionTokenRequestSuccess(token));
-          Navigation.startSingleScreenApp({
-            screen: {
-              screen: 'mobile.Home',
-              title: 'Home',
-              navigatorStyle,
-              leftButtons: [
-                {
-                  id: 'sideMenu',
-                },
-              ],
-            },
-            drawer: {
-              left: {
-                screen: 'mobile.Drawer',
-              },
-            },
-          });
+          home_screen();
         } else {
           dispatch(sessionTokenRequestFailure());
           dispatch(logoutState());
+          dispatch(deleteSessionToken());
+          login_screen();
         }
       })
 
@@ -293,6 +275,7 @@ export function signup(username, email, password) {
                 email,
               }),
           ));
+          home_screen();
         }))
       .catch((error) => {
         dispatch(signupFailure(error));
@@ -344,23 +327,7 @@ export function login(username, password) {
       .then(json => Promise.all([saveSessionToken(json), dispatch(loginState(json))])
         .then(() => {
           dispatch(loginSuccess(json));
-          Navigation.startSingleScreenApp({
-            screen: {
-              screen: 'mobile.Home',
-              title: 'Home',
-              navigatorStyle,
-              leftButtons: [
-                {
-                  id: 'sideMenu',
-                },
-              ],
-            },
-            drawer: {
-              left: {
-                screen: 'mobile.Drawer',
-              },
-            },
-          });
+          home_screen();
         }))
       .catch((error) => {
         dispatch(loginFailure(error));

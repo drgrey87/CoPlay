@@ -1,5 +1,4 @@
 import { Provider } from 'react-redux';
-import { Navigation } from 'react-native-navigation';
 import configureStore from './store/configureStore';
 import { setPlatform, setVersion } from './reducers/device/deviceActions';
 import { setStore } from './reducers/global/globalActions';
@@ -12,7 +11,11 @@ import DrawerInitialState from './reducers/drawer/drawerInitialState';
 import ActivitiesInitialState from './reducers/activities/activitiesInitialState';
 import CreateEventsInitialState from './reducers/create_events/createEventsInitialState';
 import pack from '../package.json';
-import { registerScreens, navigatorStyle } from './register_screens';
+import registerScreens,
+{
+  login_screen,
+  home_screen,
+} from './navigation/index';
 
 const VERSION = pack.version;
 /**
@@ -21,17 +24,15 @@ const VERSION = pack.version;
  * Create instances for the keys of each structure in snowflake
  * @returns {Object} object with 4 keys
  */
-function getInitialState() {
-  return {
-    auth: new AuthInitialState(),
-    device: (new DeviceInitialState()).set('isMobile', true),
-    global: (new GlobalInitialState()),
-    profile: new ProfileInitialState(),
-    drawer: new DrawerInitialState(),
-    activities: new ActivitiesInitialState(),
-    create_events: new CreateEventsInitialState(),
-  };
-}
+const getInitialState = () => ({
+  auth: new AuthInitialState(),
+  device: (new DeviceInitialState()).set('isMobile', true),
+  global: (new GlobalInitialState()),
+  profile: new ProfileInitialState(),
+  drawer: new DrawerInitialState(),
+  activities: new ActivitiesInitialState(),
+  create_events: new CreateEventsInitialState(),
+});
 
 /**
  * ## Native
@@ -57,31 +58,9 @@ export default (platform) => {
     if (is_inited_app) return;
 
     if (store.getState().auth.form.fields.email) {
-      Navigation.startSingleScreenApp({
-        screen: {
-          screen: 'mobile.Home',
-          title: 'Home',
-          navigatorStyle,
-          leftButtons: [
-            {
-              id: 'sideMenu',
-            },
-          ],
-        },
-        drawer: {
-          left: {
-            screen: 'mobile.Drawer',
-          },
-        },
-      });
+      home_screen();
     } else {
-      Navigation.startSingleScreenApp({
-        screen: {
-          screen: 'mobile.Login',
-          title: 'Login',
-          navigatorStyle,
-        },
-      });
+      login_screen();
     }
     is_inited_app = true;
   });
