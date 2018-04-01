@@ -55,7 +55,8 @@ const Register = React.createClass({
       this.props.actions.signup,
       this.props.auth.form.fields.username,
       this.props.auth.form.fields.email,
-      this.props.auth.form.fields.password);
+      this.props.auth.form.fields.password,
+    );
 
     return (
       <LoginRender

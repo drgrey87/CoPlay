@@ -50,20 +50,20 @@ export class Hapi extends Backend {
    * if error, {code: xxx, error: 'message'}
    */
   async signup(data) {
-    return await this._fetch({
-      method: 'POST',
-      url: '/account/register',
-      body: data,
-    })
-      .then((res) => {
-        if (res.status === 200 || res.status === 201) {
-          return res.json;
-        }
-        throw res.json;
-      })
-      .catch((error) => {
-        throw (error);
+    try {
+      const res = await this._fetch({
+        method: 'POST',
+        url: '/account/register',
+        body: data,
       });
+
+      if (res.status === 200 || res.status === 201) {
+        return res.json;
+      }
+      throw res.json;
+    } catch (err) {
+      throw (err);
+    }
   }
   /**
    * ### login

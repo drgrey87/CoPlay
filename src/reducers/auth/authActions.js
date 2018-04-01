@@ -210,7 +210,6 @@ export function deleteSessionToken() {
  * Otherwise, the user will default to the login in screen.
  */
 export function getSessionToken() {
-  console.log(1111111);
   return (dispatch) => {
     dispatch(sessionTokenRequest());
     return appAuthToken.getSessionToken()
