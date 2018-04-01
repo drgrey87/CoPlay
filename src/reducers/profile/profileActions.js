@@ -1,11 +1,3 @@
-/**
- * # profileActions.js
- *
- * The actions to support the users profile
- */
-
-import { Navigation } from 'react-native-navigation';
-import { navigatorStyle } from '../../navigation';
 import { appAuthToken } from '../../lib/AppAuthToken';
 
 const {
@@ -58,23 +50,6 @@ export function getProfile(sessionToken) {
       .then(token => BackendFactory(token).getProfile())
       .then((json) => {
         dispatch(getProfileSuccess(json));
-        Navigation.startSingleScreenApp({
-          screen: {
-            screen: 'mobile.Profile',
-            title: 'Profile',
-            navigatorStyle,
-            leftButtons: [
-              {
-                id: 'sideMenu',
-              },
-            ],
-          },
-          drawer: {
-            left: {
-              screen: 'mobile.Drawer',
-            },
-          },
-        });
       })
       .catch((error) => {
         dispatch(getProfileFailure(error));

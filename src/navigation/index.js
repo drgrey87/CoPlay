@@ -17,45 +17,53 @@ import Drawer from '../components/Drawer';
 import Login_new from '../containers/Login_new';
 import Translations from '../lib/Translations.json';
 
-export const navigatorStyle = {
-    statusBarColor: 'black',
-    statusBarTextColorScheme: 'light',
-    navigationBarColor: 'black',
-    navBarBackgroundColor: '#2196F3',
-    navBarTextColor: '#fff',
-    navBarButtonColor: '#fff',
-    tabBarButtonColor: 'red',
-    tabBarSelectedButtonColor: 'red',
-    tabBarBackgroundColor: '#fff',
-    topBarElevationShadowEnabled: false,
-    navBarHideOnScroll: true,
-    tabBarHidden: true,
-    drawUnderTabBar: true,
+const navigatorStyle = {
+  statusBarColor: 'black',
+  statusBarTextColorScheme: 'light',
+  navigationBarColor: 'black',
+  navBarBackgroundColor: '#2196F3',
+  navBarTextColor: '#fff',
+  navBarButtonColor: '#fff',
+  tabBarButtonColor: 'red',
+  tabBarSelectedButtonColor: 'red',
+  tabBarBackgroundColor: '#fff',
+  topBarElevationShadowEnabled: false,
+  navBarHideOnScroll: true,
+  tabBarHidden: true,
+  drawUnderTabBar: true,
+};
+const login_screen = () => Navigation.startSingleScreenApp({
+  screen: {
+    screen: 'mobile.Login',
+    title: 'Login',
+    navigatorStyle,
   },
-  login_screen = () => Navigation.startSingleScreenApp({
-    screen: {
-      screen: 'mobile.Login',
-      title: 'Login',
-      navigatorStyle,
+});
+const home_screen = icons_map => Navigation.startTabBasedApp({
+  tabs: [
+    {
+      screen: 'mobile.Home', // this is a registered name for a screen
+      icon: icons_map.home,
     },
-  }),
-  home_screen = () => Navigation.startSingleScreenApp({
-    screen: {
-      screen: 'mobile.Home',
-      title: 'Home',
-      navigatorStyle,
-      leftButtons: [
-        {
-          id: 'sideMenu',
-        },
-      ],
+    {
+      screen: 'mobile.Map',
+      icon: icons_map.map,
     },
-    drawer: {
-      left: {
-        screen: 'mobile.Drawer',
-      },
+    {
+      screen: 'mobile.Profile',
+      icon: icons_map.profile,
     },
-  });
+    {
+      screen: 'mobile.Settings',
+      icon: icons_map.settings,
+    },
+  ],
+});
+
+export const screens = {
+  login_screen,
+  home_screen,
+};
 
 export default (store, Provider) => {
   // Navigation.registerComponent('mobile.App', () => App, store, Provider);
@@ -64,11 +72,11 @@ export default (store, Provider) => {
   // Navigation.registerComponent('mobile.Activities', () => Activities, store, Provider);
   Navigation.registerComponent('mobile.Home', () => Home, store, Provider);
   // Navigation.registerComponent('mobile.Event', () => Event, store, Provider);
-  Navigation.registerComponent('mobile.Logout', () => Logout, store, Provider);
+  Navigation.registerComponent('mobile.Settings', () => Logout, store, Provider);
   Navigation.registerComponent('mobile.Login', () => Login, store, Provider);
   Navigation.registerComponent('mobile.Profile', () => Profile, store, Provider);
   // Navigation.registerComponent('mobile.Main', () => Main, store, Provider);
-  // Navigation.registerComponent('mobile.Map', () => Map, store, Provider);
+  Navigation.registerComponent('mobile.Map', () => Map, store, Provider);
   // Navigation.registerComponent('mobile.Subview', () => Subview, store, Provider);
   Navigation.registerComponent('mobile.Drawer', () => Drawer, store, Provider);
 };

@@ -1,8 +1,5 @@
-import { appAuthToken } from '../../lib/AppAuthToken';
-import {
-  login_screen,
-  home_screen,
-} from '../../navigation';
+import appAuthToken from '../../lib/AppAuthToken';
+import { screens } from '../../navigation/index';
 
 const {
   SESSION_TOKEN_REQUEST,
@@ -119,7 +116,7 @@ export function logout() {
         dispatch(logoutState());
         dispatch(logoutSuccess());
         dispatch(deleteSessionToken());
-        login_screen();
+        screens.login_screen();
       })
 
       .catch((error) => {
@@ -213,18 +210,19 @@ export function deleteSessionToken() {
  * Otherwise, the user will default to the login in screen.
  */
 export function getSessionToken() {
+  console.log(1111111);
   return (dispatch) => {
     dispatch(sessionTokenRequest());
     return appAuthToken.getSessionToken()
       .then((token) => {
         if (token) {
           dispatch(sessionTokenRequestSuccess(token));
-          home_screen();
+          screens.home_screen();
         } else {
           dispatch(sessionTokenRequestFailure());
           dispatch(logoutState());
           dispatch(deleteSessionToken());
-          login_screen();
+          screens.login_screen();
         }
       })
 
@@ -275,7 +273,7 @@ export function signup(username, email, password) {
                 email,
               }),
           ));
-          home_screen();
+          screens.home_screen();
         }))
       .catch((error) => {
         dispatch(signupFailure(error));
@@ -327,7 +325,7 @@ export function login(username, password) {
       .then(json => Promise.all([saveSessionToken(json), dispatch(loginState(json))])
         .then(() => {
           dispatch(loginSuccess(json));
-          home_screen();
+          screens.home_screen();
         }))
       .catch((error) => {
         dispatch(loginFailure(error));

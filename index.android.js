@@ -1,3 +1,3 @@
 import Coplay from './src/CoPlay';
 
-Coplay('android');
+Coplay.init({ platform: 'android' });

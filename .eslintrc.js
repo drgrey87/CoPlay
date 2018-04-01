@@ -8,6 +8,7 @@ module.exports = {
   "extends": "airbnb",
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "camelcase": [1, {"properties": "never"}]
+    "camelcase": [1, {"properties": "never"}],
+    "no-underscore-dangle": ["error", { "allowAfterThis": true }]
   }
 };

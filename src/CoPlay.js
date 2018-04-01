@@ -2,7 +2,6 @@ import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
 import { setPlatform, setVersion } from './reducers/device/deviceActions';
 import { setStore } from './reducers/global/globalActions';
-import { getSessionToken } from './reducers/auth/authActions';
 import AuthInitialState from './reducers/auth/authInitialState';
 import DeviceInitialState from './reducers/device/deviceInitialState';
 import GlobalInitialState from './reducers/global/globalInitialState';
@@ -11,11 +10,9 @@ import DrawerInitialState from './reducers/drawer/drawerInitialState';
 import ActivitiesInitialState from './reducers/activities/activitiesInitialState';
 import CreateEventsInitialState from './reducers/create_events/createEventsInitialState';
 import pack from '../package.json';
-import registerScreens,
-{
-  login_screen,
-  home_screen,
-} from './navigation/index';
+import registerScreens, { screens } from './navigation/index';
+import { appAuthToken } from './lib/AppAuthToken';
+import { get_tab_icons } from './icons/index';
 
 const VERSION = pack.version;
 /**
@@ -42,28 +39,32 @@ const getInitialState = () => ({
  * *Note* the ```store``` itself is set into the ```store```.  This
  * will be used when doing hot loading
  */
-
-export default (platform) => {
-  const store = configureStore(getInitialState());
-  let is_inited_app = null;
-  // configureStore will combine reducers from snowflake and main application
-  // it will then create the store based on aggregate state from all reducers
-  store.dispatch(setPlatform(platform));
-  store.dispatch(setVersion(VERSION));
-  store.dispatch(setStore(store));
-
-  registerScreens(store, Provider);
-
-  store.subscribe(() => {
-    if (is_inited_app) return;
-
-    if (store.getState().auth.form.fields.email) {
-      home_screen();
+export default class CoPlay {
+  static init(options) {
+    this._platform = options.platform;
+    const store = this._init_store();
+    this._register_screens(store);
+    this._run_app();
+  }
+  static _init_store() {
+    const store = configureStore(getInitialState());
+    // configureStore will combine reducers from snowflake and main application
+    // it will then create the store based on aggregate state from all reducers
+    store.dispatch(setPlatform(this._platform));
+    store.dispatch(setVersion(VERSION));
+    store.dispatch(setStore(store));
+    return store;
+  }
+  static _register_screens(store) {
+    registerScreens(store, Provider);
+  }
+  static async _run_app() {
+    const tab_icons = await get_tab_icons();
+    const token = await appAuthToken.getSessionToken();
+    if (token) {
+      screens.home_screen(tab_icons);
     } else {
-      login_screen();
+      screens.login_screen();
     }
-    is_inited_app = true;
-  });
-
-  store.dispatch(getSessionToken());
-};
+  }
+}
