@@ -9,6 +9,8 @@ module.exports = {
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "camelcase": [1, {"properties": "never"}],
-    "no-underscore-dangle": ["error", { "allowAfterThis": true }]
+    "no-underscore-dangle": ["error", { "allowAfterThis": true }],
+    "react/require-default-props": [0, { forbidDefaultForRequired: false }],
+    "comma-dangle": ["error", "never"]
   }
 };

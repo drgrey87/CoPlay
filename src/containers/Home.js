@@ -4,7 +4,7 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
+  TouchableOpacity
 } from 'react-native';
 import ActionButton from 'react-native-action-button';
 import colors from '../styles/colors';
@@ -15,26 +15,26 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     marginTop: 10,
-    padding: 20,
+    padding: 20
   },
   img: {
     width: 300,
     height: 300,
-    marginBottom: 10,
+    marginBottom: 10
   },
   text: {
     fontSize: 18,
     textAlign: 'center',
     lineHeight: 24,
-    marginBottom: 10,
+    marginBottom: 10
   },
   photo: {
     fontStyle: 'italic',
-    marginBottom: 15,
+    marginBottom: 15
   },
   container: {
-    flex: 1,
-  },
+    flex: 1
+  }
 });
 export default class Home extends Component {
   constructor() {
@@ -42,7 +42,9 @@ export default class Home extends Component {
     this.on_press = this.on_press.bind(this);
   }
   on_press() {
-    console.log('aaaaaaaa');
+    this.props.navigator.push({
+      screen: 'mobile.Activity'
+    });
   }
   render() {
     return (

@@ -15,6 +15,7 @@ import Event from '../components/create_event/Event';
 import TabIcon from '../components/TabIcon';
 import Drawer from '../components/Drawer';
 import Login_new from '../containers/Login_new';
+import Activity from '../containers/Activity';
 import Translations from '../lib/Translations.json';
 
 const navigatorStyle = {
@@ -79,4 +80,5 @@ export default (store, Provider) => {
   Navigation.registerComponent('mobile.Map', () => Map, store, Provider);
   // Navigation.registerComponent('mobile.Subview', () => Subview, store, Provider);
   Navigation.registerComponent('mobile.Drawer', () => Drawer, store, Provider);
+  Navigation.registerComponent('mobile.Activity', () => Activity, store, Provider);
 };
