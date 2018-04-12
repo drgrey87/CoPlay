@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
 export default class DatePicker extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = { chosen_date: props.date || props.min_date };
     this._open = this._open.bind(this);
   }
   get _min_date() {
@@ -27,37 +26,42 @@ export default class DatePicker extends PureComponent {
   get _mode() {
     return this.props.mode;
   }
-  _set_date(chosen_date) {
-    this.setState({ chosen_date });
+  _set_date(chosen_year, chosen_month, chosen_day) {
+    this.props.date_changed(chosen_year, chosen_month, chosen_day);
   }
   async _open() {
     const min_date = this._min_date;
-    const date = this.state.chosen_date;
+    const {
+      year,
+      month,
+      day
+    } = this.props.date;
     const mode = this._mode;
     try {
       const {
         action,
-        year,
-        month,
-        day
+        year: chosen_year,
+        month: chosen_month,
+        day: chosen_day
       } = await DatePickerAndroid.open({
         minDate: min_date,
-        date,
+        date: new Date(year, month, day),
         mode
       });
       if (action !== DatePickerAndroid.dismissedAction) {
-        this.props.date_changed(new Date(year, month, day));
+        this._set_date(chosen_year, chosen_month, chosen_day);
       }
     } catch ({ code, message }) {
       console.warn('Cannot open date picker', message);
     }
   }
   render() {
-    const date = new Date(this.state.chosen_date);
-    const date_month = date.getDate();
-    const month = date.getMonth();
-    const year = date.getFullYear();
-    const date_string = `${date_month}/${month}/${year}`;
+    const {
+      day,
+      month,
+      year
+    } = this.props.date;
+    const date_string = `${day}/${month}/${year}`;
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={this._open}>
@@ -70,7 +74,7 @@ export default class DatePicker extends PureComponent {
 
 DatePicker.propTypes = {
   min_date: PropTypes.instanceOf(Date),
-  date: PropTypes.instanceOf(Date),
+  date: PropTypes.objectOf(PropTypes.number),
   mode: PropTypes.string,
   date_changed: PropTypes.func
 };

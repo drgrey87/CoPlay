@@ -84,11 +84,16 @@ function mapDispatchToProps(dispatch) {
 class Activity extends PureComponent {
   constructor(props) {
     super(props);
+    const date = new Date();
     this.error_alert = new ErrorAlert();
     this.state = {
-      activity: '',
-      date: props.date || new Date(),
-      min_date: props.min_date || new Date(),
+      activity: ACTIVITIES[0],
+      date: {
+        year: (props.date && props.date.year) || date.getFullYear(),
+        month: (props.date && props.date.month) || date.getMonth(),
+        day: (props.date && props.date.day) || date.getDate()
+      },
+      min_date: new Date(),
       time: props.time || new Date(),
       place: '',
       description: ''
@@ -97,15 +102,18 @@ class Activity extends PureComponent {
     this._date_changed = this._date_changed.bind(this);
   }
   _activity_changed(activity) {
-    console.log('activity', activity);
     this.setState({
       activity
     });
   }
-  _date_changed(date) {
-    console.log('date', date);
+  _date_changed(year, month, day) {
+    console.log(year, month, day);
     this.setState({
-      date
+      date: {
+        year,
+        month,
+        day
+      }
     });
   }
   render() {
@@ -118,7 +126,7 @@ class Activity extends PureComponent {
           <View>
             <Selector
               items={ACTIVITIES}
-              selected_value={ACTIVITIES[0]}
+              selected_value={this.state.activity}
               selector_changed={this._activity_changed}
               mode={SELECTOR_MODE}
             />
@@ -150,8 +158,11 @@ class Activity extends PureComponent {
 }
 
 Activity.propTypes = {
-  min_date: PropTypes.instanceOf(Date),
-  date: PropTypes.instanceOf(Date),
+  date: PropTypes.PropTypes.shape({
+    year: PropTypes.number,
+    month: PropTypes.number,
+    day: PropTypes.number
+  }),
   time: PropTypes.instanceOf(Date)
 };
 
