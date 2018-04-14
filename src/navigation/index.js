@@ -31,39 +31,39 @@ const navigatorStyle = {
   topBarElevationShadowEnabled: false,
   navBarHideOnScroll: true,
   tabBarHidden: true,
-  drawUnderTabBar: true,
+  drawUnderTabBar: true
 };
 const login_screen = () => Navigation.startSingleScreenApp({
   screen: {
     screen: 'mobile.Login',
     title: 'Login',
-    navigatorStyle,
-  },
+    navigatorStyle
+  }
 });
 const home_screen = icons_map => Navigation.startTabBasedApp({
   tabs: [
     {
       screen: 'mobile.Home', // this is a registered name for a screen
-      icon: icons_map.home,
+      icon: icons_map.home
     },
     {
       screen: 'mobile.Map',
-      icon: icons_map.map,
+      icon: icons_map.map
     },
     {
       screen: 'mobile.Profile',
-      icon: icons_map.profile,
+      icon: icons_map.profile
     },
     {
       screen: 'mobile.Settings',
-      icon: icons_map.settings,
-    },
-  ],
+      icon: icons_map.settings
+    }
+  ]
 });
 
 export const screens = {
   login_screen,
-  home_screen,
+  home_screen
 };
 
 export default (store, Provider) => {

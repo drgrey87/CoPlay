@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import {
-  DatePickerAndroid,
+  TimePickerAndroid,
   View,
   Text,
   StyleSheet,
@@ -20,35 +20,31 @@ export default class DatePicker extends PureComponent {
     super(props);
     this._open = this._open.bind(this);
   }
-  get _min_date() {
-    return this.props.min_date;
-  }
-  _set_date(chosen_year, chosen_month, chosen_day) {
-    this.props.date_changed(chosen_year, chosen_month, chosen_day);
+  _set_time(chosen_hour, chosen_minute) {
+    this.props.time_changed(chosen_hour, chosen_minute);
   }
   async _open() {
-    const min_date = this._min_date;
     const {
-      mode: {
-        year,
-        month
+      time: {
+        hour,
+        minute
       },
-      day,
+      is24Hour,
       mode
     } = this.props;
     try {
       const {
         action,
-        year: chosen_year,
-        month: chosen_month,
-        day: chosen_day
-      } = await DatePickerAndroid.open({
-        minDate: min_date,
-        date: new Date(year, month, day),
+        hour: chosen_hour,
+        minute: chosen_minute
+      } = await TimePickerAndroid.open({
+        hour,
+        minute,
+        is24Hour,
         mode
       });
-      if (action !== DatePickerAndroid.dismissedAction) {
-        this._set_date(chosen_year, chosen_month, chosen_day);
+      if (action !== TimePickerAndroid.dismissedAction) {
+        this._set_time(chosen_hour, chosen_minute);
       }
     } catch ({ code, message }) {
       console.warn('Cannot open date picker', message);
@@ -56,15 +52,14 @@ export default class DatePicker extends PureComponent {
   }
   render() {
     const {
-      day,
-      month,
-      year
-    } = this.props.date;
-    const date_string = `${day}/${month}/${year}`;
+      hour,
+      minute
+    } = this.props.time;
+    const time_string = `${hour}:${minute}`;
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={this._open}>
-          <Text>{date_string}</Text>
+          <Text>{time_string}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -72,8 +67,7 @@ export default class DatePicker extends PureComponent {
 }
 
 DatePicker.propTypes = {
-  min_date: PropTypes.instanceOf(Date),
-  date: PropTypes.objectOf(PropTypes.number),
+  time: PropTypes.objectOf(PropTypes.number),
   mode: PropTypes.string,
-  date_changed: PropTypes.func
+  time_changed: PropTypes.func
 };

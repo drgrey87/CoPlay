@@ -22,6 +22,7 @@ import * as activity_actions from '../reducers/activities/activitiesActions';
 import ErrorAlert from '../components/ErrorAlert';
 import Selector from '../components/Selector';
 import DatePicker from '../components/DatePicker';
+import TimePicker from '../components/TimePicker';
 // import FormButton from '../components/FormButton';
 // import Header from '../components/Header';
 // import ItemCheckbox from '../components/ItemCheckbox';
@@ -40,10 +41,13 @@ const ACTIVITIES = [
   I18n.t('Activities.american_football'),
   I18n.t('Activities.handball'),
   I18n.t('Activities.frisbee'),
-  I18n.t('Activities.other'),
+  I18n.t('Activities.other')
 ];
 const SELECTOR_MODE = 'dropdown';
-const DATEPICKER_ANDROID_MODE = 'calendar';
+const PICKER_MODE = {
+  DATEPICKER_ANDROID: 'calendar',
+  TIMEPICKER_ANDROID: 'default'
+};
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
@@ -71,13 +75,13 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-    activities: state.activities,
+    activities: state.activities
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...activity_actions }, dispatch),
+    actions: bindActionCreators({ ...activity_actions }, dispatch)
   };
 }
 
@@ -94,12 +98,16 @@ class Activity extends PureComponent {
         day: (props.date && props.date.day) || date.getDate()
       },
       min_date: new Date(),
-      time: props.time || new Date(),
+      time: {
+        hour: (props.time && props.time.hour) || date.getHours(),
+        minute: (props.time && props.time.minute) || date.getMinutes()
+      },
       place: '',
       description: ''
     };
     this._activity_changed = this._activity_changed.bind(this);
     this._date_changed = this._date_changed.bind(this);
+    this._time_changed = this._time_changed.bind(this);
   }
   _activity_changed(activity) {
     this.setState({
@@ -107,7 +115,6 @@ class Activity extends PureComponent {
     });
   }
   _date_changed(year, month, day) {
-    console.log(year, month, day);
     this.setState({
       date: {
         year,
@@ -116,12 +123,20 @@ class Activity extends PureComponent {
       }
     });
   }
+  _time_changed(hour, minute) {
+    this.setState({
+      time: {
+        hour,
+        minute
+      }
+    });
+  }
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.block}>
           <View>
-            <Text>Activity</Text>
+            <Text>{I18n.t('Activity.activity')}</Text>
           </View>
           <View>
             <Selector
@@ -134,18 +149,29 @@ class Activity extends PureComponent {
         </View>
         <View style={styles.block}>
           <View>
-            <Text>Date</Text>
+            <Text>{I18n.t('Activity.date')}</Text>
           </View>
           <View>
             <DatePicker
               min_date={new Date()}
-              mode={DATEPICKER_ANDROID_MODE}
+              mode={PICKER_MODE.DATEPICKER_ANDROID}
               date={this.state.date}
               date_changed={this._date_changed}
             />
           </View>
         </View>
-
+        <View style={styles.block}>
+          <View>
+            <Text>{I18n.t('Activity.time')}</Text>
+          </View>
+          <View>
+            <TimePicker
+              mode={PICKER_MODE.TIMEPICKER_ANDROID}
+              time={this.state.time}
+              time_changed={this._time_changed}
+            />
+          </View>
+        </View>
         {/*<FormButton*/}
           {/*isDisabled={!this.props.profile.form.isValid || this.props.profile.form.isFetching}*/}
           {/*onPress={onButtonPress.bind(self)}*/}
@@ -163,7 +189,10 @@ Activity.propTypes = {
     month: PropTypes.number,
     day: PropTypes.number
   }),
-  time: PropTypes.instanceOf(Date)
+  time: PropTypes.PropTypes.shape({
+    hour: PropTypes.number,
+    minute: PropTypes.number
+  })
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Activity);

@@ -74,6 +74,11 @@
       "handball": "handball",
       "frisbee": "frisbee",
       "other": "other"
+    },
+    "Activity": {
+      "activity": "Activity",
+      "date": "Date",
+      "time": "Time"
     }
   },
   "en": {
@@ -151,6 +156,11 @@
       "handball": "handball",
       "frisbee": "frisbee",
       "other": "other"
+    },
+    "Activity": {
+      "activity": "Activity",
+      "date": "Date",
+      "time": "Time"
     }
   },
   "fr": {
@@ -228,6 +238,11 @@
       "handball": "handball",
       "frisbee": "frisbee",
       "other": "other"
+    },
+    "Activity": {
+      "activity": "Activity",
+      "date": "Date",
+      "time": "Time"
     }
   },
   "es": {
@@ -305,6 +320,11 @@
       "handball": "handball",
       "frisbee": "frisbee",
       "other": "other"
+    },
+    "Activity": {
+      "activity": "Activity",
+      "date": "Date",
+      "time": "Time"
     }
   }
 
