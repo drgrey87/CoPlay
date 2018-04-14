@@ -23,6 +23,7 @@ import ErrorAlert from '../components/ErrorAlert';
 import Selector from '../components/Selector';
 import DatePicker from '../components/DatePicker';
 import TimePicker from '../components/TimePicker';
+import { icons } from '../icons/index';
 // import FormButton from '../components/FormButton';
 // import Header from '../components/Header';
 // import ItemCheckbox from '../components/ItemCheckbox';
@@ -139,6 +140,7 @@ class Activity extends PureComponent {
             <Text>{I18n.t('Activity.activity')}</Text>
           </View>
           <View>
+            {icons.activity}
             <Selector
               items={ACTIVITIES}
               selected_value={this.state.activity}
@@ -152,6 +154,7 @@ class Activity extends PureComponent {
             <Text>{I18n.t('Activity.date')}</Text>
           </View>
           <View>
+            {icons.calendar}
             <DatePicker
               min_date={new Date()}
               mode={PICKER_MODE.DATEPICKER_ANDROID}
@@ -165,6 +168,7 @@ class Activity extends PureComponent {
             <Text>{I18n.t('Activity.time')}</Text>
           </View>
           <View>
+            {icons.time}
             <TimePicker
               mode={PICKER_MODE.TIMEPICKER_ANDROID}
               time={this.state.time}
