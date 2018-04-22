@@ -13,9 +13,12 @@ import React, { PureComponent } from 'react';
 import {
   StyleSheet,
   View,
-  Text
+  Text,
+  TextInput
 } from 'react-native';
 import PropTypes from 'prop-types';
+import MapView from 'react-native-maps';
+import Config from 'react-native-config';
 import t from 'tcomb-form-native';
 import I18n from 'react-native-i18n';
 import * as activity_actions from '../reducers/activities/activitiesActions';
@@ -24,6 +27,7 @@ import Selector from '../components/Selector';
 import DatePicker from '../components/DatePicker';
 import TimePicker from '../components/TimePicker';
 import { icons } from '../icons/index';
+import { colors } from '../styles/index';
 // import FormButton from '../components/FormButton';
 // import Header from '../components/Header';
 // import ItemCheckbox from '../components/ItemCheckbox';
@@ -44,33 +48,63 @@ const ACTIVITIES = [
   I18n.t('Activities.frisbee'),
   I18n.t('Activities.other')
 ];
-const SELECTOR_MODE = 'dropdown';
+const SELECTOR_MODE = 'dialog';
 const PICKER_MODE = {
   DATEPICKER_ANDROID: 'calendar',
   TIMEPICKER_ANDROID: 'default'
 };
+const MAP_WIDTH = 300;
+const MAP_HEIGHT = 300;
+const ASPECT_RATIO = MAP_WIDTH / MAP_HEIGHT;
+
+const LATITUDE = +Config.LATITUDE;
+const LONGITUDE = +Config.LONGITUDE;
+
+const LATITUDE_DELTA = +Config.LATITUDE_DELTA;
+const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     flex: 1,
-    backgroundColor: 'transparent',
+    backgroundColor: colors.white,
     justifyContent: 'space-between'
   },
   block: {
     flexDirection: 'row',
     flex: 1,
     justifyContent: 'space-around',
-    alignItems: 'center'
+    alignItems: 'center',
+    flexWrap: 'wrap'
+  },
+  description: {
+    flex: 1
+  },
+  action_block: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    flexWrap: 'wrap'
+  },
+  icon: {
+    // marginRight: 10
+    // width: 25
   },
   select_style: {
     height: 50,
     width: 100
   },
+  place_input_wrap: {
+    borderBottomColor: colors.black,
+    borderBottomWidth: 1,
+    width: 150
+  },
   inputs: {
-    marginTop: 10,
-    marginBottom: 10,
-    marginLeft: 10,
-    marginRight: 10
+
+  },
+  map: {
+    flex: 1,
+    height: MAP_HEIGHT
   }
 });
 
@@ -104,7 +138,13 @@ class Activity extends PureComponent {
         minute: (props.time && props.time.minute) || date.getMinutes()
       },
       place: '',
-      description: ''
+      description: '',
+      initial_region: {
+        latitude: LATITUDE,
+        longitude: LONGITUDE,
+        latitudeDelta: LATITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA
+      }
     };
     this._activity_changed = this._activity_changed.bind(this);
     this._date_changed = this._date_changed.bind(this);
@@ -136,11 +176,13 @@ class Activity extends PureComponent {
     return (
       <View style={styles.container}>
         <View style={styles.block}>
-          <View>
+          <View style={styles.description}>
             <Text>{I18n.t('Activity.activity')}</Text>
           </View>
-          <View>
-            {icons.activity}
+          <View style={styles.action_block}>
+            <View style={styles.icon}>
+              {icons.heartbeat}
+            </View>
             <Selector
               items={ACTIVITIES}
               selected_value={this.state.activity}
@@ -150,32 +192,66 @@ class Activity extends PureComponent {
           </View>
         </View>
         <View style={styles.block}>
-          <View>
+          <View style={styles.description}>
             <Text>{I18n.t('Activity.date')}</Text>
           </View>
           <View>
-            {icons.calendar}
-            <DatePicker
-              min_date={new Date()}
-              mode={PICKER_MODE.DATEPICKER_ANDROID}
-              date={this.state.date}
-              date_changed={this._date_changed}
-            />
+            <View style={styles.action_block}>
+              <View style={styles.icon}>
+                {icons.calendar}
+              </View>
+              <DatePicker
+                min_date={new Date()}
+                mode={PICKER_MODE.DATEPICKER_ANDROID}
+                date={this.state.date}
+                date_changed={this._date_changed}
+              />
+            </View>
           </View>
         </View>
         <View style={styles.block}>
-          <View>
+          <View style={styles.description}>
             <Text>{I18n.t('Activity.time')}</Text>
           </View>
           <View>
-            {icons.time}
-            <TimePicker
-              mode={PICKER_MODE.TIMEPICKER_ANDROID}
-              time={this.state.time}
-              time_changed={this._time_changed}
-            />
+            <View style={styles.action_block}>
+              <View style={styles.icon}>
+                {icons.time}
+              </View>
+              <TimePicker
+                mode={PICKER_MODE.TIMEPICKER_ANDROID}
+                time={this.state.time}
+                time_changed={this._time_changed}
+              />
+            </View>
           </View>
         </View>
+        <View style={styles.block}>
+          <View style={styles.description}>
+            <Text>{I18n.t('Activity.place')}</Text>
+          </View>
+          <View style={styles.action_block}>
+            <View style={styles.icon}>
+              {icons.address}
+            </View>
+            <View style={styles.place_input_wrap}>
+              <TextInput
+                multiline={false}
+                style={styles.inputs}
+                // onChangeText={(text) => this.setState({text})}
+                placeholder={I18n.t('Activity.input_placeholder')}
+              />
+            </View>
+          </View>
+        </View>
+        <MapView
+          style={styles.map}
+          region={this.state.initial_region}
+          showsUserLocation
+          followUserLocation
+          loadingEnabled
+          showsMyLocationButton
+        />
         {/*<FormButton*/}
           {/*isDisabled={!this.props.profile.form.isValid || this.props.profile.form.isFetching}*/}
           {/*onPress={onButtonPress.bind(self)}*/}

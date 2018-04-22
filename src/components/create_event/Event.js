@@ -53,7 +53,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 /**
  * ## Colors variables
  * */
-import colors from '../../styles/colors';
+import { colors } from '../../styles/index';
 
 /**
  * ## Styles

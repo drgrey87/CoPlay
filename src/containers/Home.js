@@ -6,9 +6,13 @@ import {
   StyleSheet,
   TouchableOpacity
 } from 'react-native';
+import I18n from 'react-native-i18n';
 import ActionButton from 'react-native-action-button';
-import colors from '../styles/colors';
+import { colors } from '../styles/index';
 import { ListItems } from '../lib/data.service';
+import Translations from '../lib/Translations.json';
+
+I18n.translations = Translations;
 
 const styles = StyleSheet.create({
   view: {
@@ -44,6 +48,16 @@ export default class Home extends Component {
   on_press() {
     this.props.navigator.push({
       screen: 'mobile.Activity'
+      // topTabs: [
+      //   {
+      //     screenId: 'mobile.Profile',
+      //     title: I18n.t('Activity.activity')
+      //   },
+      //   {
+      //     screenId: 'mobile.Map',
+      //     title: I18n.t('Activity.date')
+      //   }
+      // ]
     });
   }
   render() {

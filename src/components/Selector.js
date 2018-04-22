@@ -1,9 +1,17 @@
 import React, { PureComponent } from 'react';
 import {
   View,
-  Picker
+  Picker,
+  StyleSheet
 } from 'react-native';
 import PropTypes from 'prop-types';
+
+const styles = StyleSheet.create({
+  container: {
+    width: 100,
+    height: 50
+  }
+});
 
 class Selector extends PureComponent {
   get _picker_items() {
@@ -25,7 +33,7 @@ class Selector extends PureComponent {
       <View>
         <Picker
           selectedValue={selected_value}
-          style={{ height: 50, width: 100 }}
+          style={styles.container}
           mode={this._mode}
           onValueChange={item_value => this.props.selector_changed(item_value)}
         >

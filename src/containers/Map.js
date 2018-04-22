@@ -14,12 +14,19 @@ import MapView from 'react-native-maps';
 const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
 
-// (Initial Static Location) Mumbai
 const LATITUDE = +Config.LATITUDE;
 const LONGITUDE = +Config.LONGITUDE;
 
 const LATITUDE_DELTA = +Config.LATITUDE_DELTA;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+
+const styles = StyleSheet.create({
+  map: {
+    flex: 1,
+    width,
+    height
+  }
+});
 
 export default class Map extends Component {
   constructor(props, context) {
@@ -29,8 +36,8 @@ export default class Map extends Component {
         latitude: LATITUDE,
         longitude: LONGITUDE,
         latitudeDelta: LATITUDE_DELTA,
-        longitudeDelta: LONGITUDE_DELTA,
-      },
+        longitudeDelta: LONGITUDE_DELTA
+      }
     };
   }
 
@@ -43,7 +50,7 @@ export default class Map extends Component {
             longitude: position.coords.longitude,
             latitudeDelta: LATITUDE_DELTA,
             longitudeDelta: LONGITUDE_DELTA,
-          },
+          }
         });
       },
       error => alert(error.message),
@@ -82,12 +89,4 @@ export default class Map extends Component {
       />
     );
   }
-}
-
-let styles = StyleSheet.create({
-  map: {
-    flex: 1,
-    width,
-    height,
-  },
-});
+};

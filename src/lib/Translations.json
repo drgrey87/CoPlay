@@ -78,7 +78,10 @@
     "Activity": {
       "activity": "Activity",
       "date": "Date",
-      "time": "Time"
+      "time": "Time",
+      "place": "Place",
+      "description": "Description",
+      "input_placeholder": "Type a place of meeting"
     }
   },
   "en": {
@@ -160,7 +163,10 @@
     "Activity": {
       "activity": "Activity",
       "date": "Date",
-      "time": "Time"
+      "time": "Time",
+      "place": "Place",
+      "description": "Description",
+      "input_placeholder": "Type a place of meeting"
     }
   },
   "fr": {
@@ -242,7 +248,10 @@
     "Activity": {
       "activity": "Activity",
       "date": "Date",
-      "time": "Time"
+      "time": "Time",
+      "place": "Place",
+      "description": "Description",
+      "input_placeholder": "Type a place of meeting"
     }
   },
   "es": {
@@ -324,7 +333,10 @@
     "Activity": {
       "activity": "Activity",
       "date": "Date",
-      "time": "Time"
+      "time": "Time",
+      "place": "Place",
+      "description": "Description",
+      "input_placeholder": "Type a place of meeting"
     }
   }
 

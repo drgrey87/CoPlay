@@ -17,17 +17,18 @@ import Drawer from '../components/Drawer';
 import Login_new from '../containers/Login_new';
 import Activity from '../containers/Activity';
 import Translations from '../lib/Translations.json';
+import { colors } from '../styles';
 
 const navigatorStyle = {
-  statusBarColor: 'black',
-  statusBarTextColorScheme: 'light',
-  navigationBarColor: 'black',
-  navBarBackgroundColor: '#2196F3',
-  navBarTextColor: '#fff',
-  navBarButtonColor: '#fff',
-  tabBarButtonColor: 'red',
-  tabBarSelectedButtonColor: 'red',
-  tabBarBackgroundColor: '#fff',
+  statusBarColor: colors.black,
+  statusBarTextColorScheme: colors.light_blue,
+  navigationBarColor: colors.black,
+  navBarBackgroundColor: colors.blue,
+  navBarTextColor: colors.white,
+  navBarButtonColor: colors.white,
+  tabBarButtonColor: colors.red,
+  tabBarSelectedButtonColor: colors.red,
+  tabBarBackgroundColor: colors.white,
   topBarElevationShadowEnabled: false,
   navBarHideOnScroll: true,
   tabBarHidden: true,
